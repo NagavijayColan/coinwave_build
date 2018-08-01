@@ -3079,7 +3079,7 @@ var ThemeHeaderComponent = /** @class */ (function () {
         else {
             this.defaultTheme();
         }
-        this.http.get('http://18.191.202.171:5687/getCurrencies').map(function (response) { return response.json(); }).subscribe(function (data) {
+        this.http.get('http://172.31.54.117:5687/getCurrencies').map(function (response) { return response.json(); }).subscribe(function (data) {
             console.log(data);
             _this.currencyTypeList = data;
         });
