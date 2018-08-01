@@ -3699,7 +3699,7 @@ var TvChartContainerComponent = /** @class */ (function () {
         if (!localStorage.getItem('userToken') && this.clearInterval) {
             var toL = this.coinList.length > 0 ? this.coinList.length : 20;
             console.log(this.sortingKey);
-            var request = this.http.post('http://172.31.54.117:5687/exchange/getusd', { from: 0, to: toL, sort: { key: this.sortingKey, value: this.reverse } }).map(function (response) { return response.json(); }).subscribe(function (data) {
+            var request = this.http.post('http://18.191.202.171:5687/exchange/getusd', { from: 0, to: toL, sort: { key: this.sortingKey, value: this.reverse } }).map(function (response) { return response.json(); }).subscribe(function (data) {
                 if (_this.clearInterval) {
                     _this.getallCoins = data;
                     if (data.length == 0) {
