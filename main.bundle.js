@@ -2984,7 +2984,7 @@ var ThemeHeaderComponent = /** @class */ (function () {
         else {
             this.defaultTheme();
         }
-        this.http.get('http://172.31.54.117:5687/getCurrencies').map(function (response) { return response.json(); }).subscribe(function (data) {
+        this.http.get('http://172.31.53.92:5687/getCurrencies').map(function (response) { return response.json(); }).subscribe(function (data) {
             console.log(data);
             _this.currencyTypeList = data;
         });
@@ -3605,6 +3605,7 @@ var TvChartContainerComponent = /** @class */ (function () {
             var toL = this.coinList.length > 0 ? this.coinList.length : 20;
             console.log(this.sortingKey);
             var request = this.http.post('http://172.31.53.92:5687/exchange/getusd', { from: 0, to: toL, sort: { key: this.sortingKey, value: this.reverse } }).map(function (response) { return response.json(); }).subscribe(function (data) {
+                "";
                 if (_this.clearInterval) {
                     _this.getallCoins = data;
                     if (data.length == 0) {
