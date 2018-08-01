@@ -331,14 +331,14 @@ var CommonServiceService = /** @class */ (function () {
         }
         else {
             userReg.loginType = 'Manual';
-            this.http.post('http://18.191.202.171:5687/user/register', userReg).subscribe(function (data) {
+            this.http.post('http://172.31.53.92:5687/user/register', userReg).subscribe(function (data) {
                 localStorage.setItem('userToken', data['access_token']);
                 localStorage.setItem('userName', data['userName']);
                 if (sessionStorage.getItem('favouriteCoins')) {
                     var favcoin = JSON.parse(sessionStorage.getItem('favouriteCoins'));
                     if (favcoin.length > 0) {
                         var tokenV = localStorage.getItem('userToken');
-                        _this.http.put('http://18.191.202.171:5687/api/userSetting/update', { favourites: favcoin, token: tokenV }).
+                        _this.http.put('http://172.31.53.92:5687/api/userSetting/update', { favourites: favcoin, token: tokenV }).
                             subscribe(function (data) {
                             console.log(data);
                         });
@@ -370,7 +370,7 @@ var CommonServiceService = /** @class */ (function () {
             return true;
         }
         else {
-            this.http.post('http://18.191.202.171:5687/user/login', userLogin).subscribe(function (data) {
+            this.http.post('http://172.31.53.92:5687/user/login', userLogin).subscribe(function (data) {
                 localStorage.setItem('userToken', data['access_token']);
                 localStorage.setItem('userName', data['userName']);
                 var lang = "/en/" + data['siteLanguage'];
@@ -380,7 +380,7 @@ var CommonServiceService = /** @class */ (function () {
                     var favcoin = JSON.parse(sessionStorage.getItem('favouriteCoins'));
                     if (favcoin.length > 0) {
                         var tokenV = localStorage.getItem('userToken');
-                        _this.http.put('http://18.191.202.171:5687/api/userSetting/update', { favourites: favcoin, token: tokenV }).
+                        _this.http.put('http://172.31.53.92:5687/api/userSetting/update', { favourites: favcoin, token: tokenV }).
                             subscribe(function (data) {
                             console.log(data);
                         });
@@ -412,7 +412,7 @@ var CommonServiceService = /** @class */ (function () {
         userReg['loginId'] = userData.id;
         userReg['loginType'] = userData.provider;
         userReg['userName'] = userData.name;
-        this.http.post('http://18.191.202.171:5687/user/socialLogin', userReg).subscribe(function (data) {
+        this.http.post('http://172.31.53.92:5687/user/socialLogin', userReg).subscribe(function (data) {
             localStorage.setItem('userToken', data['access_token']);
             localStorage.setItem('userName', data['userName']);
             var lang = "/en/" + data['siteLanguage'];
@@ -421,7 +421,7 @@ var CommonServiceService = /** @class */ (function () {
                 var favcoin = JSON.parse(sessionStorage.getItem('favouriteCoins'));
                 if (favcoin.length > 0) {
                     var tokenV = localStorage.getItem('userToken');
-                    _this.http.put('http://18.191.202.171:5687/api/userSetting/update', { favourites: favcoin, token: tokenV }).
+                    _this.http.put('http://172.31.53.92:5687/api/userSetting/update', { favourites: favcoin, token: tokenV }).
                         subscribe(function (data) {
                         console.log(data);
                     });
@@ -1041,7 +1041,7 @@ var CoinlistComponent = /** @class */ (function () {
         }
         this.location.replaceState('/coinlist');
         this.advFilter = [];
-        this.http.get('http://18.191.202.171:5687/exchange/getMax').map(function (response) { return response.json(); }).subscribe(function (data) {
+        this.http.get('http://172.31.53.92:5687/exchange/getMax').map(function (response) { return response.json(); }).subscribe(function (data) {
             _this.maxPrice = (data[0].maxPrice * _this.currencyValue).toFixed(2) + 100;
             _this.maxVolume = (data[0].maxVolume * _this.currencyValue).toFixed(2) + 100;
             _this.marketCapVal = (data[0].marketCapValue * _this.currencyValue).toFixed(2) + 100;
@@ -1164,7 +1164,7 @@ var CoinlistComponent = /** @class */ (function () {
         var _this = this;
         if (this.advFilter.length > 0) {
             this.changeGraphTheme.clear_interval_filter();
-            this.http.post('http://18.191.202.171:5687/exchange/getusd', { filter: this.advFilter, from: 0, to: 1500 }).map(function (response) { return response.json(); }).
+            this.http.post('http://172.31.53.92:5687/exchange/getusd', { filter: this.advFilter, from: 0, to: 1500 }).map(function (response) { return response.json(); }).
                 subscribe(function (data) {
                 console.log(data);
                 _this.component1.advancedTableFilter(data);
@@ -1224,7 +1224,7 @@ module.exports = ""
 /***/ "./src/app/main/content/coinpage/coinpage.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"load_spinner\" *ngIf=\"showLoadSpinner\"><span class=\"fa fa-spinner fa-spin fa-2x\"></span></div>\r\n\r\n<div class=\"sort_content_section coinpage\" id=\"showloop\">\r\n  <div class=\"container\">\r\n\r\n    <div class=\"coinpage-head col-sm-12 col-xs-12 col-md-12 col-lg-12\">\r\n      <div class=\"col-xs-12 col-sm-12 col-md-6 col-lg-6\">\r\n        <img src=\"{{imgSrc}}\" class=\"bitcoin_logo\" />\r\n\r\n        <ul class=\"add_lst\">\r\n          <li (click)=\"buyCoin()\">\r\n            <a>\r\n              <button class=\"buyCoinsBtn\">Buy {{coinName}} <span><img class=\"coinImage\" src=\"http://18.191.202.171:5687/upload/{{coinImage}}\" ></span></button>\r\n            </a>\r\n          </li>\r\n          <li (click)=\"addToPortfolio()\">\r\n            <a>\r\n              <img src=\"/assets/images/prtfolio.png\" />\r\n            </a>\r\n          </li>\r\n        </ul>\r\n        <div *ngIf=\"isOpened\" class=\"buyCoinList\">\r\n          <ul>\r\n            <li>\r\n              <a href=\"https://mail.google.com/mail/u/0/#inbox\" target=\"_blank\">Google</a>\r\n            </li>\r\n            <li>\r\n              <a href=\"https://www.linkedin.com/\" target=\"_blank\">LInked In</a>\r\n            </li>\r\n            <li>\r\n              <a href=\"https://mail.google.com/mail/u/0/#inbox\" target=\"_blank\">Google</a>\r\n            </li>\r\n            <li>\r\n              <a href=\"https://www.linkedin.com/\" target=\"_blank\">LInked In</a>\r\n            </li>\r\n            <li>\r\n              <a href=\"https://mail.google.com/mail/u/0/#inbox\" target=\"_blank\">Google</a>\r\n            </li>\r\n            <li>\r\n              <a href=\"https://www.linkedin.com/\" target=\"_blank\">LInked In</a>\r\n            </li>\r\n            <li>\r\n              <a href=\"https://mail.google.com/mail/u/0/#inbox\" target=\"_blank\">Google</a>\r\n            </li>\r\n            <li>\r\n              <a href=\"https://www.linkedin.com/\" target=\"_blank\">LInked In</a>\r\n            </li>\r\n            <li>\r\n              <a href=\"https://mail.google.com/mail/u/0/#inbox\" target=\"_blank\">Google</a>\r\n            </li>\r\n            <li>\r\n              <a href=\"https://www.linkedin.com/\" target=\"_blank\">LInked In</a>\r\n            </li>\r\n          </ul>\r\n        </div>\r\n      </div>\r\n\r\n      <div class=\"col-xs-12 col-sm-12 col-md-3 col-lg-3 dollar\">\r\n        <label> USD:\r\n          <span class=\"red\"> $8,489.70 </span>\r\n        </label>\r\n      </div>\r\n\r\n      <div class=\"col-xs-12 col-sm-12 col-md-3 col-lg-3 dollar\">\r\n        <label> BTC:\r\n          <span class=\"green\">1.0000001 </span>\r\n        </label>\r\n      </div>\r\n    </div>\r\n\r\n    <div class=\"col-sm-12 col-xs-12 col-md-12 col-lg-12 coin-page-lft\">\r\n      <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" class=\"table-responsive\">\r\n        <thead>\r\n          <tr>\r\n            <th>24 Hour Change</th>\r\n            <th>7 Day Change</th>\r\n            <th>30 Day Change</th>\r\n            <th>24 Hour Volume</th>\r\n            <th>24 HR High/Low</th>\r\n            <th>Market Cap</th>\r\n            <th>Circulating Supply</th>\r\n            <th>Total Supply</th>\r\n          </tr>\r\n        </thead>\r\n        <tbody>\r\n          <tr *ngFor=\"let coinDetails of coinData;let i = index\" [style.background] = \"coinDetails.hexavalues\">\r\n            <td style=\"back:coinDetails.hexavalues\" class=\"cp_24four_change column-price\">{{coinDetails.dayPrice * currencyVal | number : '.0-2'}}</td>\r\n            <td class=\"cp_7day_change column-HRchange\">{{coinDetails.weeklyChange * this.currencyVal | number : '.0-2'}}</td>\r\n            <td class=\"cp_30day_change column-dayChange\">{{10 * (i+1) * this.currencyVal | number : '.0-2'}}</td>\r\n            <td>{{30 * (i+1) * this.currencyVal | number : '.0-2'}}</td>\r\n            <td>{{coinDetails.highestPrice * this.currencyVal | number : '.0-2'}} / {{coinDetails.lowestPrice * this.currencyVal | number : '.0-2'}}</td>\r\n            <td>{{2 * (i+1) * this.currencyVal | number : '.0-2'}}</td>\r\n            <td>{{2 * (i+1) * this.currencyVal | number : '.0-2'}}</td>\r\n            <td>{{100 * (i+1) * this.currencyVal | number : '.0-2'}}</td>\r\n          </tr>\r\n        </tbody>\r\n      </table>\r\n    </div>\r\n\r\n    <div class=\"sort_with_table coinpage-data\">\r\n\r\n      <div class=\"col-sm-12 col-xs-12 col-md-10 col-lg-10 rgt-coin-tab \">\r\n\r\n\r\n        <div class=\"graph\">\r\n           <label class=\"typeChangeBtn \"><button  class=\" btn\" [ngClass]=\"{'active' : btnActive  == 'candlestick' }\" (click)=\"changeType('candlestick');\">Candlestick</button></label>\r\n          <label class=\"typeChangeBtn\"><button class=\" btn\" [ngClass]=\"{'active' : btnActive  == 'ohlc' }\" (click)=\"changeType('ohlc');\">OHLC</button></label>\r\n          <label class=\"typeChangeBtn\"><button class=\" btn\" [ngClass]=\"{'active' : btnActive  == 'line' }\" (click)=\"changeType('line');\">Line</button></label>\r\n          <label class=\"typeChangeBtn\"><button class=\" btn\" [ngClass]=\"{'active' : btnActive  == 'smoothedLine' }\" (click)=\"changeType('smoothedLine');\">Advanced</button></label>\r\n          <!-- <label><button (click)=\"changeTheme('');\">Area</button></label> -->\r\n          <!-- <label><button (click)=\"changeTheme('dark');\">Theme</button></label>\r\n          <label><button [disabled]=\"disabled\" (click)=\"vwapaaaa();\">VWAP</button></label> -->\r\n          <!-- <div class=\"app-tv-chart-container app-tv-chart-container_single\" id=\"coinDetails_tv\"></div> -->\r\n          <div id=\"candleStickChart\" [ngStyle]=\"{'background-color': backgroundColor  }\"  [style.height.px]=\"650\" style=\"width:100%;float:left;margin-right:10px;\" ></div>\r\n          <!-- <div id=\"coinDataChart\" [ngStyle]=\"{'background-color': backgroundColor  }\" [style.width.%]=\"100\" [style.height.px]=\"550\" style=\"float:left;margin-right:10px;\" ></div> -->\r\n        </div>\r\n      </div>\r\n\r\n      <div class=\"col-xs-12 col-sm-12 col-md-2 col-lg-2 coin_list_lft coin-page-rgt\">\r\n        <div class=\"row\">\r\n          <app-advertisement></app-advertisement>\r\n          <div class=\"advertisment_add\">\r\n            <ul>\r\n              <li>\r\n                <a href=\"#\">\r\n                  <img src=\"/assets/images/advisement_1.png\" />\r\n                </a>\r\n              </li>\r\n            </ul>\r\n          </div>\r\n        </div>\r\n      </div>\r\n\r\n    </div>\r\n  </div>\r\n</div>\r\n"
+module.exports = "<div class=\"load_spinner\" *ngIf=\"showLoadSpinner\"><span class=\"fa fa-spinner fa-spin fa-2x\"></span></div>\r\n\r\n<div class=\"sort_content_section coinpage\" id=\"showloop\">\r\n  <div class=\"container\">\r\n\r\n    <div class=\"coinpage-head col-sm-12 col-xs-12 col-md-12 col-lg-12\">\r\n      <div class=\"col-xs-12 col-sm-12 col-md-6 col-lg-6\">\r\n        <img src=\"{{imgSrc}}\" class=\"bitcoin_logo\" />\r\n\r\n        <ul class=\"add_lst\">\r\n          <li (click)=\"buyCoin()\">\r\n            <a>\r\n              <button class=\"buyCoinsBtn\">Buy {{coinName}} <span><img class=\"coinImage\" src=\"http://172.31.53.92:5687/upload/{{coinImage}}\" ></span></button>\r\n            </a>\r\n          </li>\r\n          <li (click)=\"addToPortfolio()\">\r\n            <a>\r\n              <img src=\"/assets/images/prtfolio.png\" />\r\n            </a>\r\n          </li>\r\n        </ul>\r\n        <div *ngIf=\"isOpened\" class=\"buyCoinList\">\r\n          <ul>\r\n            <li>\r\n              <a href=\"https://mail.google.com/mail/u/0/#inbox\" target=\"_blank\">Google</a>\r\n            </li>\r\n            <li>\r\n              <a href=\"https://www.linkedin.com/\" target=\"_blank\">LInked In</a>\r\n            </li>\r\n            <li>\r\n              <a href=\"https://mail.google.com/mail/u/0/#inbox\" target=\"_blank\">Google</a>\r\n            </li>\r\n            <li>\r\n              <a href=\"https://www.linkedin.com/\" target=\"_blank\">LInked In</a>\r\n            </li>\r\n            <li>\r\n              <a href=\"https://mail.google.com/mail/u/0/#inbox\" target=\"_blank\">Google</a>\r\n            </li>\r\n            <li>\r\n              <a href=\"https://www.linkedin.com/\" target=\"_blank\">LInked In</a>\r\n            </li>\r\n            <li>\r\n              <a href=\"https://mail.google.com/mail/u/0/#inbox\" target=\"_blank\">Google</a>\r\n            </li>\r\n            <li>\r\n              <a href=\"https://www.linkedin.com/\" target=\"_blank\">LInked In</a>\r\n            </li>\r\n            <li>\r\n              <a href=\"https://mail.google.com/mail/u/0/#inbox\" target=\"_blank\">Google</a>\r\n            </li>\r\n            <li>\r\n              <a href=\"https://www.linkedin.com/\" target=\"_blank\">LInked In</a>\r\n            </li>\r\n          </ul>\r\n        </div>\r\n      </div>\r\n\r\n      <div class=\"col-xs-12 col-sm-12 col-md-3 col-lg-3 dollar\">\r\n        <label> USD:\r\n          <span class=\"red\"> $8,489.70 </span>\r\n        </label>\r\n      </div>\r\n\r\n      <div class=\"col-xs-12 col-sm-12 col-md-3 col-lg-3 dollar\">\r\n        <label> BTC:\r\n          <span class=\"green\">1.0000001 </span>\r\n        </label>\r\n      </div>\r\n    </div>\r\n\r\n    <div class=\"col-sm-12 col-xs-12 col-md-12 col-lg-12 coin-page-lft\">\r\n      <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" class=\"table-responsive\">\r\n        <thead>\r\n          <tr>\r\n            <th>24 Hour Change</th>\r\n            <th>7 Day Change</th>\r\n            <th>30 Day Change</th>\r\n            <th>24 Hour Volume</th>\r\n            <th>24 HR High/Low</th>\r\n            <th>Market Cap</th>\r\n            <th>Circulating Supply</th>\r\n            <th>Total Supply</th>\r\n          </tr>\r\n        </thead>\r\n        <tbody>\r\n          <tr *ngFor=\"let coinDetails of coinData;let i = index\" [style.background] = \"coinDetails.hexavalues\">\r\n            <td style=\"back:coinDetails.hexavalues\" class=\"cp_24four_change column-price\">{{coinDetails.dayPrice * currencyVal | number : '.0-2'}}</td>\r\n            <td class=\"cp_7day_change column-HRchange\">{{coinDetails.weeklyChange * this.currencyVal | number : '.0-2'}}</td>\r\n            <td class=\"cp_30day_change column-dayChange\">{{10 * (i+1) * this.currencyVal | number : '.0-2'}}</td>\r\n            <td>{{30 * (i+1) * this.currencyVal | number : '.0-2'}}</td>\r\n            <td>{{coinDetails.highestPrice * this.currencyVal | number : '.0-2'}} / {{coinDetails.lowestPrice * this.currencyVal | number : '.0-2'}}</td>\r\n            <td>{{2 * (i+1) * this.currencyVal | number : '.0-2'}}</td>\r\n            <td>{{2 * (i+1) * this.currencyVal | number : '.0-2'}}</td>\r\n            <td>{{100 * (i+1) * this.currencyVal | number : '.0-2'}}</td>\r\n          </tr>\r\n        </tbody>\r\n      </table>\r\n    </div>\r\n\r\n    <div class=\"sort_with_table coinpage-data\">\r\n\r\n      <div class=\"col-sm-12 col-xs-12 col-md-10 col-lg-10 rgt-coin-tab \">\r\n\r\n\r\n        <div class=\"graph\">\r\n           <label class=\"typeChangeBtn \"><button  class=\" btn\" [ngClass]=\"{'active' : btnActive  == 'candlestick' }\" (click)=\"changeType('candlestick');\">Candlestick</button></label>\r\n          <label class=\"typeChangeBtn\"><button class=\" btn\" [ngClass]=\"{'active' : btnActive  == 'ohlc' }\" (click)=\"changeType('ohlc');\">OHLC</button></label>\r\n          <label class=\"typeChangeBtn\"><button class=\" btn\" [ngClass]=\"{'active' : btnActive  == 'line' }\" (click)=\"changeType('line');\">Line</button></label>\r\n          <label class=\"typeChangeBtn\"><button class=\" btn\" [ngClass]=\"{'active' : btnActive  == 'smoothedLine' }\" (click)=\"changeType('smoothedLine');\">Advanced</button></label>\r\n          <!-- <label><button (click)=\"changeTheme('');\">Area</button></label> -->\r\n          <!-- <label><button (click)=\"changeTheme('dark');\">Theme</button></label>\r\n          <label><button [disabled]=\"disabled\" (click)=\"vwapaaaa();\">VWAP</button></label> -->\r\n          <!-- <div class=\"app-tv-chart-container app-tv-chart-container_single\" id=\"coinDetails_tv\"></div> -->\r\n          <div id=\"candleStickChart\" [ngStyle]=\"{'background-color': backgroundColor  }\"  [style.height.px]=\"650\" style=\"width:100%;float:left;margin-right:10px;\" ></div>\r\n          <!-- <div id=\"coinDataChart\" [ngStyle]=\"{'background-color': backgroundColor  }\" [style.width.%]=\"100\" [style.height.px]=\"550\" style=\"float:left;margin-right:10px;\" ></div> -->\r\n        </div>\r\n      </div>\r\n\r\n      <div class=\"col-xs-12 col-sm-12 col-md-2 col-lg-2 coin_list_lft coin-page-rgt\">\r\n        <div class=\"row\">\r\n          <app-advertisement></app-advertisement>\r\n          <div class=\"advertisment_add\">\r\n            <ul>\r\n              <li>\r\n                <a href=\"#\">\r\n                  <img src=\"/assets/images/advisement_1.png\" />\r\n                </a>\r\n              </li>\r\n            </ul>\r\n          </div>\r\n        </div>\r\n      </div>\r\n\r\n    </div>\r\n  </div>\r\n</div>\r\n"
 
 /***/ }),
 
@@ -1410,7 +1410,7 @@ var CoinpageComponent = /** @class */ (function () {
         this.aroute.params.subscribe(function (params) {
             _this.coinKey = params['id'];
         });
-        this.http.get("http://18.191.202.171:5687/exchange/getusd/" + this.coinKey).map(function (response) { return response.json(); }).subscribe(function (data) {
+        this.http.get("http://172.31.53.92:5687/exchange/getusd/" + this.coinKey).map(function (response) { return response.json(); }).subscribe(function (data) {
             _this.coinName = data[0].name;
             _this.coinImage = data[0].image;
             _this.coinData = data;
@@ -1421,7 +1421,7 @@ var CoinpageComponent = /** @class */ (function () {
         this.setIntervalTime = 1000;
         this.overrides_obj = this.graphThemeColor;
         // this.generateGraph(this.coinKey);
-        this.http.post('http://18.191.202.171:5687/exchange/getChart', { pair: this.coinKey, interval: 30, range: 100 }).map(function (response) { return response.json(); }).subscribe(function (data) {
+        this.http.post('http://172.31.53.92:5687/exchange/getChart', { pair: this.coinKey, interval: 30, range: 100 }).map(function (response) { return response.json(); }).subscribe(function (data) {
             _this.chartDataProvider = data;
             _this.themeDo('candleStickChart', _this.chartDataProvider, 'coin');
         });
@@ -1471,7 +1471,7 @@ var CoinpageComponent = /** @class */ (function () {
                 jQuery.ajax({
                     method: 'POST',
                     async: true,
-                    url: 'http://18.191.202.171:5687/exchange/getChart',
+                    url: 'http://172.31.53.92:5687/exchange/getChart',
                     data: { pair: coinToken },
                     success: function (response) {
                         onHistoryCallback(response, { noData: true });
@@ -1487,7 +1487,7 @@ var CoinpageComponent = /** @class */ (function () {
                     jQuery.ajax({
                         method: 'POST',
                         async: true,
-                        url: 'http://18.191.202.171:5687/exchange/getLastSecData',
+                        url: 'http://172.31.53.92:5687/exchange/getLastSecData',
                         data: { pair: coinToken },
                         success: function (response) {
                             onRealtimeCallback(parseJSONorNot(response[0]));
@@ -1646,7 +1646,7 @@ var CoinpageComponent = /** @class */ (function () {
         if (localStorage.getItem('userToken')) {
             this.showLoadSpinner = true;
             var tokenV = localStorage.getItem('userToken');
-            this.http.put('http://18.191.202.171:5687/api/userSetting/update', { portfolio: this.coinKey, token: tokenV }).map(function (response) { return response.json(); }).subscribe(function (data) {
+            this.http.put('http://172.31.53.92:5687/api/userSetting/update', { portfolio: this.coinKey, token: tokenV }).map(function (response) { return response.json(); }).subscribe(function (data) {
                 _this.showLoadSpinner = false;
                 _this.changeGraphTheme.trigger_successMessagePopUp_filter('Successfully added to Portfolio List');
             }, function (error) {
@@ -1859,7 +1859,7 @@ var CoinpageComponent = /** @class */ (function () {
             this.amchartVariable[coinToken].zoomOut();
         }
         else {
-            this.http.post('http://18.191.202.171:5687/exchange/getChart', { pair: coinToken, interval: intervalTime, range: rangeVal }).map(function (response) { return response.json(); }).subscribe(function (data) {
+            this.http.post('http://172.31.53.92:5687/exchange/getChart', { pair: coinToken, interval: intervalTime, range: rangeVal }).map(function (response) { return response.json(); }).subscribe(function (data) {
                 _this.amchartVariable[coinToken][btn] = data;
                 _this.amchartVariable[coinToken].dataProvider = [];
                 _this.amchartVariable[coinToken].dataSets[0].dataProvider = data;
@@ -1873,7 +1873,7 @@ var CoinpageComponent = /** @class */ (function () {
     };
     // AutoUpdateOfChart() {
     //     for (let propt in this.amchartVariable) {
-    //         this.http.post('http://18.191.202.171:5687/exchange/getLastSecData', { pair: propt }).map(response => response.json()).subscribe(data => {
+    //         this.http.post('http://172.31.53.92:5687/exchange/getLastSecData', { pair: propt }).map(response => response.json()).subscribe(data => {
     //             // this.chartDataProvider.push(data);
     //             let k = this.AmCharts;
     //             data[0]['date'] = new Date().toISOString();
@@ -2103,7 +2103,7 @@ var ExchangeComponent = /** @class */ (function () {
     };
     ExchangeComponent.prototype.exchangeDatas = function () {
         var _this = this;
-        this.http.get("http://18.191.202.171:5687/exchange/exchangeSummary").map(function (response) { return response.json(); }).subscribe(function (data) {
+        this.http.get("http://172.31.53.92:5687/exchange/exchangeSummary").map(function (response) { return response.json(); }).subscribe(function (data) {
             if (data.length > 0) {
                 _this.noData = false;
             }
@@ -2445,12 +2445,12 @@ var HeaderComponent = /** @class */ (function () {
         if (text != '') {
             if (page == '/coinlist') {
                 if (localStorage.getItem('userToken')) {
-                    this.http.post('http://18.191.202.171:5687/exchange/getusd', { search: text, from: 0, to: 1500 }).map(function (response) { return response.json(); }).subscribe(function (data) {
+                    this.http.post('http://172.31.53.92:5687/exchange/getusd', { search: text, from: 0, to: 1500 }).map(function (response) { return response.json(); }).subscribe(function (data) {
                         _this.dataShare.searchDataFilter(data);
                     });
                 }
                 else {
-                    this.http.post('http://18.191.202.171:5687/exchange/getusd', { search: text }).map(function (response) {
+                    this.http.post('http://172.31.53.92:5687/exchange/getusd', { search: text }).map(function (response) {
                         return response.json();
                     }).subscribe(function (data) {
                         console.log(data);
@@ -2459,12 +2459,12 @@ var HeaderComponent = /** @class */ (function () {
                 }
             }
             else if (page == '/portfolio' && localStorage.getItem('userToken')) {
-                this.http.post('http://18.191.202.171:5687/api/coins/getPortfolio', { search: text, token: localStorage.getItem('userToken') }).map(function (response) { return response.json(); }).subscribe(function (data) {
+                this.http.post('http://172.31.53.92:5687/api/coins/getPortfolio', { search: text, token: localStorage.getItem('userToken') }).map(function (response) { return response.json(); }).subscribe(function (data) {
                     _this.dataShare.searchDataFilter(data);
                 });
             }
             else if (page == '/exchange') {
-                // this.http.get("http://18.191.202.171:5687/exchange/exchangeSummary", { search: text }).map(
+                // this.http.get("http://172.31.53.92:5687/exchange/exchangeSummary", { search: text }).map(
                 //   response => response.json()).subscribe(
                 //   data => {
                 this.dataShare.searchDataFilter(text);
@@ -3102,7 +3102,7 @@ var ThemeHeaderComponent = /** @class */ (function () {
     };
     ThemeHeaderComponent.prototype.selectCurrency = function (text, image) {
         var _this = this;
-        this.http.post('http://18.191.202.171:5687/currencyConverter', { converter: text }).map(function (response) { return response.json(); }).subscribe(function (data) {
+        this.http.post('http://172.31.53.92:5687/currencyConverter', { converter: text }).map(function (response) { return response.json(); }).subscribe(function (data) {
             _this.currencyvalue = data.rate.toFixed(2);
             localStorage.setItem('currencyRate', _this.currencyvalue);
             _this.changeGraphTheme.currencyConverter_filter(_this.currencyvalue);
@@ -3169,7 +3169,7 @@ var ThemeHeaderComponent = /** @class */ (function () {
             this.themeSettings['token'] = localStorage.getItem('userToken');
             var siteLang = __WEBPACK_IMPORTED_MODULE_3_angular_bootstrap_md_utils_facade_browser__["a" /* document */].getElementsByClassName("goog-te-combo")[0].value;
             this.themeSettings['siteLanguage'] = siteLang;
-            this.http.put('http://18.191.202.171:5687/api/userSetting/update', this.themeSettings).map(function (response) { return response.json(); }).subscribe(function (data) {
+            this.http.put('http://172.31.53.92:5687/api/userSetting/update', this.themeSettings).map(function (response) { return response.json(); }).subscribe(function (data) {
                 _this.changeGraphTheme.trigger_successMessagePopUp_filter('Your Theme Updated Successfully !');
             }, function (error) {
                 _this.changeGraphTheme.trigger_errorMessagePopUp_filter(error.error);
@@ -3195,7 +3195,7 @@ var ThemeHeaderComponent = /** @class */ (function () {
         var _this = this;
         console.log('User Theme');
         var tokenV = localStorage.getItem('userToken');
-        this.http.post('http://18.191.202.171:5687/api/userSetting/getUserData', { token: tokenV }).map(function (response) { return response.json(); }).subscribe(function (data) {
+        this.http.post('http://172.31.53.92:5687/api/userSetting/getUserData', { token: tokenV }).map(function (response) { return response.json(); }).subscribe(function (data) {
             _this.desktoplists = data.customizeColumns.desktop;
             _this.mobilelists = data.customizeColumns.mobile;
             _this.appList = data.customizeColumns.app;
@@ -3319,7 +3319,7 @@ module.exports = ".app-tv-chart-container_multi {\r\n\theight: calc(100vh - 80px
 /***/ "./src/app/main/tv-chart-container/tv-chart-container.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<!-- <div class=\"load_spinner\" *ngIf=\"showLoadSpinner\">\r\n  <span class=\"fa fa-spinner fa-spin fa-2x\"></span>\r\n</div> -->\r\n<div class=\"table-responsive\">\r\n  <table  id=\"coin_list_table\" class=\"table table-condensed table-bordered data-table \" style=\"white-space:nowrap;\">\r\n    <thead>\r\n      <th width=\"50px\">#</th>\r\n      <th width=\"100px\" *ngIf=\"resolutionColumn.coin\" (click)=\"sort('name');\">Coins\r\n        <span class=\"fa sort-icon\" *ngIf=\"key =='name'\" [ngClass]=\"{'fa-sort-up':reverseValue,'fa-sort-down':!reverseValue}\"></span>\r\n      </th>\r\n      <th *ngIf=\"resolutionColumn.price\" (click)=\"sort('price')\" style=\"width:130px;\">Price\r\n        <span class=\"fa sort-icon\" *ngIf=\"key =='price'\" [ngClass]=\"{'fa-sort-up':reverseValue,'fa-sort-down':!reverseValue}\"></span>\r\n      </th>\r\n      <th *ngIf=\"resolutionColumn.expand\">Graph</th>\r\n      <th *ngIf=\"resolutionColumn.favourite\" style=\"width:40px;pointer-events:none;\">\r\n        <span class=\"fa fa-star fa-2x colorYellowStar\"></span>\r\n      </th>\r\n      <th *ngIf=\"resolutionColumn.dayChange\" (click)=\"sort('dayPrice')\" style=\"width:130px;\">24 HR (%)\r\n        <span class=\"fa sort-icon\" *ngIf=\"key =='dayPrice'\" [ngClass]=\"{'fa-sort-up':reverseValue,'fa-sort-down':!reverseValue}\"></span>\r\n      </th>\r\n      <th *ngIf=\"resolutionColumn.weaklyChange\" (click)=\"sort('weeklyChange')\" style=\"width:130px;\">7 Days (%)\r\n        <span class=\"fa sort-icon\" *ngIf=\"key =='weeklyChange'\" [ngClass]=\"{'fa-sort-up':reverseValue,'fa-sort-down':!reverseValue}\"></span>\r\n      </th>\r\n      <th *ngIf=\"resolutionColumn.dayVolume\" style=\"width:100px;\" (click)=\"sort('dayVolume')\"> Volume (24H)\r\n        <span class=\"fa sort-icon\" *ngIf=\"key =='dayVolume'\" [ngClass]=\"{'fa-sort-up':reverseValue,'fa-sort-down':!reverseValue}\"></span>\r\n      </th>\r\n      <th *ngIf=\"resolutionColumn.marketCap\" (click)=\"sort('marketCapValue')\">Market CAP\r\n        <span class=\"fa sort-icon\" *ngIf=\"key =='marketCapValue'\" [ngClass]=\"{'fa-sort-up':reverseValue,'fa-sort-down':!reverseValue}\"></span>\r\n      </th>\r\n      <th *ngIf=\"resolutionColumn.dayHighLow\" (click)=\"sort('highestPrice')\">24 HR High / Low\r\n        <span class=\"fa sort-icon\" *ngIf=\"key =='highestPrice'\" [ngClass]=\"{'fa-sort-up':reverseValue,'fa-sort-down':!reverseValue}\"></span>\r\n      </th>\r\n      <!-- <th (click)=\"sort('lowestPrice')\">24 LOW HIGH  <span class=\"fa sort-icon\" *ngIf=\"key =='lowestPrice'\" [ngClass]=\"{'fa-sort-up':reverseValue,'fa-sort-down':!reverseValue}\"></span></th> -->\r\n    </thead>\r\n\r\n    <tbody *ngFor=\"let coins of favCoinsList; let i = index\" class=\"favourite_coins\">\r\n      <tr style=\"cursor:pointer\">\r\n        <td>{{i+1}}</td>\r\n        <td *ngIf=\"resolutionColumn.coin\" (click)=\"coinDetails(coins.pair)\" class=\"coinBlock\">\r\n          <span class=\"notranslate\">\r\n            <img class=\"coinLogo\" src=\"http://18.191.202.171:5687/upload/{{coins.image}}\"> {{coins.name }}</span>\r\n        </td>\r\n        <td *ngIf=\"resolutionColumn.price\" (click)=\"coinDetails(coins.pair)\" class=\"column-price\" [ngClass]=\"{'colorGreen': coins.priceStatus === 'true','colorRed': coins.priceStatus === 'false'}\">\r\n          <b>{{coins.price * currencyValue | number:'.0-2'}}</b>\r\n          <span class=\"fa upDownSymbol\" [ngClass]=\"{'arrow-up': coins.priceStatus === 'true','arrow-down': coins.priceStatus === 'false'}\"></span>\r\n        </td>\r\n        <td *ngIf=\"resolutionColumn.expand\" (click)=\"expandGraph(event,i,coins.pair,coins.name,'tv_chart_containerFav','expandFav')\" class=\"graphTabledata\">\r\n          <i class=\"fa fa-arrows-alt\" ></i>\r\n        </td>\r\n        <td *ngIf=\"resolutionColumn.favourite\">\r\n          <!-- <input type=\"checkbox\" class=\"favorite_coin\" (click)=\"favCoinFunctionality(coins.pair,'fav')\" checked > -->\r\n          <span class=\"fa fa-star fa-2x colorYellowStar\" (click)=\"favCoinFunctionality(coins.pair,'fav',coins)\"></span>\r\n        </td>\r\n        <td *ngIf=\"resolutionColumn.dayChange\" (click)=\"coinDetails(coins.pair)\" class=\"\" [ngClass]=\"{'colorGreen': coins.dayPriceStatus === 'true','colorRed': coins.dayPriceStatus === 'false'}\">{{coins.dayPrice *currencyValue | number:'.0-2'}} ({{coins.dayPricePercent | number:'.0-2'}})\r\n          <span class=\"fa upDownSymbol\" [ngClass]=\"{'arrow-up': coins.dayPriceStatus === 'true','arrow-down': coins.dayPriceStatus === 'false'}\"></span>\r\n        </td>\r\n        <td *ngIf=\"resolutionColumn.weaklyChange\" (click)=\"coinDetails(coins.pair)\" class=\" \" [ngClass]=\"{'colorGreen': coins.weeklyChangeStatus === 'true','colorRed': coins.weeklyChangeStatus === 'false'}\">{{coins.weeklyChange * currencyValue | number:'.0-2'}} ({{coins.weeklyChangePercent | number:'.0-2'}})\r\n          <span class=\"fa upDownSymbol\" [ngClass]=\"{'arrow-up': coins.weeklyChangeStatus === 'true','arrow-down': coins.weeklyChangeStatus === 'false'}\"></span>\r\n        </td>\r\n        <td *ngIf=\"resolutionColumn.dayVolume\" (click)=\"coinDetails(coins.pair)\">{{coins.dayVolume * currencyValue | number:'.0-2'}}</td>\r\n        <td *ngIf=\"resolutionColumn.marketCap\" (click)=\"coinDetails(coins.pair)\">{{coins.marketCapValue * currencyValue | number:'.0-2'}}</td>\r\n        <td *ngIf=\"resolutionColumn.dayHighLow\" (click)=\"coinDetails(coins.pair)\">{{coins.highestPrice * currencyValue | number:'.0-2'}} / {{coins.lowestPrice * currencyValue | number:'.0-2'}}</td>\r\n      </tr>\r\n      <tr id=\"expandFav{{i}}\" class=\"hidingNow\">\r\n        <td colspan=\"11\" height=\"300px;\" width=\"100%\">\r\n          <!-- <div class=\"app-tv-chart-container app-tv-chart-container_multi\" id=\"tv_chart_containerFav{{i}}\"></div>\r\n          <!-- <div class=\"app-tv-chart-container\" id=\"tv_chart_container2{{i}}\"></div>\r\n          <div class=\"col-md-2 float-right chart_rgt_cont\">\r\n            <ul>\r\n              <li>\r\n                <label>Currency</label>\r\n                <div class=\"in_sel-term\">\r\n                  <select>\r\n                    <option>USD</option>\r\n                  </select>\r\n                </div>\r\n              </li>\r\n              <li>\r\n                <label>Low/High 24h</label>\r\n                <span>{{coins.highestPrice * currencyValue | number:'.0-2'}} / {{coins.lowestPrice * currencyValue | number:'.0-2'}}</span>\r\n              </li>\r\n            </ul>\r\n          </div>\r\n        </td> -->\r\n        <label class=\"typeChangeBtn \"><button  class=\" btn active\"  (click)=\"changeType('candlestick',coins.pair);\">Candlestick</button></label>\r\n        <!-- <label class=\"typeChangeBtn\"><button class=\" btn\" [ngClass]=\"{'active' : btnActive  == 'ohlc' }\" (click)=\"changeType('ohlc',coins.pair);\">OHLC</button></label> -->\r\n        <label class=\"typeChangeBtn\"><button class=\" btn\"  (click)=\"changeType('line',coins.pair);\">Line</button></label>\r\n        <!-- <label class=\"typeChangeBtn\"><button class=\" btn\" [ngClass]=\"{'active' : btnActive  == 'advanced' }\" (click)=\"changeType('advanced',coins.pair);\">Advanced</button></label> -->\r\n        <div id=\"candleStick{{i}}\" [ngStyle]=\"{'background-color': backgroundColor  }\"  [style.height.px]=\"350\" style=\"width:95%;float:left;margin-right:10px;\" ></div>\r\n           <!-- <div class=\"col-md-2 float-right chart_rgt_cont\">\r\n              <ul>\r\n                <li><label>Currency</label><div class=\"in_sel-term\"><select><option>USD</option></select></div></li>\r\n                <li><label>Low/High 24h</label><span>$0.08903-$0.09261</span></li>\r\n              </ul>\r\n          </div> -->\r\n           <!-- <div id=\"lineChart{{i}}\" [ngStyle]=\"{'background-color': backgroundColor  }\"  [style.height.px]=\"350\" style=\"width:48%;float:left;margin-right:10px;\" ></div> -->\r\n      </tr>\r\n    </tbody>\r\n    <tbody  *ngFor=\"let coins of coinList | filter: searchText ; let i = index \">\r\n      <tr style=\"cursor:pointer\">\r\n        <td>{{favCoinsList.length+i+1}}</td>\r\n        <td *ngIf=\"resolutionColumn.coin\" (click)=\"coinDetails(coins.pair)\" class=\"coinBlock\">\r\n          <span title=\"{{coins.pair}}\" class=\"notranslate\">\r\n            <img class=\"coinLogo\" src=\"http://18.191.202.171:5687/upload/{{coins.image}}\"> {{coins.name }}</span>\r\n        </td>\r\n        <td *ngIf=\"resolutionColumn.price\" (click)=\"coinDetails(coins.pair)\" class=\"column-price\" [ngClass]=\"{'colorGreen': coins.priceStatus === 'true','colorRed': coins.priceStatus === 'false'}\">\r\n          <b>{{coins.price * currencyValue | number:'.0-2'}}</b>\r\n          <span class=\"fa upDownSymbol\" [ngClass]=\"{'arrow-up': coins.priceStatus === 'true','arrow-down': coins.priceStatus === 'false'}\"></span>\r\n        </td>\r\n        <td *ngIf=\"resolutionColumn.expand\" (click)=\"expandGraph(event,favCoinsList.length+i,coins.pair,coins.name,'chart1div','expand')\" class=\"graphTabledata\">\r\n          <i class=\"fa fa-arrows-alt\" ></i>\r\n        </td>\r\n       <!--  <td *ngIf=\"resolutionColumn.expand\" (click)=\"expandGraph(event,favCoinsList.length+i,coins.pair,coins.name,'tv_chart_container','expand')\" class=\"graphTabledata\">\r\n            <i class=\"fa fa-arrows-alt\" ></i>\r\n          </td> -->\r\n        <td *ngIf=\"resolutionColumn.favourite\">\r\n          <span class=\"fa fa-star fa-2x colorWhiteStar\" (click)=\"favCoinFunctionality(coins.pair,'normal',coins)\"></span>\r\n          <!-- <input type=\"checkbox\" class=\"favorite_coin\"  [(ngModel)]=\"coins.checked\"> -->\r\n        </td>\r\n        <td *ngIf=\"resolutionColumn.dayChange\" (click)=\"coinDetails(coins.pair)\" class=\"\" [ngClass]=\"{'colorGreen': coins.dayPriceStatus === 'true','colorRed': coins.dayPriceStatus === 'false'}\">{{coins.dayPrice *currencyValue | number:'.0-2'}} ({{coins.dayPricePercent | number:'.0-2'}})\r\n          <span class=\"fa upDownSymbol\" [ngClass]=\"{'arrow-up': coins.dayPriceStatus === 'true','arrow-down': coins.dayPriceStatus === 'false'}\"></span>\r\n        </td>\r\n        <td *ngIf=\"resolutionColumn.weaklyChange\" (click)=\"coinDetails(coins.pair)\" class=\" \" [ngClass]=\"{'colorGreen': coins.weeklyChangeStatus === 'true','colorRed': coins.weeklyChangeStatus === 'false'}\">{{coins.weeklyChange * currencyValue | number:'.0-2'}} ({{coins.weeklyChangePercent | number:'.0-2'}})\r\n          <span class=\"fa upDownSymbol\" [ngClass]=\"{'arrow-up': coins.weeklyChangeStatus === 'true','arrow-down': coins.weeklyChangeStatus === 'false'}\"></span>\r\n        </td>\r\n        <td *ngIf=\"resolutionColumn.dayVolume\" (click)=\"coinDetails(coins.pair)\">{{coins.dayVolume * currencyValue | number:'.0-2'}}</td>\r\n        <td *ngIf=\"resolutionColumn.marketCap\" (click)=\"coinDetails(coins.pair)\">{{coins.marketCapValue * currencyValue | number:'.0-2'}}</td>\r\n        <td *ngIf=\"resolutionColumn.dayHighLow\" (click)=\"coinDetails(coins.pair)\">{{coins.highestPrice * currencyValue | number:'.0-2'}} / {{coins.lowestPrice * currencyValue | number:'.0-2'}}</td>\r\n      </tr>\r\n      <tr id=\"expand{{favCoinsList.length+i}}\" class=\"hidingNow\">\r\n        <td colspan=\"11\" height=\"300px;\" width=\"100%\">\r\n          <!-- <div class=\"app-tv-chart-container app-tv-chart-container_multi\" id=\"tv_chart_container{{favCoinsList.length+i}}\"></div>\r\n          <div class=\"col-md-2 float-right chart_rgt_cont\">\r\n            <ul>\r\n              <li>\r\n                <label>Currency</label>\r\n                <div class=\"in_sel-term\">\r\n                  <select>\r\n                    <option>USD</option>\r\n                  </select>\r\n                </div>\r\n              </li>\r\n              <li>\r\n                <label>Low/High 24h</label>\r\n                <span>{{coins.highestPrice * currencyValue | number:'.0-2'}} / {{coins.lowestPrice * currencyValue | number:'.0-2'}}</span>\r\n              </li>\r\n            </ul>\r\n          </div> -->\r\n          <label class=\"typeChangeBtn \"><button  class=\" btn active\"  (click)=\"changeType('candlestick',coins.pair);\">Candlestick</button></label>\r\n          <!-- <label class=\"typeChangeBtn\"><button class=\" btn\" [ngClass]=\"{'active' : btnActive  == 'ohlc' }\" (click)=\"changeType('ohlc' , favCoinsList.length+i);\">OHLC</button></label> -->\r\n          <label class=\"typeChangeBtn\"><button class=\" btn\"  (click)=\"changeType('line', coins.pair);\">Line</button></label>\r\n          <!-- <label class=\"typeChangeBtn\"><button class=\" btn\" [ngClass]=\"{'active' : btnActive  == 'advanced' }\" (click)=\"changeType('advanced', favCoinsList.length+i);\">Advanced</button></label> -->\r\n          <div id=\"candleStick{{favCoinsList.length+i}}\" [ngStyle]=\"{'background-color': backgroundColor  }\"  [style.height.px]=\"450\" style=\"width:99%;float:left;padding:10px;\" ></div>\r\n           <!-- <div class=\"col-md-2 float-right chart_rgt_cont\">\r\n              <ul>\r\n                <li><label>Currency</label><div class=\"in_sel-term\"><select><option>USD</option></select></div></li>\r\n                <li><label>Low/High 24h</label><span>$0.08903-$0.09261</span></li>\r\n              </ul>\r\n          </div> -->\r\n         <!-- <div class=\"buttons_perio_sel0\">\r\n            <button type=\"button\" [ngClass]=\"{'btnActive': isBtnClicked == 'onehour'}\" (click)=\"chartDispal(coins.pair,15,6,'onehour')\">1 Hour</button>\r\n            <button type=\"button\" [ngClass]=\"{'btnActive': isBtnClicked == 'sixhour'}\" (click)=\"chartDispal(coins.pair,30,5,'sixhour')\">6 Hour</button>\r\n            <button type=\"button\" [ngClass]=\"{'btnActive': isBtnClicked == 'oneweek'}\" (click)=\"chartDispal(coins.pair,30,100,'oneweek')\">1 Week</button>\r\n            <button type=\"button\" [ngClass]=\"{'btnActive': isBtnClicked == 'onemonth'}\" (click)=\"chartDispal(coins.pair,30,365,'onemonth')\">1 Month</button>\r\n            <button type=\"button\" [ngClass]=\"{'btnActive': isBtnClicked == 'oneyear'}\" (click)=\"chartDispal(coins.pair,30,365,'oneyear')\">1 Year</button>\r\n            <button type=\"button\" [ngClass]=\"{'btnActive': isBtnClicked == 'max'}\" (click)=\"chartDispal(coins.pair,30,365,'max')\">MAX</button>\r\n         </div> -->\r\n           <!-- <div id=\"lineChart{{favCoinsList.length+i}}\" [ngStyle]=\"{'background-color': backgroundColor  }\"  [style.height.px]=\"350\" style=\"width:48%;float:left;margin-right:10px;\" ></div> -->\r\n        </td>\r\n      </tr>\r\n    </tbody>\r\n  </table>\r\n  <div *ngIf=\"noData\" class=\"noDataFound\">No Data found!</div>\r\n</div>"
+module.exports = "<!-- <div class=\"load_spinner\" *ngIf=\"showLoadSpinner\">\r\n  <span class=\"fa fa-spinner fa-spin fa-2x\"></span>\r\n</div> -->\r\n<div class=\"table-responsive\">\r\n  <table  id=\"coin_list_table\" class=\"table table-condensed table-bordered data-table \" style=\"white-space:nowrap;\">\r\n    <thead>\r\n      <th width=\"50px\">#</th>\r\n      <th width=\"100px\" *ngIf=\"resolutionColumn.coin\" (click)=\"sort('name');\">Coins\r\n        <span class=\"fa sort-icon\" *ngIf=\"key =='name'\" [ngClass]=\"{'fa-sort-up':reverseValue,'fa-sort-down':!reverseValue}\"></span>\r\n      </th>\r\n      <th *ngIf=\"resolutionColumn.price\" (click)=\"sort('price')\" style=\"width:130px;\">Price\r\n        <span class=\"fa sort-icon\" *ngIf=\"key =='price'\" [ngClass]=\"{'fa-sort-up':reverseValue,'fa-sort-down':!reverseValue}\"></span>\r\n      </th>\r\n      <th *ngIf=\"resolutionColumn.expand\">Graph</th>\r\n      <th *ngIf=\"resolutionColumn.favourite\" style=\"width:40px;pointer-events:none;\">\r\n        <span class=\"fa fa-star fa-2x colorYellowStar\"></span>\r\n      </th>\r\n      <th *ngIf=\"resolutionColumn.dayChange\" (click)=\"sort('dayPrice')\" style=\"width:130px;\">24 HR (%)\r\n        <span class=\"fa sort-icon\" *ngIf=\"key =='dayPrice'\" [ngClass]=\"{'fa-sort-up':reverseValue,'fa-sort-down':!reverseValue}\"></span>\r\n      </th>\r\n      <th *ngIf=\"resolutionColumn.weaklyChange\" (click)=\"sort('weeklyChange')\" style=\"width:130px;\">7 Days (%)\r\n        <span class=\"fa sort-icon\" *ngIf=\"key =='weeklyChange'\" [ngClass]=\"{'fa-sort-up':reverseValue,'fa-sort-down':!reverseValue}\"></span>\r\n      </th>\r\n      <th *ngIf=\"resolutionColumn.dayVolume\" style=\"width:100px;\" (click)=\"sort('dayVolume')\"> Volume (24H)\r\n        <span class=\"fa sort-icon\" *ngIf=\"key =='dayVolume'\" [ngClass]=\"{'fa-sort-up':reverseValue,'fa-sort-down':!reverseValue}\"></span>\r\n      </th>\r\n      <th *ngIf=\"resolutionColumn.marketCap\" (click)=\"sort('marketCapValue')\">Market CAP\r\n        <span class=\"fa sort-icon\" *ngIf=\"key =='marketCapValue'\" [ngClass]=\"{'fa-sort-up':reverseValue,'fa-sort-down':!reverseValue}\"></span>\r\n      </th>\r\n      <th *ngIf=\"resolutionColumn.dayHighLow\" (click)=\"sort('highestPrice')\">24 HR High / Low\r\n        <span class=\"fa sort-icon\" *ngIf=\"key =='highestPrice'\" [ngClass]=\"{'fa-sort-up':reverseValue,'fa-sort-down':!reverseValue}\"></span>\r\n      </th>\r\n      <!-- <th (click)=\"sort('lowestPrice')\">24 LOW HIGH  <span class=\"fa sort-icon\" *ngIf=\"key =='lowestPrice'\" [ngClass]=\"{'fa-sort-up':reverseValue,'fa-sort-down':!reverseValue}\"></span></th> -->\r\n    </thead>\r\n\r\n    <tbody *ngFor=\"let coins of favCoinsList; let i = index\" class=\"favourite_coins\">\r\n      <tr style=\"cursor:pointer\">\r\n        <td>{{i+1}}</td>\r\n        <td *ngIf=\"resolutionColumn.coin\" (click)=\"coinDetails(coins.pair)\" class=\"coinBlock\">\r\n          <span class=\"notranslate\">\r\n            <img class=\"coinLogo\" src=\"http://172.31.53.92:5687/upload/{{coins.image}}\"> {{coins.name }}</span>\r\n        </td>\r\n        <td *ngIf=\"resolutionColumn.price\" (click)=\"coinDetails(coins.pair)\" class=\"column-price\" [ngClass]=\"{'colorGreen': coins.priceStatus === 'true','colorRed': coins.priceStatus === 'false'}\">\r\n          <b>{{coins.price * currencyValue | number:'.0-2'}}</b>\r\n          <span class=\"fa upDownSymbol\" [ngClass]=\"{'arrow-up': coins.priceStatus === 'true','arrow-down': coins.priceStatus === 'false'}\"></span>\r\n        </td>\r\n        <td *ngIf=\"resolutionColumn.expand\" (click)=\"expandGraph(event,i,coins.pair,coins.name,'tv_chart_containerFav','expandFav')\" class=\"graphTabledata\">\r\n          <i class=\"fa fa-arrows-alt\" ></i>\r\n        </td>\r\n        <td *ngIf=\"resolutionColumn.favourite\">\r\n          <!-- <input type=\"checkbox\" class=\"favorite_coin\" (click)=\"favCoinFunctionality(coins.pair,'fav')\" checked > -->\r\n          <span class=\"fa fa-star fa-2x colorYellowStar\" (click)=\"favCoinFunctionality(coins.pair,'fav',coins)\"></span>\r\n        </td>\r\n        <td *ngIf=\"resolutionColumn.dayChange\" (click)=\"coinDetails(coins.pair)\" class=\"\" [ngClass]=\"{'colorGreen': coins.dayPriceStatus === 'true','colorRed': coins.dayPriceStatus === 'false'}\">{{coins.dayPrice *currencyValue | number:'.0-2'}} ({{coins.dayPricePercent | number:'.0-2'}})\r\n          <span class=\"fa upDownSymbol\" [ngClass]=\"{'arrow-up': coins.dayPriceStatus === 'true','arrow-down': coins.dayPriceStatus === 'false'}\"></span>\r\n        </td>\r\n        <td *ngIf=\"resolutionColumn.weaklyChange\" (click)=\"coinDetails(coins.pair)\" class=\" \" [ngClass]=\"{'colorGreen': coins.weeklyChangeStatus === 'true','colorRed': coins.weeklyChangeStatus === 'false'}\">{{coins.weeklyChange * currencyValue | number:'.0-2'}} ({{coins.weeklyChangePercent | number:'.0-2'}})\r\n          <span class=\"fa upDownSymbol\" [ngClass]=\"{'arrow-up': coins.weeklyChangeStatus === 'true','arrow-down': coins.weeklyChangeStatus === 'false'}\"></span>\r\n        </td>\r\n        <td *ngIf=\"resolutionColumn.dayVolume\" (click)=\"coinDetails(coins.pair)\">{{coins.dayVolume * currencyValue | number:'.0-2'}}</td>\r\n        <td *ngIf=\"resolutionColumn.marketCap\" (click)=\"coinDetails(coins.pair)\">{{coins.marketCapValue * currencyValue | number:'.0-2'}}</td>\r\n        <td *ngIf=\"resolutionColumn.dayHighLow\" (click)=\"coinDetails(coins.pair)\">{{coins.highestPrice * currencyValue | number:'.0-2'}} / {{coins.lowestPrice * currencyValue | number:'.0-2'}}</td>\r\n      </tr>\r\n      <tr id=\"expandFav{{i}}\" class=\"hidingNow\">\r\n        <td colspan=\"11\" height=\"300px;\" width=\"100%\">\r\n          <!-- <div class=\"app-tv-chart-container app-tv-chart-container_multi\" id=\"tv_chart_containerFav{{i}}\"></div>\r\n          <!-- <div class=\"app-tv-chart-container\" id=\"tv_chart_container2{{i}}\"></div>\r\n          <div class=\"col-md-2 float-right chart_rgt_cont\">\r\n            <ul>\r\n              <li>\r\n                <label>Currency</label>\r\n                <div class=\"in_sel-term\">\r\n                  <select>\r\n                    <option>USD</option>\r\n                  </select>\r\n                </div>\r\n              </li>\r\n              <li>\r\n                <label>Low/High 24h</label>\r\n                <span>{{coins.highestPrice * currencyValue | number:'.0-2'}} / {{coins.lowestPrice * currencyValue | number:'.0-2'}}</span>\r\n              </li>\r\n            </ul>\r\n          </div>\r\n        </td> -->\r\n        <label class=\"typeChangeBtn \"><button  class=\" btn active\"  (click)=\"changeType('candlestick',coins.pair);\">Candlestick</button></label>\r\n        <!-- <label class=\"typeChangeBtn\"><button class=\" btn\" [ngClass]=\"{'active' : btnActive  == 'ohlc' }\" (click)=\"changeType('ohlc',coins.pair);\">OHLC</button></label> -->\r\n        <label class=\"typeChangeBtn\"><button class=\" btn\"  (click)=\"changeType('line',coins.pair);\">Line</button></label>\r\n        <!-- <label class=\"typeChangeBtn\"><button class=\" btn\" [ngClass]=\"{'active' : btnActive  == 'advanced' }\" (click)=\"changeType('advanced',coins.pair);\">Advanced</button></label> -->\r\n        <div id=\"candleStick{{i}}\" [ngStyle]=\"{'background-color': backgroundColor  }\"  [style.height.px]=\"350\" style=\"width:95%;float:left;margin-right:10px;\" ></div>\r\n           <!-- <div class=\"col-md-2 float-right chart_rgt_cont\">\r\n              <ul>\r\n                <li><label>Currency</label><div class=\"in_sel-term\"><select><option>USD</option></select></div></li>\r\n                <li><label>Low/High 24h</label><span>$0.08903-$0.09261</span></li>\r\n              </ul>\r\n          </div> -->\r\n           <!-- <div id=\"lineChart{{i}}\" [ngStyle]=\"{'background-color': backgroundColor  }\"  [style.height.px]=\"350\" style=\"width:48%;float:left;margin-right:10px;\" ></div> -->\r\n      </tr>\r\n    </tbody>\r\n    <tbody  *ngFor=\"let coins of coinList | filter: searchText ; let i = index \">\r\n      <tr style=\"cursor:pointer\">\r\n        <td>{{favCoinsList.length+i+1}}</td>\r\n        <td *ngIf=\"resolutionColumn.coin\" (click)=\"coinDetails(coins.pair)\" class=\"coinBlock\">\r\n          <span title=\"{{coins.pair}}\" class=\"notranslate\">\r\n            <img class=\"coinLogo\" src=\"http://172.31.53.92:5687/upload/{{coins.image}}\"> {{coins.name }}</span>\r\n        </td>\r\n        <td *ngIf=\"resolutionColumn.price\" (click)=\"coinDetails(coins.pair)\" class=\"column-price\" [ngClass]=\"{'colorGreen': coins.priceStatus === 'true','colorRed': coins.priceStatus === 'false'}\">\r\n          <b>{{coins.price * currencyValue | number:'.0-2'}}</b>\r\n          <span class=\"fa upDownSymbol\" [ngClass]=\"{'arrow-up': coins.priceStatus === 'true','arrow-down': coins.priceStatus === 'false'}\"></span>\r\n        </td>\r\n        <td *ngIf=\"resolutionColumn.expand\" (click)=\"expandGraph(event,favCoinsList.length+i,coins.pair,coins.name,'chart1div','expand')\" class=\"graphTabledata\">\r\n          <i class=\"fa fa-arrows-alt\" ></i>\r\n        </td>\r\n       <!--  <td *ngIf=\"resolutionColumn.expand\" (click)=\"expandGraph(event,favCoinsList.length+i,coins.pair,coins.name,'tv_chart_container','expand')\" class=\"graphTabledata\">\r\n            <i class=\"fa fa-arrows-alt\" ></i>\r\n          </td> -->\r\n        <td *ngIf=\"resolutionColumn.favourite\">\r\n          <span class=\"fa fa-star fa-2x colorWhiteStar\" (click)=\"favCoinFunctionality(coins.pair,'normal',coins)\"></span>\r\n          <!-- <input type=\"checkbox\" class=\"favorite_coin\"  [(ngModel)]=\"coins.checked\"> -->\r\n        </td>\r\n        <td *ngIf=\"resolutionColumn.dayChange\" (click)=\"coinDetails(coins.pair)\" class=\"\" [ngClass]=\"{'colorGreen': coins.dayPriceStatus === 'true','colorRed': coins.dayPriceStatus === 'false'}\">{{coins.dayPrice *currencyValue | number:'.0-2'}} ({{coins.dayPricePercent | number:'.0-2'}})\r\n          <span class=\"fa upDownSymbol\" [ngClass]=\"{'arrow-up': coins.dayPriceStatus === 'true','arrow-down': coins.dayPriceStatus === 'false'}\"></span>\r\n        </td>\r\n        <td *ngIf=\"resolutionColumn.weaklyChange\" (click)=\"coinDetails(coins.pair)\" class=\" \" [ngClass]=\"{'colorGreen': coins.weeklyChangeStatus === 'true','colorRed': coins.weeklyChangeStatus === 'false'}\">{{coins.weeklyChange * currencyValue | number:'.0-2'}} ({{coins.weeklyChangePercent | number:'.0-2'}})\r\n          <span class=\"fa upDownSymbol\" [ngClass]=\"{'arrow-up': coins.weeklyChangeStatus === 'true','arrow-down': coins.weeklyChangeStatus === 'false'}\"></span>\r\n        </td>\r\n        <td *ngIf=\"resolutionColumn.dayVolume\" (click)=\"coinDetails(coins.pair)\">{{coins.dayVolume * currencyValue | number:'.0-2'}}</td>\r\n        <td *ngIf=\"resolutionColumn.marketCap\" (click)=\"coinDetails(coins.pair)\">{{coins.marketCapValue * currencyValue | number:'.0-2'}}</td>\r\n        <td *ngIf=\"resolutionColumn.dayHighLow\" (click)=\"coinDetails(coins.pair)\">{{coins.highestPrice * currencyValue | number:'.0-2'}} / {{coins.lowestPrice * currencyValue | number:'.0-2'}}</td>\r\n      </tr>\r\n      <tr id=\"expand{{favCoinsList.length+i}}\" class=\"hidingNow\">\r\n        <td colspan=\"11\" height=\"300px;\" width=\"100%\">\r\n          <!-- <div class=\"app-tv-chart-container app-tv-chart-container_multi\" id=\"tv_chart_container{{favCoinsList.length+i}}\"></div>\r\n          <div class=\"col-md-2 float-right chart_rgt_cont\">\r\n            <ul>\r\n              <li>\r\n                <label>Currency</label>\r\n                <div class=\"in_sel-term\">\r\n                  <select>\r\n                    <option>USD</option>\r\n                  </select>\r\n                </div>\r\n              </li>\r\n              <li>\r\n                <label>Low/High 24h</label>\r\n                <span>{{coins.highestPrice * currencyValue | number:'.0-2'}} / {{coins.lowestPrice * currencyValue | number:'.0-2'}}</span>\r\n              </li>\r\n            </ul>\r\n          </div> -->\r\n          <label class=\"typeChangeBtn \"><button  class=\" btn active\"  (click)=\"changeType('candlestick',coins.pair);\">Candlestick</button></label>\r\n          <!-- <label class=\"typeChangeBtn\"><button class=\" btn\" [ngClass]=\"{'active' : btnActive  == 'ohlc' }\" (click)=\"changeType('ohlc' , favCoinsList.length+i);\">OHLC</button></label> -->\r\n          <label class=\"typeChangeBtn\"><button class=\" btn\"  (click)=\"changeType('line', coins.pair);\">Line</button></label>\r\n          <!-- <label class=\"typeChangeBtn\"><button class=\" btn\" [ngClass]=\"{'active' : btnActive  == 'advanced' }\" (click)=\"changeType('advanced', favCoinsList.length+i);\">Advanced</button></label> -->\r\n          <div id=\"candleStick{{favCoinsList.length+i}}\" [ngStyle]=\"{'background-color': backgroundColor  }\"  [style.height.px]=\"450\" style=\"width:99%;float:left;padding:10px;\" ></div>\r\n           <!-- <div class=\"col-md-2 float-right chart_rgt_cont\">\r\n              <ul>\r\n                <li><label>Currency</label><div class=\"in_sel-term\"><select><option>USD</option></select></div></li>\r\n                <li><label>Low/High 24h</label><span>$0.08903-$0.09261</span></li>\r\n              </ul>\r\n          </div> -->\r\n         <!-- <div class=\"buttons_perio_sel0\">\r\n            <button type=\"button\" [ngClass]=\"{'btnActive': isBtnClicked == 'onehour'}\" (click)=\"chartDispal(coins.pair,15,6,'onehour')\">1 Hour</button>\r\n            <button type=\"button\" [ngClass]=\"{'btnActive': isBtnClicked == 'sixhour'}\" (click)=\"chartDispal(coins.pair,30,5,'sixhour')\">6 Hour</button>\r\n            <button type=\"button\" [ngClass]=\"{'btnActive': isBtnClicked == 'oneweek'}\" (click)=\"chartDispal(coins.pair,30,100,'oneweek')\">1 Week</button>\r\n            <button type=\"button\" [ngClass]=\"{'btnActive': isBtnClicked == 'onemonth'}\" (click)=\"chartDispal(coins.pair,30,365,'onemonth')\">1 Month</button>\r\n            <button type=\"button\" [ngClass]=\"{'btnActive': isBtnClicked == 'oneyear'}\" (click)=\"chartDispal(coins.pair,30,365,'oneyear')\">1 Year</button>\r\n            <button type=\"button\" [ngClass]=\"{'btnActive': isBtnClicked == 'max'}\" (click)=\"chartDispal(coins.pair,30,365,'max')\">MAX</button>\r\n         </div> -->\r\n           <!-- <div id=\"lineChart{{favCoinsList.length+i}}\" [ngStyle]=\"{'background-color': backgroundColor  }\"  [style.height.px]=\"350\" style=\"width:48%;float:left;margin-right:10px;\" ></div> -->\r\n        </td>\r\n      </tr>\r\n    </tbody>\r\n  </table>\r\n  <div *ngIf=\"noData\" class=\"noDataFound\">No Data found!</div>\r\n</div>"
 
 /***/ }),
 
@@ -3543,7 +3543,7 @@ var TvChartContainerComponent = /** @class */ (function () {
         this.toolsBg = this.graphThemeColor.toolsBg;
         if (localStorage.getItem('userToken')) {
             var tokenV = localStorage.getItem('userToken');
-            this.http.post('http://18.191.202.171:5687/api/userSetting/getUserData', { token: tokenV }).map(function (response) { return response.json(); }).subscribe(function (data) {
+            this.http.post('http://172.31.53.92:5687/api/userSetting/getUserData', { token: tokenV }).map(function (response) { return response.json(); }).subscribe(function (data) {
                 _this.changeGraphTheme.customizeColumns_filter(data.customizeColumns);
                 _this.customizeColUpdate(data.customizeColumns);
                 _this.setIntervalTime = data.refreshRate + '000';
@@ -3560,7 +3560,7 @@ var TvChartContainerComponent = /** @class */ (function () {
         var _this = this;
         var tokenV = localStorage.getItem('userToken');
         if (tokenV && this.clearInterval) {
-            this.subscriptionOfHttp = this.http.post('http://18.191.202.171:5687/api/coins/getFavourites', { token: tokenV }).map(function (response) { return response.json(); }).subscribe(function (data) {
+            this.subscriptionOfHttp = this.http.post('http://172.31.53.92:5687/api/coins/getFavourites', { token: tokenV }).map(function (response) { return response.json(); }).subscribe(function (data) {
                 if (_this.clearInterval) {
                     if (_this.favCoinsList.length > 0) {
                         _this.noData = false;
@@ -3579,7 +3579,7 @@ var TvChartContainerComponent = /** @class */ (function () {
                 }
             });
             var toL = this.coinList.length > 0 ? this.coinList.length : 20;
-            this.subscriptionOfHttp = this.http.post('http://18.191.202.171:5687/api/coins/getCoins', { from: 0, to: toL, token: tokenV }).map(function (response) { return response.json(); }).subscribe(function (data) {
+            this.subscriptionOfHttp = this.http.post('http://172.31.53.92:5687/api/coins/getCoins', { from: 0, to: toL, token: tokenV }).map(function (response) { return response.json(); }).subscribe(function (data) {
                 if (_this.clearInterval) {
                     if (_this.coinList.length > 0 && _this.clearInterval) {
                         _this.noData = false;
@@ -3604,7 +3604,7 @@ var TvChartContainerComponent = /** @class */ (function () {
         if (!localStorage.getItem('userToken') && this.clearInterval) {
             var toL = this.coinList.length > 0 ? this.coinList.length : 20;
             console.log(this.sortingKey);
-            var request = this.http.post('http://18.191.202.171:5687/exchange/getusd', { from: 0, to: toL, sort: { key: this.sortingKey, value: this.reverse } }).map(function (response) { return response.json(); }).subscribe(function (data) {
+            var request = this.http.post('http://172.31.53.92:5687/exchange/getusd', { from: 0, to: toL, sort: { key: this.sortingKey, value: this.reverse } }).map(function (response) { return response.json(); }).subscribe(function (data) {
                 if (_this.clearInterval) {
                     _this.getallCoins = data;
                     if (data.length == 0) {
@@ -3749,7 +3749,7 @@ var TvChartContainerComponent = /** @class */ (function () {
             if (elementExp.contains('fa-arrows-alt')) {
                 elementExp.add('fa-arrows');
                 elementExp.remove('fa-arrows-alt');
-                this.http.post('http://18.191.202.171:5687/exchange/getChart', { pair: coinToken, interval: 30, range: 100 }).map(function (response) { return response.json(); }).subscribe(function (data) {
+                this.http.post('http://172.31.53.92:5687/exchange/getChart', { pair: coinToken, interval: 30, range: 100 }).map(function (response) { return response.json(); }).subscribe(function (data) {
                     console.log(data);
                     _this.themeDo(i, data, coinToken);
                     _this.barsData = data;
@@ -3780,7 +3780,7 @@ var TvChartContainerComponent = /** @class */ (function () {
         else {
             this.coinList = [];
             var toL = this.coinList.length > 0 ? this.coinList.length : 20;
-            this.http.post('http://18.191.202.171:5687/exchange/getusd', { from: 0, to: toL, sort: { key: this.sortingKey, value: this.reverse } }).map(function (response) { return response.json(); }).subscribe(function (data) {
+            this.http.post('http://172.31.53.92:5687/exchange/getusd', { from: 0, to: toL, sort: { key: this.sortingKey, value: this.reverse } }).map(function (response) { return response.json(); }).subscribe(function (data) {
                 _this.coinList = [];
                 _this.coinList = data;
                 Object(__WEBPACK_IMPORTED_MODULE_8_timers__["setInterval"])(function () {
@@ -3829,7 +3829,7 @@ var TvChartContainerComponent = /** @class */ (function () {
                 jQuery.ajax({
                     method: 'POST',
                     async: true,
-                    url: 'http://18.191.202.171:5687/exchange/getChart',
+                    url: 'http://172.31.53.92:5687/exchange/getChart',
                     data: { pair: coinToken },
                     success: function (response) {
                         console.log(response);
@@ -3848,7 +3848,7 @@ var TvChartContainerComponent = /** @class */ (function () {
                     jQuery.ajax({
                         method: 'POST',
                         async: true,
-                        url: 'http://18.191.202.171:5687/exchange/getLastSecData',
+                        url: 'http://172.31.53.92:5687/exchange/getLastSecData',
                         data: { pair: coinToken },
                         success: function (response) {
                             onRealtimeCallback(parseJSONorNot(response[0]));
@@ -3872,7 +3872,7 @@ var TvChartContainerComponent = /** @class */ (function () {
             jQuery.ajax({
                 method: 'POST',
                 async: true,
-                url: 'http://18.191.202.171:5687/exchange/getChart',
+                url: 'http://172.31.53.92:5687/exchange/getChart',
                 data: { pair: coinToken },
                 success: function (response) {
                     return response;
@@ -4049,7 +4049,7 @@ var TvChartContainerComponent = /** @class */ (function () {
         var _this = this;
         if (localStorage.getItem('userToken')) {
             var tokenV = localStorage.getItem('userToken');
-            this.http.put('http://18.191.202.171:5687/api/userSetting/update', { favourites: [pair], token: tokenV }).map(function (response) { return response.json(); }).
+            this.http.put('http://172.31.53.92:5687/api/userSetting/update', { favourites: [pair], token: tokenV }).map(function (response) { return response.json(); }).
                 subscribe(function (data) {
                 var message;
                 if (type == 'normal') {
@@ -4124,12 +4124,12 @@ var TvChartContainerComponent = /** @class */ (function () {
     };
     TvChartContainerComponent.prototype.getUserCoins = function (tokenV) {
         var _this = this;
-        this.subscriptionOfHttp = this.http.post('http://18.191.202.171:5687/api/coins/getFavourites', { token: tokenV }).map(function (response) { return response.json(); }).subscribe(function (data) {
+        this.subscriptionOfHttp = this.http.post('http://172.31.53.92:5687/api/coins/getFavourites', { token: tokenV }).map(function (response) { return response.json(); }).subscribe(function (data) {
             _this.favCoinsList = data;
         }, function (err) {
             _this.favCoinsList = [];
         });
-        this.subscriptionOfHttp = this.http.post('http://18.191.202.171:5687/api/coins/getCoins', { token: tokenV }).map(function (response) { return response.json(); }).subscribe(function (data) {
+        this.subscriptionOfHttp = this.http.post('http://172.31.53.92:5687/api/coins/getCoins', { token: tokenV }).map(function (response) { return response.json(); }).subscribe(function (data) {
             _this.coinList = data;
             console.log(JSON.stringify(data));
         }, function (err) {
@@ -4178,11 +4178,11 @@ var TvChartContainerComponent = /** @class */ (function () {
         var _this = this;
         if ((__WEBPACK_IMPORTED_MODULE_7_angular_bootstrap_md_utils_facade_browser__["c" /* window */].innerHeight + __WEBPACK_IMPORTED_MODULE_7_angular_bootstrap_md_utils_facade_browser__["c" /* window */].scrollY) >= __WEBPACK_IMPORTED_MODULE_7_angular_bootstrap_md_utils_facade_browser__["a" /* document */].body.offsetHeight) {
             if (localStorage.getItem('userToken')) {
-                this.url = 'http://18.191.202.171:5687/coins/getCoins';
+                this.url = 'http://172.31.53.92:5687/coins/getCoins';
                 var tokenV = localStorage.getItem('userToken');
             }
             else {
-                this.url = 'http://18.191.202.171:5687/exchange/getusd';
+                this.url = 'http://172.31.53.92:5687/exchange/getusd';
             }
             this.showLoadSpinner = true;
             this.subscriptionOfHttp = this.http.post(this.url, { from: this.coinList.length + 1, to: this.coinList.length + 21, token: localStorage.getItem('userToken') ? localStorage.getItem('userToken') : '' }).map(function (response) { return response.json(); }).subscribe(function (data) {
@@ -4395,7 +4395,7 @@ var TvChartContainerComponent = /** @class */ (function () {
             this.amchartVariable[coinToken].zoomOut();
         }
         else {
-            this.http.post('http://18.191.202.171:5687/exchange/getChart', { pair: coinToken, interval: intervalTime, range: rangeVal }).map(function (response) { return response.json(); }).subscribe(function (data) {
+            this.http.post('http://172.31.53.92:5687/exchange/getChart', { pair: coinToken, interval: intervalTime, range: rangeVal }).map(function (response) { return response.json(); }).subscribe(function (data) {
                 _this.amchartVariable[coinToken][btn] = data;
                 _this.amchartVariable[coinToken].dataProvider = [];
                 _this.amchartVariable[coinToken].dataSets[0].dataProvider = data;
@@ -4410,7 +4410,7 @@ var TvChartContainerComponent = /** @class */ (function () {
     TvChartContainerComponent.prototype.AutoUpdateOfChart = function () {
         var _this = this;
         var _loop_3 = function (propt) {
-            this_3.http.post('http://18.191.202.171:5687/exchange/getLastSecData', { pair: propt }).map(function (response) { return response.json(); }).subscribe(function (data) {
+            this_3.http.post('http://172.31.53.92:5687/exchange/getLastSecData', { pair: propt }).map(function (response) { return response.json(); }).subscribe(function (data) {
                 // this.chartDataProvider.push(data);
                 var k = _this.AmCharts;
                 data[0]['date'] = new Date().toISOString();
