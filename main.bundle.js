@@ -3801,12 +3801,7 @@ var TvChartContainerComponent = /** @class */ (function () {
             var upData = void 0;
             var toL = this.coinList.length > 0 ? this.coinList.length : 20;
             console.log(this.sortingKey);
-            if (this.isAdvFilter) {
-                upData = { filter: this.advFilter, from: 0, to: toL, sort: { key: this.sortingKey, value: this.reverse } };
-            }
-            else {
-                var upData_1 = { from: 0, to: toL, sort: { key: this.sortingKey, value: this.reverse } };
-            }
+            upData = { from: 0, to: toL, sort: { key: this.sortingKey, value: this.reverse } };
             var request = this.http.post('http://54.165.36.80:5687/exchange/getusd', upData).map(function (response) { return response.json(); }).subscribe(function (data) {
                 if (_this.clearInterval) {
                     _this.getallCoins = data;
