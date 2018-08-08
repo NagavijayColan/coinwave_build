@@ -65,7 +65,7 @@ var AppRoutingModule = /** @class */ (function () {
     }
     AppRoutingModule = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["NgModule"])({
-            imports: [__WEBPACK_IMPORTED_MODULE_1__angular_router__["d" /* RouterModule */].forRoot(routes, { useHash: true })],
+            imports: [__WEBPACK_IMPORTED_MODULE_1__angular_router__["d" /* RouterModule */].forRoot(routes, { useHash: false })],
             exports: [__WEBPACK_IMPORTED_MODULE_1__angular_router__["d" /* RouterModule */]]
         })
     ], AppRoutingModule);
@@ -514,6 +514,8 @@ var CompDataSharingService = /** @class */ (function () {
         this.portFolio_clear = new __WEBPACK_IMPORTED_MODULE_2_rxjs_Subject__["b" /* Subject */]();
         this.clear_interval = new __WEBPACK_IMPORTED_MODULE_2_rxjs_Subject__["b" /* Subject */]();
         this.amchart_theme = new __WEBPACK_IMPORTED_MODULE_2_rxjs_Subject__["b" /* Subject */]();
+        this.advFilter = new __WEBPACK_IMPORTED_MODULE_2_rxjs_Subject__["b" /* Subject */]();
+        this.resetadvFilter = new __WEBPACK_IMPORTED_MODULE_2_rxjs_Subject__["b" /* Subject */]();
         this.exchange = new __WEBPACK_IMPORTED_MODULE_2_rxjs_Subject__["b" /* Subject */]();
         this.changeGraphTheme = new __WEBPACK_IMPORTED_MODULE_1_rxjs_BehaviorSubject__["BehaviorSubject"]("default message");
         this.currentMessage = this.changeGraphTheme.asObservable();
@@ -645,6 +647,18 @@ var CompDataSharingService = /** @class */ (function () {
     };
     CompDataSharingService.prototype.chnageTheme_of_amchart_listener = function () {
         return this.amchart_theme.asObservable();
+    };
+    CompDataSharingService.prototype.advancedFilter_filter = function (theme) {
+        this.advFilter.next(theme);
+    };
+    CompDataSharingService.prototype.advancedFilter_listener = function () {
+        return this.advFilter.asObservable();
+    };
+    CompDataSharingService.prototype.reset_advancedFilter_filter = function () {
+        this.resetadvFilter.next();
+    };
+    CompDataSharingService.prototype.reset_advancedFilter_listener = function () {
+        return this.resetadvFilter.asObservable();
     };
     CompDataSharingService.prototype.changeMessage = function (message) {
         this.changeGraphTheme.next(message);
@@ -978,7 +992,7 @@ module.exports = ""
 /***/ "./src/app/main/content/coinlist/coinlist.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"sort_content_section\">\r\n  <div class=\"container\">\r\n\r\n    <div class=\"sort_with_table\">\r\n\r\n      <div class=\"col-xs-12 col-sm-12 col-md-2 col-lg-2 coin_list_lft\">\r\n        <div class=\"row \">\r\n          <div class=\"sort_by sort_by_block\">\r\n            <h1 class=\"sort_by_head\">Sort By\r\n              <i class=\"fa fa-chevron-down sort_by_icon\" aria-hidden=\"true\"></i>\r\n              <!--<img src=\"/assets/images/sort_arw.png\" class=\"sort_by_icon\"/>-->\r\n            </h1>\r\n            <ul>\r\n              <li (click)=\"sortTable('name')\">\r\n                <a>Coins</a>\r\n              </li>\r\n              <li (click)=\"sortTable('price')\">\r\n                <a>Price</a>\r\n              </li>\r\n              <li (click)=\"sortTable('dayPrice')\">\r\n                <a>24 Hr (%) </a>\r\n              </li>\r\n              <li (click)=\"sortTable('weeklyChange')\">\r\n                <a>7 Day (%) </a>\r\n              </li>\r\n              <li (click)=\"sortTable('dayVolume')\">\r\n                <a>Volume (24H) </a>\r\n              </li>\r\n\r\n              <li (click)=\"sortTable('marketCapValue')\">\r\n                <a>Market Cap </a>\r\n              </li>\r\n              <li (click)=\"sortTable('highestPrice')\">\r\n                <a>24 Hr High/Low </a>\r\n              </li>\r\n            </ul>\r\n          </div>\r\n\r\n          <div class=\"sort_by\">\r\n            <h1 class=\"sort_by_head\">\r\n              <i class=\"fa fa-filter advance_filter float-left\" aria-hidden=\"true\"></i>\r\n              Advance\r\n              <span>Search Filters</span>\r\n             \r\n              <i class=\"fa float-right undosymbol mobileViewAdvFltr\" [ngClass]=\"{'fa-chevron-up' :  hideInMobileView == true , 'fa-chevron-down' : hideInMobileView == false }\" (click)=\"hideInMobileView = !hideInMobileView\"></i>\r\n              <i class=\"fa fa-undo float-right undosymbol\" (click)=\"resetAdvFilter()\"></i>\r\n            </h1>\r\n            <accordion id=\"advancedSearchFilter\" [closeOthers]=\"false\" *ngIf=\"hideInMobileView\">\r\n              <accordion-group heading=\"PRICE\" [isOpened]=\"true\">\r\n                <ion-range-slider #priceVal type=\"double\" [min]=\"0\" [max]=\"maxPrice\" from_min=\"0\" [from_max]=\"maxPrice\" from_shadow=\"false\"\r\n                  [to]=\"maxPrice\" to_min=\"0\" [to_max]=\"maxPrice\" to_shadow=\"true\" grid=\"true\" postfix=\" Price\" decorate_both=\"false\"\r\n                  (onChange)=\"priceFilter($event)\"></ion-range-slider>\r\n              </accordion-group>\r\n              <accordion-group heading=\"24 HR (%)\" [isOpened]=\"false\">\r\n                <ion-range-slider #dayChange type=\"double\" [min]=\"0\" max=\"100\" from_shadow=\"false\" to_shadow=\"true\" grid=\"true\" grid_num=\"4\"\r\n                  postfix=\" 24 HOUR CHANGE\" decorate_both=\"false\" (onChange)=\"dayfilter($event)\"></ion-range-slider>\r\n              </accordion-group>\r\n              <accordion-group heading=\"7 DAY (%)\" [isOpened]=\"false\">\r\n                <ion-range-slider #weeklyChange type=\"double\" [min]=\"0\" max=\"100\" to_shadow=\"true\" grid=\"true\" grid_num=\"4\" postfix=\" 7 DAY CHANGE\"\r\n                  decorate_both=\"false\" (onChange)=\"weeklyFilter($event)\"></ion-range-slider>\r\n\r\n              </accordion-group>\r\n              <accordion-group heading=\"VOLUME (24H)\" [isOpened]=\"false\">\r\n                <ion-range-slider #volume24H type=\"double\" [min]=\"0\" [max]=\"maxVolume\" from_min=\"0\" [from_max]=\"maxVolume\" from_shadow=\"false\"\r\n                [to]=\"maxVolume\" to_min=\"0\" [to_max]=\"maxVolume\" to_shadow=\"true\" grid=\"true\" postfix=\" Volume\" decorate_both=\"false\"\r\n                  (onChange)=\"dayVolumeFilter($event)\"></ion-range-slider>\r\n              </accordion-group>\r\n              <accordion-group heading=\"MARKET CAP\" [isOpened]=\"false\">\r\n                <ion-range-slider #marketCap type=\"double\" min=\"0\" [max]=\"marketCapVal\"  from_min=\"0\" [from_max]=\"marketCapVal\" from_shadow=\"false\" [to]=\"marketCapVal\"\r\n                  to_min=\"0\" [to_max]=\"marketCapVal\" to_shadow=\"true\" grid=\"true\" grid_num=\"4\" postfix=\" MARKET CAP\" decorate_both=\"false\"\r\n                  (onChange)=\"marketCapFilter($event)\"></ion-range-slider>\r\n              </accordion-group>\r\n            </accordion>\r\n          </div>\r\n          <div class=\"w-100\" *ngIf=\"hideInMobileView\">\r\n            <button class=\"pull-right advSearchBtn\" (click)=\"advancedSearchFilter()\">Search</button>\r\n          </div>\r\n          <app-advertisement class=\"sort_by_block\"></app-advertisement>\r\n        </div>\r\n      </div>\r\n\r\n      <div class=\"col-sm-12 col-xs-12 col-md-10 col-lg-10 rgt-coin-tab\">\r\n        <!-- <data-table-sort-expands></data-table-sort-expands> -->\r\n        <!-- <app-graph-section #component1></app-graph-section> -->\r\n        <app-tv-chart-container  #component1></app-tv-chart-container>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</div>"
+module.exports = "<div class=\"sort_content_section\">\r\n  <div class=\"container\">\r\n\r\n    <div class=\"sort_with_table\">\r\n\r\n      <div class=\"col-xs-12 col-sm-12 col-md-2 col-lg-2 coin_list_lft\">\r\n        <div class=\"row \">\r\n          <div class=\"sort_by sort_by_block\">\r\n            <h1 class=\"sort_by_head\">Sort By\r\n              <i class=\"fa fa-chevron-down sort_by_icon\" aria-hidden=\"true\"></i>\r\n              <!--<img src=\"/assets/images/sort_arw.png\" class=\"sort_by_icon\"/>-->\r\n            </h1>\r\n            <ul>\r\n              <li (click)=\"sortTable('name')\">\r\n                <a>Coins</a>\r\n              </li>\r\n              <li (click)=\"sortTable('price')\">\r\n                <a>Price</a>\r\n              </li>\r\n              <li (click)=\"sortTable('dayPrice')\">\r\n                <a>24 Hr (%) </a>\r\n              </li>\r\n              <li (click)=\"sortTable('weeklyChange')\">\r\n                <a>7 Day (%) </a>\r\n              </li>\r\n              <li (click)=\"sortTable('dayVolume')\">\r\n                <a>Volume (24H) </a>\r\n              </li>\r\n\r\n              <li (click)=\"sortTable('marketCapValue')\">\r\n                <a>Market Cap </a>\r\n              </li>\r\n              <li (click)=\"sortTable('highestPrice')\">\r\n                <a>24 Hr High/Low </a>\r\n              </li>\r\n            </ul>\r\n          </div>\r\n          \r\n          <div class=\"sort_by\">\r\n            <h1 class=\"sort_by_head\">\r\n              <i class=\"fa fa-filter advance_filter float-left\" aria-hidden=\"true\"></i>\r\n              Advance\r\n              <span>Search Filters</span>\r\n             \r\n              <i class=\"fa float-right undosymbol mobileViewAdvFltr\" [ngClass]=\"{'fa-chevron-up' :  hideInMobileView == true , 'fa-chevron-down' : hideInMobileView == false }\" (click)=\"hideInMobileView = !hideInMobileView\"></i>\r\n              <i class=\"fa fa-undo float-right undosymbol\" (click)=\"resetAdvFilter()\"></i>\r\n            </h1>\r\n           \r\n            <accordion id=\"advancedSearchFilter\" [closeOthers]=\"false\" [hidden]=\"!hideInMobileView\">\r\n              <accordion-group heading=\"PRICE\" [isOpened]=\"true\" >\r\n                  <div (click)=\"refreshRateChange()\" id=\"priceNoUiSlider\">\r\n                      <nouislider [config]=\"someRange2config\" [tooltips]=\"[ true]\" [(ngModel)]=\"someRange\" (ngModelChange)=\"priceFilter(someRange)\"></nouislider>\r\n                  </div>\r\n                <!-- <ion-range-slider #priceVal type=\"double\" [min]=\"0\" [max]=\"maxPrice\" from_min=\"0\" [from_max]=\"maxPrice\" from_shadow=\"false\"\r\n                  [to]=\"maxPrice\" to_min=\"0\" [to_max]=\"maxPrice\" to_shadow=\"true\" grid=\"true\" [postfix]=\"parameterPrice\" decorate_both=\"false\"\r\n                  (onChange)=\"priceFilter($event)\"></ion-range-slider> -->\r\n              </accordion-group>\r\n              <accordion-group heading=\"24 HR (%)\" [isOpened]=\"false\">\r\n                <ion-range-slider #dayChange type=\"double\" min=\"-100\" max=\"100\" from_shadow=\"false\" to_shadow=\"true\" grid=\"true\" grid_num=\"4\"\r\n                  postfix=\"%\" decorate_both=\"false\" (onChange)=\"dayfilter($event)\"></ion-range-slider>\r\n              </accordion-group>\r\n              <accordion-group heading=\"7 DAY (%)\" [isOpened]=\"false\">\r\n                <ion-range-slider #weeklyChange type=\"double\" [min]=\"-100\" max=\"100\" to_shadow=\"true\" grid=\"true\" grid_num=\"4\" postfix=\"%\"\r\n                  decorate_both=\"false\" (onChange)=\"weeklyFilter($event)\"></ion-range-slider>\r\n              </accordion-group>\r\n              <accordion-group heading=\"VOLUME (24H)\" [isOpened]=\"false\">\r\n                <ion-range-slider #volume24H type=\"double\" [min]=\"0\" [max]=\"maxVolume\" from_min=\"0\" [from_max]=\"maxVolume\" from_shadow=\"false\"\r\n                [to]=\"maxVolume\" to_min=\"0\" [to_max]=\"maxVolume\" to_shadow=\"true\" grid=\"true\" [postfix]=\" parameterVol\" decorate_both=\"false\"\r\n                  (onChange)=\"dayVolumeFilter($event)\"></ion-range-slider>\r\n              </accordion-group>\r\n              <accordion-group heading=\"MARKET CAP\" [isOpened]=\"true\">\r\n                  <div  id=\"marketCapNoUiSlider\">\r\n                      <nouislider [config]=\"marketCapConfig\" [tooltips]=\"[ true]\" [(ngModel)]=\"marketRange\" (ngModelChange)=\"marketCapFilter(marketRange)\"></nouislider>\r\n                  </div>\r\n                <!-- <ion-range-slider #marketCap type=\"double\" min=\"0\" [max]=\"marketCapVal\"  from_min=\"0\" [from_max]=\"marketCapVal\" from_shadow=\"false\" [to]=\"marketCapVal\"\r\n                  to_min=\"0\" [to_max]=\"marketCapVal\" to_shadow=\"true\" grid=\"true\" grid_num=\"4\" [postfix]=\" parameterMarkCap\" decorate_both=\"false\"\r\n                  (onChange)=\"marketCapFilter($event)\"></ion-range-slider> -->\r\n              </accordion-group>\r\n            </accordion>\r\n          </div>\r\n          <div class=\"w-100 mt-1\" *ngIf=\"hideInMobileView\">\r\n            <button class=\"pull-right advSearchBtn\" (click)=\"advancedSearchFilter()\">Search</button>\r\n          </div>\r\n          <app-advertisement class=\"sort_by_block\"></app-advertisement>\r\n        </div>\r\n      </div>\r\n\r\n      <div class=\"col-sm-12 col-xs-12 col-md-10 col-lg-10 rgt-coin-tab\">\r\n        <!-- <data-table-sort-expands></data-table-sort-expands> -->\r\n        <!-- <app-graph-section #component1></app-graph-section> -->\r\n        <app-tv-chart-container  #component1></app-tv-chart-container>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</div>"
 
 /***/ }),
 
@@ -995,6 +1009,8 @@ module.exports = "<div class=\"sort_content_section\">\r\n  <div class=\"contain
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_router__ = __webpack_require__("./node_modules/@angular/router/esm5/router.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__comp_data_sharing_service__ = __webpack_require__("./src/app/comp-data-sharing.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__common_service_service__ = __webpack_require__("./src/app/common-service.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_timers__ = __webpack_require__("./node_modules/timers-browserify/main.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_timers___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_timers__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1004,6 +1020,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+
 
 
 
@@ -1027,6 +1044,39 @@ var CoinlistComponent = /** @class */ (function () {
     // special params:
     CoinlistComponent.prototype.ngOnInit = function () {
         var _this = this;
+        this.someRange = 0;
+        this.marketRange = 0;
+        this.someRange2config = {
+            snap: true,
+            animate: true,
+            range: {
+                'min': 0,
+                '25%': .50,
+                '50%': 1,
+                '75%': 500,
+                'max': 501,
+            },
+            pips: {
+                mode: 'steps',
+                density: 5
+            }
+        };
+        this.marketCapConfig = {
+            snap: false,
+            animate: true,
+            range: {
+                'min': 0,
+                '20%': 25,
+                '40%': 50,
+                '60%': 100,
+                '80%': 500,
+                'max': 501,
+            },
+            pips: {
+                mode: 'steps',
+                density: 5
+            }
+        };
         if (window.screen.width > 990) {
             this.hideInMobileView = true;
         }
@@ -1042,22 +1092,53 @@ var CoinlistComponent = /** @class */ (function () {
         this.location.replaceState('/coinlist');
         this.advFilter = [];
         this.http.get('http://54.165.36.80:5687/exchange/getMax').map(function (response) { return response.json(); }).subscribe(function (data) {
-            _this.maxPrice = (data[0].maxPrice * _this.currencyValue).toFixed(2) + 100;
-            _this.maxVolume = (data[0].maxVolume * _this.currencyValue).toFixed(2) + 100;
-            _this.marketCapVal = (data[0].marketCapValue * _this.currencyValue).toFixed(2) + 100;
+            _this.maxPrice = ((data[0].maxPrice + data[0].maxPrice * 20 / 100) * _this.currencyValue).toFixed(2);
+            // this.maxPrice = this.makeNumber(this.maxPrice,'price');
+            _this.maxVolume = ((data[0].maxVolume + data[0].maxVolume * 20 / 100) * _this.currencyValue).toFixed(2);
+            _this.maxVolume = _this.makeNumber(_this.maxVolume, 'volume');
+            _this.marketCapVal = ((data[0].marketCapValue + data[0].marketCapValue * 20 / 100) * _this.currencyValue).toFixed(2);
+            // this.marketCapVal = this.makeNumber(this.marketCapVal,'marketCap');
         });
+        Object(__WEBPACK_IMPORTED_MODULE_7_timers__["setTimeout"])(function () {
+            var valueArray = ['0', '$.50', '$1', '$500', '>$500'];
+            var elemen = document.getElementById('priceNoUiSlider');
+            var arrayL = elemen.getElementsByClassName('noUi-value');
+            for (var m = 0; m < valueArray.length; m++) {
+                arrayL[m].textContent = valueArray[m];
+            }
+            var valueArray1 = ['0', '25M', '50M', '100M', '500M', '>500M'];
+            var elemen1 = document.getElementById('marketCapNoUiSlider');
+            var arrayL1 = elemen1.getElementsByClassName('noUi-value');
+            for (var m = 0; m < valueArray1.length; m++) {
+                arrayL1[m].textContent = valueArray1[m];
+            }
+        }, 1000);
+        // setTimeout(() => {
+        // }, 1000)
     };
     CoinlistComponent.prototype.sortTable = function (key) {
         this.component1.sort(key);
     };
     CoinlistComponent.prototype.priceFilter = function (event) {
+        var elemen = document.getElementById('priceNoUiSlider');
+        var arrayL = elemen.getElementsByClassName('noUi-value');
+        var getfilterdData = {};
+        if (event <= 500) {
+            getfilterdData = {
+                "price": {
+                    "from": 0,
+                    "to": event
+                }
+            };
+        }
+        else {
+            getfilterdData = {
+                "price": {
+                    "from": event
+                }
+            };
+        }
         var toVal = parseFloat((event.to / this.currencyValue).toFixed(2));
-        var getfilterdData = {
-            "price": {
-                "from": event.from,
-                "to": toVal
-            }
-        };
         this.isThere = false;
         for (var i = 0; i < this.advFilter.length; i++) {
             if (this.advFilter[i].price) {
@@ -1069,6 +1150,16 @@ var CoinlistComponent = /** @class */ (function () {
         if (!this.isThere) {
             this.advFilter.push(getfilterdData);
         }
+        Object(__WEBPACK_IMPORTED_MODULE_7_timers__["setTimeout"])(function () {
+            if (event <= 500) {
+                var elemen_1 = document.getElementById('priceNoUiSlider');
+                var arrayL1 = elemen_1.getElementsByClassName('noUi-tooltip')[0].innerHTML = '$0-$' + event;
+            }
+            else if (event == 501) {
+                var elemen_2 = document.getElementById('priceNoUiSlider');
+                var arrayL1 = elemen_2.getElementsByClassName('noUi-tooltip')[0].innerHTML = '$500+';
+            }
+        }, 200);
     };
     CoinlistComponent.prototype.dayfilter = function (event) {
         var getfilterdData = {
@@ -1128,12 +1219,23 @@ var CoinlistComponent = /** @class */ (function () {
         }
     };
     CoinlistComponent.prototype.marketCapFilter = function (event) {
-        var getfilterdData = {
-            "marketCapValue": {
-                "from": event.from,
-                "to": event.to
-            }
-        };
+        var events = event * 1000000;
+        var getfilterdData = {};
+        if (event <= 500) {
+            getfilterdData = {
+                "marketCapValue": {
+                    "from": 0,
+                    "to": events
+                }
+            };
+        }
+        else {
+            getfilterdData = {
+                "marketCapValue": {
+                    "from": events
+                }
+            };
+        }
         this.isThere = false;
         for (var i = 0; i < this.advFilter.length; i++) {
             if (this.advFilter[i].marketCapValue) {
@@ -1143,37 +1245,85 @@ var CoinlistComponent = /** @class */ (function () {
             }
         }
         if (!this.isThere) {
+            // document.getElementsByClassName('noUi-tooltip')[0].innerHTML = this.changeRefreshRate;
             this.advFilter.push(getfilterdData);
         }
+        Object(__WEBPACK_IMPORTED_MODULE_7_timers__["setTimeout"])(function () {
+            if (event <= 500) {
+                var elemen1 = document.getElementById('marketCapNoUiSlider');
+                var arrayL1 = elemen1.getElementsByClassName('noUi-tooltip')[0].innerHTML = '0-' + event + 'M';
+            }
+            else if (event == 501) {
+                var elemen1 = document.getElementById('marketCapNoUiSlider');
+                var arrayL1 = elemen1.getElementsByClassName('noUi-tooltip')[0].innerHTML = 500 + '+ M';
+            }
+        }, 200);
     };
     CoinlistComponent.prototype.resetAdvFilter = function () {
         if (this.advFilter.length > 0) {
+            this.changeGraphTheme.reset_advancedFilter_filter();
             if (localStorage.getItem('userToken')) {
                 this.component1.userWithFavCoins();
             }
             else {
                 this.component1.userNormalData();
             }
-            this.priceVal.update({ from: 0, to: this.maxPrice });
-            this.dayChange.update({ from: 0, to: 100 });
-            this.weeklyChange.update({ from: 0, to: 100 });
+            this.someRange = 0;
+            this.marketRange = 0;
+            //  this.priceVal.update({ from: 0, to: this.maxPrice });
+            this.dayChange.update({ from: -100, to: 100 });
+            this.weeklyChange.update({ from: -100, to: 100 });
             this.volume24H.update({ from: 0, to: this.maxVolume });
         }
     };
     CoinlistComponent.prototype.advancedSearchFilter = function () {
-        var _this = this;
         if (this.advFilter.length > 0) {
-            this.changeGraphTheme.clear_interval_filter();
-            this.http.post('http://54.165.36.80:5687/exchange/getusd', { filter: this.advFilter, from: 0, to: 1500 }).map(function (response) { return response.json(); }).
-                subscribe(function (data) {
-                console.log(data);
-                _this.component1.advancedTableFilter(data);
-            }, function (err) {
-                console.log(err);
-                var array = [];
-                _this.component1.advancedTableFilter(array);
-            });
+            this.changeGraphTheme.advancedFilter_filter(this.advFilter);
         }
+    };
+    CoinlistComponent.prototype.makeNumber = function (labelValue, type) {
+        if (Math.abs(Number(labelValue)) >= 1.0e+9) {
+            if (type == 'price') {
+                this.parameterPrice = 'M';
+            }
+            else if (type == 'volume') {
+                this.parameterVol = 'M';
+            }
+            else if (type == 'marketCap') {
+                this.parameterMarkCap = 'M';
+            }
+            return Math.abs(Number(labelValue)) / 1.0e+9;
+        }
+        else if (Math.abs(Number(labelValue)) >= 1.0e+6) {
+            if (type == 'price') {
+                this.parameterPrice = 'B';
+            }
+            else if (type == 'volume') {
+                this.parameterVol = 'B';
+            }
+            else if (type == 'marketCap') {
+                this.parameterMarkCap = 'B';
+            }
+            return Math.abs(Number(labelValue)) / 1.0e+6;
+        }
+        else if (Math.abs(Number(labelValue)) >= 1.0e+3) {
+            if (type == 'price') {
+                this.parameterPrice = 'K';
+            }
+            else if (type == 'volume') {
+                this.parameterVol = 'K';
+            }
+            else if (type == 'marketCap') {
+                this.parameterMarkCap = 'K';
+            }
+            return Math.abs(Number(labelValue)) / 1.0e+3;
+        }
+        else {
+            return Math.abs(Number(labelValue)).toFixed(2);
+        }
+        // Nine Zeroes for Billions
+    };
+    CoinlistComponent.prototype.refreshRateChange = function () {
     };
     __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["ViewChild"])("component1"),
@@ -2137,7 +2287,7 @@ module.exports = ".addPortfolio{\r\n    background: #e67e22;\r\n    padding: 7px
 /***/ "./src/app/main/content/portfolio/portfolio.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"load_spinner\" *ngIf=\"showLoadSpinner\">\r\n  <span class=\"fa fa-spinner fa-spin fa-2x\"></span>\r\n</div>\r\n<div class=\"portfolio_main\">\r\n  <div class=\"container\">\r\n\r\n    <div class=\"grid_view_head\">\r\n      <h6>\r\n        <b>{{userName}}</b>\r\n      </h6>\r\n      <div class=\"price_data\">\r\n        <h2>$2,000.00\r\n          <i class=\"fa fa-arrows-v\" aria-hidden=\"true\"></i>\r\n        </h2>\r\n      </div>\r\n      <div class=\"grid_list_tab\">\r\n        <ul>\r\n          <li style=\"cursor:pointer\">\r\n            <button (click)=\"addCoin.show()\" class=\"addCoin_btn\">Add Coins</button>\r\n          </li>\r\n          <!-- <li (click)=\"changeGridView('list_view')\" style=\"cursor:pointer\" class=\"active\" id=\"list_view\">\r\n            <i class=\"fa fa-list-ul\" aria-hidden=\"true\"></i>\r\n            <span>List View</span> \r\n          </li>\r\n          <li (click)=\"changeGridView('grid_view')\" style=\"cursor:pointer\" id=\"grid_view\">\r\n            <i class=\"fa fa-table\" aria-hidden=\"true\"></i>\r\n           <span>Grid View</span> \r\n          </li> -->\r\n        </ul>\r\n      </div>\r\n    </div>\r\n\r\n    <!--grid_view-->\r\n    <div class=\"grid_view\" *ngIf=\"gridSelected\">\r\n      <div class=\"grid_view_details\">\r\n        <div class=\" col-xs-12 col-sm-12 col-md-4 col-lg-4\" *ngFor=\"let coins of portfoliogrid | filter: searchText \">\r\n          <div class=\"bitsoin\">\r\n            <h2> {{coins.name | uppercase}}</h2>\r\n            <ul>\r\n              <li>\r\n                <p>\r\n                  <label>PRICE </label>\r\n                  <span class=\"price_head\">{{ coins.price }}</span>\r\n                </p>\r\n              </li>\r\n              <li>\r\n                <p>\r\n                  <label>24 HR Change </label>\r\n                  <span>{{coins.dayPrice | number : '.0-2'}}</span>\r\n                </p>\r\n              </li>\r\n              <li>\r\n                <p>\r\n                  <label>7 Day Chnage </label>\r\n                  <span>{{coins.weeklyChange | number : '.0-2'}} ({{coins.weeklyChangePercent | number : '.0-2'}}%)</span>\r\n                </p>\r\n              </li>\r\n              <li>\r\n                <p>\r\n                  <label>24 HR Volume</label>\r\n                  <span>{{coins.dayVolume | number : '.0-2'}}</span>\r\n                </p>\r\n              </li>\r\n              <li>\r\n                <p>\r\n                  <label>Market Cap</label>\r\n                  <span>{{coins.marketCapValue | number : '.0-2'}}</span>\r\n                </p>\r\n              </li>\r\n\r\n            </ul>\r\n          </div>\r\n        </div>\r\n      </div>\r\n    </div>\r\n    <!--grid_view-->\r\n\r\n    <!--list_view-->\r\n    <div class=\"table-responsive col-sm-12 col-xs-12 col-md-12 col-lg-12 coin-page-lft list_view_table\" *ngIf=\"listSelected\">\r\n      <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" class=\"table-responsive\">\r\n        <thead>\r\n          <tr>\r\n            <th>#</th>\r\n            <th (click)=\"sort('name')\">Coins\r\n              <span class=\"fa sort-icon\" *ngIf=\"key =='name'\" [ngClass]=\"{'fa-sort-up':reverse,'fa-sort-down':!reverse}\">\r\n              </span>\r\n            </th>\r\n            <th (click)=\"sort('price')\">Totals\r\n              <span class=\"fa sort-icon\" *ngIf=\"key =='price'\" [ngClass]=\"{'fa-sort-up':reverse,'fa-sort-down':!reverse}\"></span>\r\n            </th>\r\n            <th (click)=\"sort('price')\">Price Paid\r\n              <span class=\"fa sort-icon\" *ngIf=\"key =='price'\" [ngClass]=\"{'fa-sort-up':reverse,'fa-sort-down':!reverse}\"></span>\r\n            </th>\r\n            <th (click)=\"sort('price')\">Current Price\r\n                <span class=\"fa sort-icon\" *ngIf=\"key =='price'\" [ngClass]=\"{'fa-sort-up':reverse,'fa-sort-down':!reverse}\"></span>\r\n              </th>\r\n            <th (click)=\"sort('dayPrice')\">Total Gain/Loss\r\n              <span class=\"fa sort-icon\" *ngIf=\"key =='dayPrice'\" [ngClass]=\"{'fa-sort-up':reverse,'fa-sort-down':!reverse}\"></span>\r\n            </th>\r\n            <th>Trade</th>\r\n          </tr>\r\n        </thead>\r\n\r\n        <tbody>\r\n          <tr *ngFor=\"let coins of coinList ; let i = index\">\r\n            <td>{{i+1}}</td>\r\n            <td>{{coins.name}}</td>\r\n            <td class=\"ls_price\">{{coins.price | number : '.0-2'}}</td>\r\n            <td class=\"ls_price\" [ngClass]=\"{'colorGreen': coins.dayPriceStatus === 'true','colorRed': coins.dayPriceStatus === 'false'}\">{{coins.price | number : '.0-2'}} \r\n              <span class=\"fa upDownSymbol\" [ngClass]=\"{'arrow-up': coins.dayPriceStatus === 'true','arrow-down': coins.dayPriceStatus === 'false'}\"></span>\r\n            </td>\r\n            <td class=\"ls_price\" [ngClass]=\"{'colorGreen': coins.dayPriceStatus === 'true','colorRed': coins.dayPriceStatus === 'false'}\">{{coins.price | number : '.0-2'}} \r\n                <span class=\"fa upDownSymbol\" [ngClass]=\"{'arrow-up': coins.dayPriceStatus === 'true','arrow-down': coins.dayPriceStatus === 'false'}\"></span>\r\n              </td>\r\n            <td class=\"\" [ngClass]=\"{'colorGreen': coins.dayPriceStatus === 'true','colorRed': coins.dayPriceStatus === 'false'}\">${{coins.dayPrice | number : '.0-2'}} /{{coins.dayPrice | number : '.0-2'}}\r\n              <span class=\"fa upDownSymbol\" [ngClass]=\"{'arrow-up': coins.dayPriceStatus === 'true','arrow-down': coins.dayPriceStatus === 'false'}\"></span>\r\n            </td>\r\n            <td class=\"trade_btn\">\r\n              <button>Trade </button>\r\n            </td>\r\n          </tr>\r\n        </tbody>\r\n      </table>\r\n    </div>\r\n    <!--list_view-->\r\n\r\n    <div *ngIf=\"noData\" class=\"noDataFound\">You have not yet added any data to portfolio!</div>\r\n    <div *ngIf=\"getLoggedIn\" class=\"noDataFound\">Please Log in To Get Portfolio List</div>\r\n  </div>\r\n</div>\r\n\r\n\r\n\r\n<div mdbModal #addCoin=\"mdb-modal\" class=\"modal fade\" id=\"addPortfolio_popup\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"myModalLabel\"\r\n  aria-hidden=\"true\" [config]=\"{backdrop: false, ignoreBackdropClick: false}\">\r\n  <div class=\"modal-dialog cascading-modal\" role=\"document\">\r\n    <!--Content-->\r\n    <div class=\"modal-content\">\r\n\r\n      <!--Header-->\r\n      <!-- <div class=\"modal-header light-blue darken-3 white-text\">\r\n                <h4 class=\"title\">\r\n                    <i class=\"fa fa-user-plus\"></i> Register</h4>\r\n                <button type=\"button\" class=\"close waves-effect waves-light\" data-dismiss=\"modal\" aria-label=\"Close\" (click)=\"registerform.hide()\">\r\n                    <span aria-hidden=\"true\">×</span>\r\n                </button>\r\n            </div> -->\r\n      <!--Body-->\r\n      <div class=\"modal-body\">\r\n        <label style=\"color:red;\" *ngIf=\"errormessageSignUp\">Please Enter all mandatory fields</label>\r\n        <form id=\"signuPCredentials\">\r\n          <div class=\"md-form form-sm\">\r\n            <!-- <i class=\"fa fa-user prefix\"></i> -->\r\n            <!-- <input type=\"text\" name=\"userName\"  appOnlyalphabets [(ngModel)]=\"userReg.portfolio_title\" class=\"form-control required placeholder_color\" placeholder=\"Portfolio Title *\"> -->\r\n            <select class=\"select_dropdown\">\r\n              <option disabled>Name of Coin</option>\r\n              <option *ngFor=\"let currency of currencyList;let i = index;\" value=\"currency.symbol\">{{currency.name}}</option>\r\n            </select>\r\n          </div>\r\n\r\n          <div class=\"md-form form-sm\">\r\n            <!-- <i class=\"fa fa-envelope prefix\"></i> -->\r\n            <input type=\"text\" name=\"emailId\" [(ngModel)]=\"userReg.totalcosts\" class=\"form-control required placeholder_color\" placeholder=\"Quantity\">\r\n          </div>\r\n          <div class=\"md-form form-sm\">\r\n            <!-- <i class=\"fa fa-envelope prefix\"></i> -->\r\n            <input type=\"text\" name=\"emailId\" [(ngModel)]=\"userReg.totalcosts\" class=\"form-control required placeholder_color\" placeholder=\"Price Paid\">\r\n          </div>\r\n          <div class=\"md-form form-sm\">\r\n            <!-- <i class=\"fa fa-envelope prefix\"></i> -->\r\n            <input type=\"date\" name=\"emailId\" [(ngModel)]=\"userReg.totalcosts\" class=\"form-control required placeholder_color\" placeholder=\"Date of Purchase\">\r\n          </div>\r\n          <div class=\"text-center mt-2\">\r\n            <button class=\"btn btn-info waves-light\" (click)=\"signUpWithMail(userReg)\" mdbWavesEffect>Add Coin\r\n              <!-- <i class=\"fa fa-sign-in ml-1\"></i> -->\r\n            </button>\r\n          </div>\r\n        </form>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</div>"
+module.exports = "<div class=\"load_spinner\" *ngIf=\"showLoadSpinner\">\r\n  <span class=\"fa fa-spinner fa-spin fa-2x\"></span>\r\n</div>\r\n<div class=\"portfolio_main\">\r\n  <div class=\"container\">\r\n\r\n    <div class=\"grid_view_head\">\r\n      <h6>\r\n        <b>{{userName}}</b>\r\n      </h6>\r\n      <div class=\"price_data\">\r\n        <h2>$2,000.00\r\n          <i class=\"fa fa-arrows-v\" aria-hidden=\"true\"></i>\r\n        </h2>\r\n      </div>\r\n      <div class=\"grid_list_tab\">\r\n        <ul>\r\n          <li style=\"cursor:pointer\">\r\n            <button (click)=\"addCoin.show()\" class=\"addCoin_btn\">Add Coins</button>\r\n          </li>\r\n          <!-- <li (click)=\"changeGridView('list_view')\" style=\"cursor:pointer\" class=\"active\" id=\"list_view\">\r\n            <i class=\"fa fa-list-ul\" aria-hidden=\"true\"></i>\r\n            <span>List View</span> \r\n          </li>\r\n          <li (click)=\"changeGridView('grid_view')\" style=\"cursor:pointer\" id=\"grid_view\">\r\n            <i class=\"fa fa-table\" aria-hidden=\"true\"></i>\r\n           <span>Grid View</span> \r\n          </li> -->\r\n        </ul>\r\n      </div>\r\n    </div>\r\n\r\n    <!--grid_view-->\r\n    <div class=\"grid_view\" *ngIf=\"gridSelected\">\r\n      <div class=\"grid_view_details\">\r\n        <div class=\" col-xs-12 col-sm-12 col-md-4 col-lg-4\" *ngFor=\"let coins of portfoliogrid | filter: searchText \">\r\n          <div class=\"bitsoin\">\r\n            <h2> {{coins.name | uppercase}}</h2>\r\n            <ul>\r\n              <li>\r\n                <p>\r\n                  <label>PRICE </label>\r\n                  <span class=\"price_head\">{{ coins.price }}</span>\r\n                </p>\r\n              </li>\r\n              <li>\r\n                <p>\r\n                  <label>24 HR Change </label>\r\n                  <span>{{coins.dayPrice | number : '.0-2'}}</span>\r\n                </p>\r\n              </li>\r\n              <li>\r\n                <p>\r\n                  <label>7 Day Chnage </label>\r\n                  <span>{{coins.weeklyChange | number : '.0-2'}} ({{coins.weeklyChangePercent | number : '.0-2'}}%)</span>\r\n                </p>\r\n              </li>\r\n              <li>\r\n                <p>\r\n                  <label>24 HR Volume</label>\r\n                  <span>{{coins.dayVolume | number : '.0-2'}}</span>\r\n                </p>\r\n              </li>\r\n              <li>\r\n                <p>\r\n                  <label>Market Cap</label>\r\n                  <span>{{coins.marketCapValue | number : '.0-2'}}</span>\r\n                </p>\r\n              </li>\r\n\r\n            </ul>\r\n          </div>\r\n        </div>\r\n      </div>\r\n    </div>\r\n    <!--grid_view-->\r\n\r\n    <!--list_view-->\r\n    <div class=\"table-responsive col-sm-12 col-xs-12 col-md-12 col-lg-12 coin-page-lft list_view_table\" *ngIf=\"listSelected\">\r\n      <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" class=\"table-responsive\">\r\n        <thead>\r\n          <tr>\r\n            <th>#</th>\r\n            <th (click)=\"sort('name')\">Coins\r\n              <span class=\"fa sort-icon\" *ngIf=\"key =='name'\" [ngClass]=\"{'fa-sort-up':reverse,'fa-sort-down':!reverse}\">\r\n              </span>\r\n            </th>\r\n            <th (click)=\"sort('total_coins')\">Totals\r\n              <span class=\"fa sort-icon\" *ngIf=\"key =='total_coins'\" [ngClass]=\"{'fa-sort-up':reverse,'fa-sort-down':!reverse}\"></span>\r\n            </th>\r\n            <th (click)=\"sort('price_paid')\">Price Paid\r\n              <span class=\"fa sort-icon\" *ngIf=\"key =='price_paid'\" [ngClass]=\"{'fa-sort-up':reverse,'fa-sort-down':!reverse}\"></span>\r\n            </th>\r\n            <th (click)=\"sort('price')\">Current Price\r\n                <span class=\"fa sort-icon\" *ngIf=\"key =='price'\" [ngClass]=\"{'fa-sort-up':reverse,'fa-sort-down':!reverse}\"></span>\r\n              </th>\r\n            <th (click)=\"sort('dayPrice')\">Total Gain/Loss\r\n              <span class=\"fa sort-icon\" *ngIf=\"key =='dayPrice'\" [ngClass]=\"{'fa-sort-up':reverse,'fa-sort-down':!reverse}\"></span>\r\n            </th>\r\n            <th>Trade</th>\r\n          </tr>\r\n        </thead>\r\n\r\n        <tbody>\r\n          <tr *ngFor=\"let coins of coinList ; let i = index\">\r\n            <td>{{i+1}}</td>\r\n            <td>{{coins.name}}</td>\r\n            <td class=\"ls_price\">{{coins.total_coins | number : '.0-2'}}</td>\r\n            <td class=\"ls_price\">{{coins.price_paid | number : '.0-2'}}</td>\r\n            <td class=\"ls_price\" [ngClass]=\"{'colorGreen': coins.dayPriceStatus === 'true','colorRed': coins.dayPriceStatus === 'false'}\">{{coins.price | number : '.0-2'}} \r\n                <span class=\"fa upDownSymbol\" [ngClass]=\"{'arrow-up': coins.dayPriceStatus === 'true','arrow-down': coins.dayPriceStatus === 'false'}\"></span>\r\n              </td>\r\n            <td class=\"\" [ngClass]=\"{'colorGreen': coins.price_paid < coins.price,'colorRed': coins.price_paid > coins.price}\">{{ coins.price - coins.price_paid}}\r\n              <span class=\"fa upDownSymbol\" [ngClass]=\"{'arrow-up': coins.price_paid < coins.price,'arrow-down': coins.price_paid > coins.price}\"></span>\r\n            </td>\r\n            <td class=\"trade_btn\">\r\n              <button>Trade </button>\r\n            </td>\r\n          </tr>\r\n        </tbody>\r\n      </table>\r\n    </div>\r\n    <!--list_view-->\r\n    <div *ngIf=\"noData\" class=\"noDataFound\">You have not yet added any data to portfolio!</div>\r\n    <div *ngIf=\"getLoggedIn\" class=\"noDataFound\">Please Log in To Get Portfolio List</div>\r\n  </div>\r\n</div>\r\n\r\n\r\n\r\n<div mdbModal #addCoin=\"mdb-modal\" class=\"modal fade\" id=\"addPortfolio_popup\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"myModalLabel\"\r\n  aria-hidden=\"true\" [config]=\"{backdrop: false, ignoreBackdropClick: false}\">\r\n  <div class=\"modal-dialog cascading-modal\" role=\"document\">\r\n    <!--Content-->\r\n    <div class=\"modal-content\">\r\n\r\n      <!--Header-->\r\n      <!-- <div class=\"modal-header light-blue darken-3 white-text\">\r\n                <h4 class=\"title\">\r\n                    <i class=\"fa fa-user-plus\"></i> Register</h4>\r\n                <button type=\"button\" class=\"close waves-effect waves-light\" data-dismiss=\"modal\" aria-label=\"Close\" (click)=\"registerform.hide()\">\r\n                    <span aria-hidden=\"true\">×</span>\r\n                </button>\r\n            </div> -->\r\n      <!--Body-->\r\n      <div class=\"modal-body\">\r\n        <label style=\"color:red;\" *ngIf=\"errormessageSignUp\">Please Enter all mandatory fields</label>\r\n        <form id=\"signuPCredentials\">\r\n          <div class=\"md-form form-sm\">\r\n            <select class=\"select_dropdown\" id=\"selectDropDown\"  (change)=\"getCurrencyDetails($event.target.value)\">\r\n              <option disabled value=\"name\">Name of Coin</option>\r\n              <option *ngFor=\"let currency of currencyList;let i = index;\" value=\"{{currency.symbol}}\">{{currency.name}}</option>\r\n            </select>\r\n          </div>\r\n\r\n          <div class=\"md-form form-sm\">\r\n            <!-- <i class=\"fa fa-envelope prefix\"></i> -->\r\n            <input type=\"text\" name=\"total_coins\" [(ngModel)]=\"addCoinModel.total_coins\" class=\"form-control required placeholder_color\" placeholder=\"Quantity\">\r\n          </div>\r\n          <div class=\"md-form form-sm\">\r\n            <!-- <i class=\"fa fa-envelope prefix\"></i> -->\r\n            <input type=\"text\" name=\"price_paid\" [(ngModel)]=\"addCoinModel.price_paid\" class=\"form-control required placeholder_color\" placeholder=\"Price Paid\">\r\n          </div>\r\n          <!-- <div class=\"placeholder_color\">\r\n            <input type=\"checkbox\" > Calculate Average Price.\r\n          </div> -->\r\n          <div class=\"md-form form-sm\">\r\n            <!-- <i class=\"fa fa-envelope prefix\"></i> -->\r\n            <input type=\"date\" name=\"trade_date\" [(ngModel)]=\"addCoinModel.trade_date\" class=\"form-control required placeholder_color\" placeholder=\"Date of Purchase\">\r\n          </div>\r\n          <div class=\"text-center mt-2\">\r\n            <button class=\"btn btn-info waves-light\" (click)=\"AddCoinIntoPortfolio(addCoinModel)\" mdbWavesEffect>Add Coin\r\n              <!-- <i class=\"fa fa-sign-in ml-1\"></i> -->\r\n            </button>\r\n          </div>\r\n        </form>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</div>"
 
 /***/ }),
 
@@ -2150,6 +2300,7 @@ module.exports = "<div class=\"load_spinner\" *ngIf=\"showLoadSpinner\">\r\n  <s
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__("./node_modules/@angular/http/esm5/http.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__comp_data_sharing_service__ = __webpack_require__("./src/app/comp-data-sharing.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_Rx__ = __webpack_require__("./node_modules/rxjs/_esm5/Rx.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_angular_bootstrap_md_utils_facade_browser__ = __webpack_require__("./node_modules/angular-bootstrap-md/utils/facade/browser.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2159,6 +2310,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+
 
 
 
@@ -2197,14 +2349,14 @@ var PortfolioComponent = /** @class */ (function () {
         if (ev == 'list_view') {
             this.gridSelected = false;
             this.listSelected = true;
-            document.getElementById('list_view').classList.add('active');
-            document.getElementById('grid_view').classList.remove('active');
+            __WEBPACK_IMPORTED_MODULE_4_angular_bootstrap_md_utils_facade_browser__["a" /* document */].getElementById('list_view').classList.add('active');
+            __WEBPACK_IMPORTED_MODULE_4_angular_bootstrap_md_utils_facade_browser__["a" /* document */].getElementById('grid_view').classList.remove('active');
         }
         else if (ev == 'grid_view') {
             this.gridSelected = true;
             this.listSelected = false;
-            document.getElementById('list_view').classList.remove('active');
-            document.getElementById('grid_view').classList.add('active');
+            __WEBPACK_IMPORTED_MODULE_4_angular_bootstrap_md_utils_facade_browser__["a" /* document */].getElementById('list_view').classList.remove('active');
+            __WEBPACK_IMPORTED_MODULE_4_angular_bootstrap_md_utils_facade_browser__["a" /* document */].getElementById('grid_view').classList.add('active');
         }
     };
     PortfolioComponent.prototype.sort = function (key) {
@@ -2214,7 +2366,7 @@ var PortfolioComponent = /** @class */ (function () {
     PortfolioComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.accordionData = [];
-        this.userReg = {};
+        this.addCoinModel = {};
         this.coinList = [];
         this.clearInterval = true;
         if (localStorage.getItem('userToken')) {
@@ -2280,11 +2432,36 @@ var PortfolioComponent = /** @class */ (function () {
             _loop_1(i);
         }
     };
+    PortfolioComponent.prototype.getCurrencyDetails = function (value) {
+        var _this = this;
+        this.http.get("http://54.165.36.80:5687/exchange/getusd/" + value).map(function (response) { return response.json(); }).subscribe(function (data) {
+            _this.coinDetails = data;
+            console.log(data);
+        });
+    };
+    PortfolioComponent.prototype.AddCoinIntoPortfolio = function (model) {
+        var objects = {};
+        objects['name'] = this.coinDetails[0].name;
+        objects['price_paid'] = model['price_paid'];
+        objects['total_coins'] = model['total_coins'];
+        objects['trade_date'] = model['trade_date'];
+        objects['price'] = this.coinDetails[0].price;
+        objects['dayPriceStatus'] = this.coinDetails[0].dayPriceStatus;
+        console.log(objects);
+        this.coinList.push(objects);
+        this.addCoin.hide();
+        this.addCoinModel = {};
+        __WEBPACK_IMPORTED_MODULE_4_angular_bootstrap_md_utils_facade_browser__["a" /* document */].getElementById('selectDropDown').value = 'name';
+    };
     PortfolioComponent.prototype.ngOnDestroy = function () {
         // this.runningInterval.unsubscribe()
         // this.ngUnsubscribe.next();
         // this.ngUnsubscribe.complete();
     };
+    __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["ViewChild"])('addCoin'),
+        __metadata("design:type", Object)
+    ], PortfolioComponent.prototype, "addCoin", void 0);
     PortfolioComponent = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
             selector: 'app-portfolio',
@@ -2511,6 +2688,15 @@ var HeaderComponent = /** @class */ (function () {
         this.router.navigate(['/login'], { skipLocationChange: false });
     };
     HeaderComponent.prototype.logOut = function () {
+        // let a = document.querySelector("#google_translate_element select");
+        // console.log(a)
+        // let options = a.getElementsByTagName('option');
+        //  for(let i = 0;i <options.length; i++){
+        //    if( 'en' == options[i].value){
+        //          a.selectedIndex=i;
+        //          a.dispatchEvent(new Event('change'));
+        //    }
+        //  }
         localStorage.removeItem('userToken');
         localStorage.removeItem('userName');
         this.dataShare.callLogOut_filter();
@@ -2736,7 +2922,7 @@ module.exports = ".switch {\r\n    position: relative;\r\n    display: inline-bl
 /***/ "./src/app/main/theme-header/theme-header.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "\r\n<div class=\"theme_color_section\" *ngIf=\"hideThemesection\">\r\n    <div class=\"container\">\r\n        <div class=\"sub_theme\">\r\n            <ul>\r\n                <li>\r\n                    <a (click)=\"refreshrate.show()\">\r\n                        <img src=\"/assets/images/price_interval.png\">\r\n                        <span >Refresh Rate</span>\r\n                    </a>\r\n                </li>\r\n                <li>\r\n                    <a (click)=\"nightmode()\">\r\n                        <img src=\"/assets/images/black_out_color.png\" />\r\n                        <span >Night Mode</span>\r\n                    </a>\r\n                </li>\r\n                <li>\r\n                    <a>\r\n                        <label class=\"switch\">\r\n                            <input type=\"checkbox\" checked (click)=\"siteColor()\">\r\n                            <span class=\"slider round\"></span>\r\n                        </label>\r\n                        <!-- <img src=\"/assets/images/site_color.png\"/>-->\r\n                        <span >Site Color</span>\r\n                    </a>\r\n                </li>\r\n                <li>\r\n                    <span class=\"customize_call nowrap_text\" (click)=\"customize.show()\" mdbWavesEffect>\r\n                        <i class=\"fa fa-columns\" aria-hidden=\"true\"></i>Customize Columns</span>\r\n                </li>\r\n            </ul>\r\n\r\n            <div class=\"sel-term\">\r\n\r\n                <div class=\"in_sel-term1\">\r\n\r\n                    <div class=\"opt_tlt\">\r\n                        <span>{{currencyText}}</span>\r\n                        <i class=\"fa fa-chevron-down\" aria-hidden=\"true\"></i>\r\n                    </div>\r\n                    <div class=\"opt_lst\">\r\n\r\n                        <span class=\"opt_arw\" [class.active]=\"currencyorder === 'id'\" (click)=\"sort('id')\">\r\n                            <label>Sort </label>\r\n                            <span [hidden]=\"reverse\">▼</span>\r\n                            <span [hidden]=\"!reverse\">▲</span>\r\n                        </span>\r\n                        <div *ngFor=\"let ctL of currencyTypeList | orderBy: key : reverse ;\">\r\n                            <div class=\"opt_tlt\" (click)=\"selectCurrency(ctL.id)\">\r\n                                {{ ctL.id }}</div>\r\n                        </div>\r\n                    </div>\r\n\r\n                </div>\r\n                <div class=\"in_sel-term1\">\r\n                    <!-- <div class=\"opt_tlt\">\r\n                        <img [src]=\"languageImg\" />\r\n                        <span>{{languageText}}</span>\r\n                        <i class=\"fa fa-chevron-down\" aria-hidden=\"true\"></i>\r\n                    </div>\r\n                    <div class=\"opt_lst\">\r\n\r\n                        <span class=\"opt_arw\" (click)=\"sort('languagename')\">\r\n                            <label>sort</label>\r\n                            <span [hidden]=\"reverse\">▼</span>\r\n                            <span [hidden]=\"!reverse\">▲</span>\r\n\r\n                        </span>\r\n                        <div *ngFor=\"let row of collection | orderBy: key :reverse\">\r\n\r\n                            <div class=\"opt_tlt\" (click)=\"selectLanguage(row.languagename,row.languageimage)\">\r\n                                <img src={{row.languageimage}}> {{ row.languagename }}</div>\r\n\r\n\r\n                        </div>\r\n                    </div> -->\r\n                    <div id=\"google_translate_element\"></div>\r\n                   \r\n                </div>\r\n                <button type=\"button\" class=\"button_icon\" (click)=\"saveThemeStructure()\">\r\n                    <i class=\"fa fa-save waves-light \" aria-hidden=\"true\"></i>Save</button>\r\n                <input type=\"search\" placeholder=\"\" class=\"search_icon\" />\r\n                <span class=\"close_icon\">\r\n                    <i (click)=\"themeSectionHide()\" class=\"fa fa-close\" aria-hidden=\"true\"></i>\r\n                </span>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</div>\r\n\r\n<!-- Refresh Rate -->\r\n\r\n<div mdbModal #refreshrate=\"mdb-modal\" class=\"modal fade\" id=\"centralModalSuccess\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"myModalLabel\"\r\n    aria-hidden=\"true\">\r\n    <div class=\"modal-dialog cascading-modal\" role=\"document\">\r\n        <!--Content-->\r\n        <div class=\"modal-content\">\r\n\r\n            <!--Header-->\r\n            <div class=\"modal-header light-blue darken-3 white-text\">\r\n                <h4 class=\"title\"> Refresh Rate</h4>\r\n                <button type=\"button\" class=\"close waves-effect waves-light\" data-dismiss=\"modal\" aria-label=\"Close\" (click)=\"refreshrate.hide()\">\r\n                    <span aria-hidden=\"true\">×</span>\r\n                </button>\r\n            </div>\r\n            <!--Body-->\r\n            <div class=\"modal-body refresh_rate\">\r\n                <!-- <p class=\"siteRefreshText\">Site will refresh on every {{changeRefreshRate}} </p> -->\r\n                <div (click)=\"refreshRateChange()\">\r\n                    <nouislider [config]=\"someRange2config\" [tooltips]=\"[ true]\" [(ngModel)]=\"someRange\"></nouislider>\r\n                </div>\r\n            </div>\r\n            <!--Footer-->\r\n            <div class=\"modal-footer\">\r\n                <button *ngIf=\"!enableRefreshBtn\" type=\"button\" class=\"btn btn-outline-info float-left\" data-dismiss=\"modal\" (click)=\"noRefresh()\" mdbWavesEffect>Stop Refresh</button>\r\n                <button *ngIf=\"enableRefreshBtn\" type=\"button\" class=\"btn btn-outline-info float-left\" data-dismiss=\"modal\" (click)=\"doRefresh()\" mdbWavesEffect>Start Refresh</button>\r\n\r\n            </div>\r\n        </div>\r\n        <!--/.Content-->\r\n    </div>\r\n</div>\r\n<!-- Refresh Rate -->\r\n\r\n\r\n<!-- Customize -->\r\n\r\n\r\n\r\n\r\n\r\n<!--Modal: customize column-->\r\n<div mdbModal #customize=\"mdb-modal\" class=\"modal fade\" id=\"modalRegister3\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"myModalLabel\"\r\n    aria-hidden=\"true\">\r\n    <div class=\"modal-dialog cascading-modal\" role=\"document\">\r\n        <!--Content-->\r\n        <div class=\"modal-content\">\r\n\r\n            <!--Header-->\r\n            <div class=\"modal-header light-blue darken-3 white-text\">\r\n                <h4 class=\"title\">\r\n                    <i class=\"fa fa-columns\" aria-hidden=\"true\"></i> Customize Columns</h4>\r\n                <button type=\"button\" class=\"close waves-effect waves-light\" data-dismiss=\"modal\" aria-label=\"Close\" (click)=\"customize.hide()\">\r\n                    <span aria-hidden=\"true\">×</span>\r\n                </button>\r\n            </div>\r\n            <!--Body-->\r\n            <div class=\"modal-body customize_main\">\r\n\r\n                <div class=\"customize_col\">\r\n\r\n                    <div class=\"options_list\">\r\n                        <div class=\"desktop_options col-md-4 col-lg-4 col-sm-12 col-xs-12\">\r\n                            <span class=\"lst_tlt\">Desktop</span>\r\n                            <span class=\"lst_tlt\">Coinlist</span>\r\n                            <div class=\"form-check\" *ngFor=\"let desklist of desktoplists\">\r\n                                <input class=\"form-check-input\" [(ngModel)]=\"desklist.ischecked\" (change)=\"coulumnCustomization({desktop : desktoplists,mobile:mobilelists,app : mobilelists},desktoplists)\"\r\n                                    type=\"checkbox\" name=\"listsgroup\">\r\n                                <label class=\"form-check-label\">{{desklist.label}}</label>\r\n                            </div>\r\n                        </div>\r\n                        <div class=\"mobile_options col-md-4 col-lg-4 col-sm-12 col-xs-12\">\r\n                            <span class=\"lst_tlt\">Mobile</span>\r\n                            <div class=\"form-check\" *ngFor=\"let moblist of mobilelists\">\r\n                                <input class=\"form-check-input\" [(ngModel)]=\"moblist.ischecked\" (change)=\"coulumnCustomization({desktop : desktoplists,mobile:mobilelists,app : mobilelists},mobilelists)\"\r\n                                    type=\"checkbox\" name=\"listsgroup\">\r\n                                <label class=\"form-check-label\">{{moblist.label}}</label>\r\n                            </div>\r\n                        </div>\r\n                        <div class=\"app_options col-md-4 col-lg-4 col-sm-12 col-xs-12\">\r\n                            <span class=\"lst_tlt\">App</span>\r\n                            <div class=\"form-check\" *ngFor=\"let app of appList\">\r\n                                <input class=\"form-check-input\" [(ngModel)]=\"app.ischecked\" (change)=\"coulumnCustomization({desktop : desktoplists,mobile:mobilelists,app : appList},appList)\"\r\n                                    type=\"checkbox\" name=\"listsgroup\">\r\n                                <label class=\"form-check-label\">{{app.label}}</label>\r\n                            </div>\r\n                        </div>\r\n\r\n                    </div>\r\n                </div>\r\n            </div>\r\n        </div>\r\n        <!--/.Content-->\r\n    </div>\r\n</div>\r\n<!--Modal: Customize column Form-->\r\n<!-- popup -->\r\n\r\n"
+module.exports = "\r\n<div class=\"theme_color_section\" *ngIf=\"hideThemesection\">\r\n    <div class=\"container\">\r\n        <div class=\"sub_theme\">\r\n            <ul>\r\n                <li>\r\n                    <a (click)=\"refreshrate.show()\">\r\n                        <img src=\"/assets/images/price_interval.png\">\r\n                        <span >Refresh Rate</span>\r\n                    </a>\r\n                </li>\r\n                <li>\r\n                    <a (click)=\"nightmode()\">\r\n                        <img src=\"/assets/images/black_out_color.png\" />\r\n                        <span >Night Mode</span>\r\n                    </a>\r\n                </li>\r\n                <li>\r\n                    <a>\r\n                        <label class=\"switch\">\r\n                            <input type=\"checkbox\" checked (click)=\"siteColor()\">\r\n                            <span class=\"slider round\"></span>\r\n                        </label>\r\n                        <!-- <img src=\"/assets/images/site_color.png\"/>-->\r\n                        <span >Site Color</span>\r\n                    </a>\r\n                </li>\r\n                <li>\r\n                    <span class=\"customize_call nowrap_text\" (click)=\"customize.show()\" mdbWavesEffect>\r\n                        <i class=\"fa fa-columns\" aria-hidden=\"true\"></i>Customize Columns</span>\r\n                </li>\r\n            </ul>\r\n\r\n            <div class=\"sel-term\">\r\n\r\n                <div class=\"in_sel-term1\">\r\n\r\n                    <div class=\"opt_tlt\">\r\n                        <span>{{currencyText}}</span>\r\n                        <i class=\"fa fa-chevron-down\" aria-hidden=\"true\"></i>\r\n                    </div>\r\n                    <div class=\"opt_lst\">\r\n\r\n                        <span class=\"opt_arw\" [class.active]=\"currencyorder === 'id'\" (click)=\"sort('id')\">\r\n                            <label>Sort </label>\r\n                            <span [hidden]=\"reverse\">▼</span>\r\n                            <span [hidden]=\"!reverse\">▲</span>\r\n                        </span>\r\n                        <div *ngFor=\"let ctL of currencyTypeList | orderBy: key : reverse ;\">\r\n                            <div class=\"opt_tlt\" (click)=\"selectCurrency(ctL.id)\">\r\n                                {{ ctL.id }}</div>\r\n                        </div>\r\n                    </div>\r\n\r\n                </div>\r\n                <div class=\"in_sel-term1\">\r\n                    <!-- <div class=\"opt_tlt\">\r\n                        <img [src]=\"languageImg\" />\r\n                        <span>{{languageText}}</span>\r\n                        <i class=\"fa fa-chevron-down\" aria-hidden=\"true\"></i>\r\n                    </div>\r\n                    <div class=\"opt_lst\">\r\n\r\n                        <span class=\"opt_arw\" (click)=\"sort('languagename')\">\r\n                            <label>sort</label>\r\n                            <span [hidden]=\"reverse\">▼</span>\r\n                            <span [hidden]=\"!reverse\">▲</span>\r\n\r\n                        </span>\r\n                        <div *ngFor=\"let row of collection | orderBy: key :reverse\">\r\n\r\n                            <div class=\"opt_tlt\" (click)=\"selectLanguage(row.languagename,row.languageimage)\">\r\n                                <img src={{row.languageimage}}> {{ row.languagename }}</div>\r\n\r\n\r\n                        </div>\r\n                    </div> -->\r\n                    <div id=\"google_translate_element\"></div>\r\n                   \r\n                </div>\r\n                <button type=\"button\" class=\"button_icon\" (click)=\"saveThemeStructure()\">\r\n                    <i class=\"fa fa-save waves-light \" aria-hidden=\"true\"></i>Save</button>\r\n                <input type=\"search\" placeholder=\"\" class=\"search_icon\" />\r\n                <span class=\"close_icon\">\r\n                    <i (click)=\"themeSectionHide()\" class=\"fa fa-close\" aria-hidden=\"true\"></i>\r\n                </span>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</div>\r\n\r\n<!-- Refresh Rate -->\r\n\r\n<div mdbModal #refreshrate=\"mdb-modal\" class=\"modal fade\" id=\"centralModalSuccess\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"myModalLabel\"\r\n    aria-hidden=\"true\">\r\n    <div class=\"modal-dialog cascading-modal\" role=\"document\">\r\n        <!--Content-->\r\n        <div class=\"modal-content\">\r\n            <!--Header-->\r\n            <div class=\"modal-header light-blue darken-3 white-text\">\r\n                <h4 class=\"title\"> Refresh Rate</h4>\r\n                <button type=\"button\" class=\"close waves-effect waves-light\" data-dismiss=\"modal\" aria-label=\"Close\" (click)=\"refreshrate.hide()\">\r\n                    <span aria-hidden=\"true\">×</span>\r\n                </button>\r\n            </div>\r\n            <!--Body-->\r\n            <div class=\"modal-body refresh_rate\">\r\n                <!-- <p class=\"siteRefreshText\">Site will refresh on every {{changeRefreshRate}} </p> -->\r\n                <div (click)=\"refreshRateChange()\">\r\n                    <nouislider [config]=\"someRange2config\" [tooltips]=\"[ false]\" [(ngModel)]=\"someRange\"></nouislider>\r\n                </div>\r\n                \r\n            </div>\r\n            <!--Footer-->\r\n            <div class=\"modal-footer\">\r\n                <button *ngIf=\"!enableRefreshBtn\" type=\"button\" class=\"btn btn-outline-info float-left\" data-dismiss=\"modal\" (click)=\"noRefresh()\" mdbWavesEffect>Stop Refresh</button>\r\n                <button *ngIf=\"enableRefreshBtn\" type=\"button\" class=\"btn btn-outline-info float-left\" data-dismiss=\"modal\" (click)=\"doRefresh()\" mdbWavesEffect>Start Refresh</button>\r\n            </div>\r\n        </div>\r\n        <!--/.Content-->\r\n    </div>\r\n</div>\r\n<!-- Refresh Rate -->\r\n\r\n\r\n<!-- Customize -->\r\n\r\n\r\n\r\n\r\n\r\n<!--Modal: customize column-->\r\n<div mdbModal #customize=\"mdb-modal\" class=\"modal fade\" id=\"modalRegister3\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"myModalLabel\"\r\n    aria-hidden=\"true\">\r\n    <div class=\"modal-dialog cascading-modal\" role=\"document\">\r\n        <!--Content-->\r\n        <div class=\"modal-content\">\r\n\r\n            <!--Header-->\r\n            <div class=\"modal-header light-blue darken-3 white-text\">\r\n                <h4 class=\"title\">\r\n                    <i class=\"fa fa-columns\" aria-hidden=\"true\"></i> Customize Columns</h4>\r\n                <button type=\"button\" class=\"close waves-effect waves-light\" data-dismiss=\"modal\" aria-label=\"Close\" (click)=\"customize.hide()\">\r\n                    <span aria-hidden=\"true\">×</span>\r\n                </button>\r\n            </div>\r\n            <!--Body-->\r\n            <div class=\"modal-body customize_main\">\r\n\r\n                <div class=\"customize_col\">\r\n\r\n                    <div class=\"options_list\">\r\n                        <div class=\"desktop_options col-md-4 col-lg-4 col-sm-12 col-xs-12\">\r\n                            <span class=\"lst_tlt\">Desktop</span>\r\n                            <span class=\"lst_tlt\">Coinlist</span>\r\n                            <div class=\"form-check\" *ngFor=\"let desklist of desktoplists\">\r\n                                <input class=\"form-check-input\" [(ngModel)]=\"desklist.ischecked\" (change)=\"coulumnCustomization({desktop : desktoplists,mobile:mobilelists,app : mobilelists},desktoplists)\"\r\n                                    type=\"checkbox\" name=\"listsgroup\">\r\n                                <label class=\"form-check-label\">{{desklist.label}}</label>\r\n                            </div>\r\n                        </div>\r\n                        <div class=\"mobile_options col-md-4 col-lg-4 col-sm-12 col-xs-12\">\r\n                            <span class=\"lst_tlt\">Mobile</span>\r\n                            <div class=\"form-check\" *ngFor=\"let moblist of mobilelists\">\r\n                                <input class=\"form-check-input\" [(ngModel)]=\"moblist.ischecked\" (change)=\"coulumnCustomization({desktop : desktoplists,mobile:mobilelists,app : mobilelists},mobilelists)\"\r\n                                    type=\"checkbox\" name=\"listsgroup\">\r\n                                <label class=\"form-check-label\">{{moblist.label}}</label>\r\n                            </div>\r\n                        </div>\r\n                        <div class=\"app_options col-md-4 col-lg-4 col-sm-12 col-xs-12\">\r\n                            <span class=\"lst_tlt\">App</span>\r\n                            <div class=\"form-check\" *ngFor=\"let app of appList\">\r\n                                <input class=\"form-check-input\" [(ngModel)]=\"app.ischecked\" (change)=\"coulumnCustomization({desktop : desktoplists,mobile:mobilelists,app : appList},appList)\"\r\n                                    type=\"checkbox\" name=\"listsgroup\">\r\n                                <label class=\"form-check-label\">{{app.label}}</label>\r\n                            </div>\r\n                        </div>\r\n\r\n                    </div>\r\n                </div>\r\n            </div>\r\n        </div>\r\n        <!--/.Content-->\r\n    </div>\r\n</div>\r\n<!--Modal: Customize column Form-->\r\n<!-- popup -->\r\n\r\n"
 
 /***/ }),
 
@@ -3426,6 +3612,13 @@ var TvChartContainerComponent = /** @class */ (function () {
             _this.clearInterval = false;
             clearInterval(_this.runningInterval);
         });
+        this.changeGraphTheme.advancedFilter_listener().subscribe(function (data) {
+            _this.advFilter = data;
+            _this.advancedSearchFilter(data);
+        });
+        this.changeGraphTheme.reset_advancedFilter_listener().subscribe(function () {
+            _this.advFilter = [];
+        });
         this.changeGraphTheme.chnageTheme_of_amchart_listener().subscribe(function (theme) {
             if (theme == 'black') {
                 _this.backgroundColor = '#000';
@@ -3605,10 +3798,16 @@ var TvChartContainerComponent = /** @class */ (function () {
     TvChartContainerComponent.prototype.getCoinList = function () {
         var _this = this;
         if (!localStorage.getItem('userToken') && this.clearInterval) {
+            var upData = void 0;
             var toL = this.coinList.length > 0 ? this.coinList.length : 20;
             console.log(this.sortingKey);
-            var request = this.http.post('http://54.165.36.80:5687/exchange/getusd', { from: 0, to: toL, sort: { key: this.sortingKey, value: this.reverse } }).map(function (response) { return response.json(); }).subscribe(function (data) {
-                "";
+            if (this.isAdvFilter) {
+                upData = { filter: this.advFilter, from: 0, to: toL, sort: { key: this.sortingKey, value: this.reverse } };
+            }
+            else {
+                var upData_1 = { from: 0, to: toL, sort: { key: this.sortingKey, value: this.reverse } };
+            }
+            var request = this.http.post('http://54.165.36.80:5687/exchange/getusd', upData).map(function (response) { return response.json(); }).subscribe(function (data) {
                 if (_this.clearInterval) {
                     _this.getallCoins = data;
                     if (data.length == 0) {
@@ -3632,7 +3831,8 @@ var TvChartContainerComponent = /** @class */ (function () {
                     }
                 }
             });
-            this.subscriptions.add(request);
+            // this.subscriptions.add(request);
+            this.subscriptionOfHttp1.push(request);
         }
     };
     TvChartContainerComponent.prototype.updateAllCoinsData = function (allCoins) {
@@ -3767,14 +3967,14 @@ var TvChartContainerComponent = /** @class */ (function () {
         var _this = this;
         this.clearInterval = false;
         clearInterval(this.subscriptionOfHttp);
-        this.subscriptions.unsubscribe();
-        // if (this.subscriptionOfHttp1.length > 0) {
-        //     for (let m = 0; m < this.subscriptionOfHttp1.length; m++) {
-        //         if (!this.subscriptionOfHttp1[m].closed) {
-        //             this.subscriptionOfHttp1[m].unsubscribe();
-        //         }
-        //     }
-        // }
+        // this.subscriptions.unsubscribe();
+        if (this.subscriptionOfHttp1.length > 0) {
+            for (var m = 0; m < this.subscriptionOfHttp1.length; m++) {
+                if (!this.subscriptionOfHttp1[m].closed) {
+                    this.subscriptionOfHttp1[m].unsubscribe();
+                }
+            }
+        }
         this.sortingKey = key;
         this.key = key;
         this.reverse = this.reverse == -1 ? 1 : -1;
@@ -3784,7 +3984,7 @@ var TvChartContainerComponent = /** @class */ (function () {
         else {
             this.coinList = [];
             var toL = this.coinList.length > 0 ? this.coinList.length : 20;
-            this.http.post('http://54.165.36.80:5687/exchange/getusd', { from: 0, to: toL, sort: { key: this.sortingKey, value: this.reverse } }).map(function (response) { return response.json(); }).subscribe(function (data) {
+            this.http.post('http://54.165.36.80:5687/exchange/getusd', { filter: this.advFilter, from: 0, to: toL, sort: { key: this.sortingKey, value: this.reverse } }).map(function (response) { return response.json(); }).subscribe(function (data) {
                 _this.coinList = [];
                 _this.coinList = data;
                 Object(__WEBPACK_IMPORTED_MODULE_8_timers__["setInterval"])(function () {
@@ -4128,12 +4328,13 @@ var TvChartContainerComponent = /** @class */ (function () {
     };
     TvChartContainerComponent.prototype.getUserCoins = function (tokenV) {
         var _this = this;
-        this.subscriptionOfHttp = this.http.post('http://54.165.36.80:5687/api/coins/getFavourites', { token: tokenV }).map(function (response) { return response.json(); }).subscribe(function (data) {
+        var toL = this.favCoinsList.length > 0 ? this.favCoinsList.length : 20;
+        this.subscriptionOfHttp = this.http.post('http://54.165.36.80:5687/api/coins/getFavourites', { token: tokenV, from: 0, to: toL, sort: { key: this.sortingKey, value: this.reverse } }).map(function (response) { return response.json(); }).subscribe(function (data) {
             _this.favCoinsList = data;
         }, function (err) {
             _this.favCoinsList = [];
         });
-        this.subscriptionOfHttp = this.http.post('http://54.165.36.80:5687/api/coins/getCoins', { token: tokenV }).map(function (response) { return response.json(); }).subscribe(function (data) {
+        this.subscriptionOfHttp = this.http.post('http://54.165.36.80:5687/api/coins/getCoins', { token: tokenV, from: 0, to: toL, sort: { key: this.sortingKey, value: this.reverse } }).map(function (response) { return response.json(); }).subscribe(function (data) {
             _this.coinList = data;
             console.log(JSON.stringify(data));
         }, function (err) {
@@ -4152,6 +4353,7 @@ var TvChartContainerComponent = /** @class */ (function () {
     };
     TvChartContainerComponent.prototype.userWithFavCoins = function () {
         var _this = this;
+        this.isAdvFilter = false;
         this.clearInterval = true;
         this.coinList = [];
         this.favCoinsList = [];
@@ -4163,6 +4365,7 @@ var TvChartContainerComponent = /** @class */ (function () {
         }
     };
     TvChartContainerComponent.prototype.userNormalData = function () {
+        this.isAdvFilter = false;
         this.coinList = [];
         this.clearInterval = true;
         this.getCoinList();
@@ -4173,7 +4376,14 @@ var TvChartContainerComponent = /** @class */ (function () {
     TvChartContainerComponent.prototype.getLimitedCoins = function () {
     };
     TvChartContainerComponent.prototype.ngOnDestroy = function () {
-        this.subscriptions.unsubscribe();
+        if (this.subscriptionOfHttp1.length > 0) {
+            for (var m = 0; m < this.subscriptionOfHttp1.length; m++) {
+                if (!this.subscriptionOfHttp1[m].closed) {
+                    this.subscriptionOfHttp1[m].unsubscribe();
+                }
+            }
+        }
+        // this.subscriptions.unsubscribe();
         clearInterval(this.runningInterval);
         this.ngUnsubscribe.next();
         this.ngUnsubscribe.complete();
@@ -4446,6 +4656,21 @@ var TvChartContainerComponent = /** @class */ (function () {
             }
         }
         // this.amchartVariable[variable].validateNow();
+    };
+    TvChartContainerComponent.prototype.advancedSearchFilter = function (advFilter) {
+        var _this = this;
+        if (advFilter.length > 0) {
+            this.changeGraphTheme.clear_interval_filter();
+            this.http.post('http://54.165.36.80:5687/exchange/getusd', { filter: advFilter, from: 0, to: 1500 }).map(function (response) { return response.json(); }).
+                subscribe(function (data) {
+                console.log(data);
+                _this.advancedTableFilter(data);
+            }, function (err) {
+                console.log(err);
+                var array = [];
+                _this.advancedTableFilter(array);
+            });
+        }
     };
     __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["ViewChild"])('loginform'),
