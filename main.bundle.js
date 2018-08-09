@@ -992,7 +992,7 @@ module.exports = ""
 /***/ "./src/app/main/content/coinlist/coinlist.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"sort_content_section\">\r\n  <div class=\"container\">\r\n\r\n    <div class=\"sort_with_table\">\r\n\r\n      <div class=\"col-xs-12 col-sm-12 col-md-2 col-lg-2 coin_list_lft\">\r\n        <div class=\"row \">\r\n          <div class=\"sort_by sort_by_block\">\r\n            <h1 class=\"sort_by_head\">Sort By\r\n              <i class=\"fa fa-chevron-down sort_by_icon\" aria-hidden=\"true\"></i>\r\n              <!--<img src=\"/assets/images/sort_arw.png\" class=\"sort_by_icon\"/>-->\r\n            </h1>\r\n            <ul>\r\n              <li (click)=\"sortTable('name')\">\r\n                <a>Coins</a>\r\n              </li>\r\n              <li (click)=\"sortTable('price')\">\r\n                <a>Price</a>\r\n              </li>\r\n              <li (click)=\"sortTable('dayPrice')\">\r\n                <a>24 Hr (%) </a>\r\n              </li>\r\n              <li (click)=\"sortTable('weeklyChange')\">\r\n                <a>7 Day (%) </a>\r\n              </li>\r\n              <li (click)=\"sortTable('dayVolume')\">\r\n                <a>Volume (24H) </a>\r\n              </li>\r\n\r\n              <li (click)=\"sortTable('marketCapValue')\">\r\n                <a>Market Cap </a>\r\n              </li>\r\n              <li (click)=\"sortTable('highestPrice')\">\r\n                <a>24 Hr High/Low </a>\r\n              </li>\r\n            </ul>\r\n          </div>\r\n          \r\n          <div class=\"sort_by\">\r\n            <h1 class=\"sort_by_head\">\r\n              <i class=\"fa fa-filter advance_filter float-left\" aria-hidden=\"true\"></i>\r\n              Advance\r\n              <span>Search Filters</span>\r\n             \r\n              <i class=\"fa float-right undosymbol mobileViewAdvFltr\" [ngClass]=\"{'fa-chevron-up' :  hideInMobileView == true , 'fa-chevron-down' : hideInMobileView == false }\" (click)=\"hideInMobileView = !hideInMobileView\"></i>\r\n              <i class=\"fa fa-undo float-right undosymbol\" (click)=\"resetAdvFilter()\"></i>\r\n            </h1>\r\n           \r\n            <accordion id=\"advancedSearchFilter\" [closeOthers]=\"false\" [hidden]=\"!hideInMobileView\">\r\n              <accordion-group heading=\"PRICE\" [isOpened]=\"true\" >\r\n                  <div (click)=\"refreshRateChange()\" id=\"priceNoUiSlider\">\r\n                      <nouislider [config]=\"someRange2config\" [tooltips]=\"[ true]\" [(ngModel)]=\"someRange\" (ngModelChange)=\"priceFilter(someRange)\"></nouislider>\r\n                  </div>\r\n                <!-- <ion-range-slider #priceVal type=\"double\" [min]=\"0\" [max]=\"maxPrice\" from_min=\"0\" [from_max]=\"maxPrice\" from_shadow=\"false\"\r\n                  [to]=\"maxPrice\" to_min=\"0\" [to_max]=\"maxPrice\" to_shadow=\"true\" grid=\"true\" [postfix]=\"parameterPrice\" decorate_both=\"false\"\r\n                  (onChange)=\"priceFilter($event)\"></ion-range-slider> -->\r\n              </accordion-group>\r\n              <accordion-group heading=\"24 HR (%)\" [isOpened]=\"false\">\r\n                <ion-range-slider #dayChange type=\"double\" min=\"-100\" max=\"100\" from_shadow=\"false\" to_shadow=\"true\" grid=\"true\" grid_num=\"4\"\r\n                  postfix=\"%\" decorate_both=\"false\" (onChange)=\"dayfilter($event)\"></ion-range-slider>\r\n              </accordion-group>\r\n              <accordion-group heading=\"7 DAY (%)\" [isOpened]=\"false\">\r\n                <ion-range-slider #weeklyChange type=\"double\" [min]=\"-100\" max=\"100\" to_shadow=\"true\" grid=\"true\" grid_num=\"4\" postfix=\"%\"\r\n                  decorate_both=\"false\" (onChange)=\"weeklyFilter($event)\"></ion-range-slider>\r\n              </accordion-group>\r\n              <accordion-group heading=\"VOLUME (24H)\" [isOpened]=\"false\">\r\n                <ion-range-slider #volume24H type=\"double\" [min]=\"0\" [max]=\"maxVolume\" from_min=\"0\" [from_max]=\"maxVolume\" from_shadow=\"false\"\r\n                [to]=\"maxVolume\" to_min=\"0\" [to_max]=\"maxVolume\" to_shadow=\"true\" grid=\"true\" [postfix]=\" parameterVol\" decorate_both=\"false\"\r\n                  (onChange)=\"dayVolumeFilter($event)\"></ion-range-slider>\r\n              </accordion-group>\r\n              <accordion-group heading=\"MARKET CAP\" [isOpened]=\"true\">\r\n                  <div  id=\"marketCapNoUiSlider\">\r\n                      <nouislider [config]=\"marketCapConfig\" [tooltips]=\"[ true]\" [(ngModel)]=\"marketRange\" (ngModelChange)=\"marketCapFilter(marketRange)\"></nouislider>\r\n                  </div>\r\n                <!-- <ion-range-slider #marketCap type=\"double\" min=\"0\" [max]=\"marketCapVal\"  from_min=\"0\" [from_max]=\"marketCapVal\" from_shadow=\"false\" [to]=\"marketCapVal\"\r\n                  to_min=\"0\" [to_max]=\"marketCapVal\" to_shadow=\"true\" grid=\"true\" grid_num=\"4\" [postfix]=\" parameterMarkCap\" decorate_both=\"false\"\r\n                  (onChange)=\"marketCapFilter($event)\"></ion-range-slider> -->\r\n              </accordion-group>\r\n            </accordion>\r\n          </div>\r\n          <div class=\"w-100 mt-1\" *ngIf=\"hideInMobileView\">\r\n            <button class=\"pull-right advSearchBtn\" (click)=\"advancedSearchFilter()\">Search</button>\r\n          </div>\r\n          <app-advertisement class=\"sort_by_block\"></app-advertisement>\r\n        </div>\r\n      </div>\r\n\r\n      <div class=\"col-sm-12 col-xs-12 col-md-10 col-lg-10 rgt-coin-tab\">\r\n        <!-- <data-table-sort-expands></data-table-sort-expands> -->\r\n        <!-- <app-graph-section #component1></app-graph-section> -->\r\n        <app-tv-chart-container  #component1></app-tv-chart-container>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</div>"
+module.exports = "<div class=\"sort_content_section\">\r\n  <div class=\"container\">\r\n\r\n    <div class=\"sort_with_table\">\r\n\r\n      <div class=\"col-xs-12 col-sm-12 col-md-2 col-lg-2 coin_list_lft\">\r\n        <div class=\"row \">\r\n          <div class=\"sort_by sort_by_block\">\r\n            <h1 class=\"sort_by_head\">Sort By\r\n              <i class=\"fa fa-chevron-down sort_by_icon\" aria-hidden=\"true\"></i>\r\n              <!--<img src=\"/assets/images/sort_arw.png\" class=\"sort_by_icon\"/>-->\r\n            </h1>\r\n            <ul>\r\n              <li (click)=\"sortTable('name')\">\r\n                <a>Coins</a>\r\n              </li>\r\n              <li (click)=\"sortTable('price')\">\r\n                <a>Price</a>\r\n              </li>\r\n              <li (click)=\"sortTable('dayPrice')\">\r\n                <a>24 Hr (%) </a>\r\n              </li>\r\n              <li (click)=\"sortTable('weeklyChange')\">\r\n                <a>7 Day (%) </a>\r\n              </li>\r\n              <li (click)=\"sortTable('dayVolume')\">\r\n                <a>Volume (24H) </a>\r\n              </li>\r\n\r\n              <li (click)=\"sortTable('marketCapValue')\">\r\n                <a>Market Cap </a>\r\n              </li>\r\n              <li (click)=\"sortTable('highestPrice')\">\r\n                <a>24 Hr High/Low </a>\r\n              </li>\r\n            </ul>\r\n          </div>\r\n          \r\n          <div class=\"sort_by\">\r\n            <h1 class=\"sort_by_head\">\r\n              <i class=\"fa fa-filter advance_filter float-left\" aria-hidden=\"true\"></i>\r\n              Advance\r\n              <span>Search Filters</span>\r\n             \r\n              <i class=\"fa float-right undosymbol mobileViewAdvFltr\" [ngClass]=\"{'fa-chevron-up' :  hideInMobileView == true , 'fa-chevron-down' : hideInMobileView == false }\" (click)=\"hideInMobileView = !hideInMobileView\"></i>\r\n              <i class=\"fa fa-undo float-right undosymbol\" (click)=\"resetAdvFilter()\"></i>\r\n            </h1>\r\n           \r\n            <accordion id=\"advancedSearchFilter\" [closeOthers]=\"false\" [hidden]=\"!hideInMobileView\">\r\n              <accordion-group heading=\"PRICE\" [isOpened]=\"true\" >\r\n                  <div (click)=\"refreshRateChange()\" id=\"priceNoUiSlider\">\r\n                      <nouislider #priceSliderRef [config]=\"someRange2config\" [tooltips]=\"[true, true]\" [(ngModel)]=\"someRange\" (ngModelChange)=\"priceFilter(someRange)\"></nouislider>\r\n                  </div>\r\n                <!-- <ion-range-slider #priceVal type=\"double\" [min]=\"0\" [max]=\"maxPrice\" from_min=\"0\" [from_max]=\"maxPrice\" from_shadow=\"false\"\r\n                  [to]=\"maxPrice\" to_min=\"0\" [to_max]=\"maxPrice\" to_shadow=\"true\" grid=\"true\" [postfix]=\"parameterPrice\" decorate_both=\"false\"\r\n                  (onChange)=\"priceFilter($event)\"></ion-range-slider> -->\r\n              </accordion-group>\r\n              <accordion-group heading=\"24 HR (%)\" [isOpened]=\"false\">\r\n                <ion-range-slider #dayChange type=\"double\" min=\"-100\" max=\"100\" from_shadow=\"false\" to_shadow=\"true\" grid=\"true\" grid_num=\"4\"\r\n                  postfix=\"%\" decorate_both=\"false\" (onChange)=\"dayfilter($event)\"></ion-range-slider>\r\n              </accordion-group>\r\n              <accordion-group heading=\"7 DAY (%)\" [isOpened]=\"false\">\r\n                <ion-range-slider #weeklyChange type=\"double\" [min]=\"-100\" max=\"100\" to_shadow=\"true\" grid=\"true\" grid_num=\"4\" postfix=\"%\"\r\n                  decorate_both=\"false\" (onChange)=\"weeklyFilter($event)\"></ion-range-slider>\r\n              </accordion-group>\r\n              <accordion-group heading=\"VOLUME (24H)\" [isOpened]=\"true\">\r\n                  <div  id=\"volumeNoUiSlider\">\r\n                      <nouislider [config]=\"volumeConfig\" [tooltips]=\"[true, true]\" [(ngModel)]=\"volumeRange\" (ngModelChange)=\"dayVolumeFilter(volumeRange)\"></nouislider>\r\n                  </div>\r\n                <!-- <ion-range-slider #volume24H type=\"double\" [min]=\"0\" [max]=\"maxVolume\" from_min=\"0\" [from_max]=\"maxVolume\" from_shadow=\"false\"\r\n                [to]=\"maxVolume\" to_min=\"0\" [to_max]=\"maxVolume\" to_shadow=\"true\" grid=\"true\" [postfix]=\" parameterVol\" decorate_both=\"false\"\r\n                  (onChange)=\"dayVolumeFilter($event)\"></ion-range-slider> -->\r\n              </accordion-group>\r\n              <accordion-group heading=\"MARKET CAP\" [isOpened]=\"true\">\r\n                  <div  id=\"marketCapNoUiSlider\">\r\n                      <nouislider [config]=\"marketCapConfig\" [tooltips]=\"[true, true]\" [(ngModel)]=\"marketRange\" (ngModelChange)=\"marketCapFilter(marketRange)\"></nouislider>\r\n                  </div>\r\n                <!-- <ion-range-slider #marketCap type=\"double\" min=\"0\" [max]=\"marketCapVal\"  from_min=\"0\" [from_max]=\"marketCapVal\" from_shadow=\"false\" [to]=\"marketCapVal\"\r\n                  to_min=\"0\" [to_max]=\"marketCapVal\" to_shadow=\"true\" grid=\"true\" grid_num=\"4\" [postfix]=\" parameterMarkCap\" decorate_both=\"false\"\r\n                  (onChange)=\"marketCapFilter($event)\"></ion-range-slider> -->\r\n              </accordion-group>\r\n            </accordion>\r\n          </div>\r\n          <div class=\"w-100 mt-1\" *ngIf=\"hideInMobileView\">\r\n            <button class=\"pull-right advSearchBtn\" (click)=\"advancedSearchFilter()\">Search</button>\r\n          </div>\r\n          <app-advertisement class=\"sort_by_block\"></app-advertisement>\r\n        </div>\r\n      </div>\r\n\r\n      <div class=\"col-sm-12 col-xs-12 col-md-10 col-lg-10 rgt-coin-tab\">\r\n        <!-- <data-table-sort-expands></data-table-sort-expands> -->\r\n        <!-- <app-graph-section #component1></app-graph-section> -->\r\n        <app-tv-chart-container  #component1></app-tv-chart-container>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</div>"
 
 /***/ }),
 
@@ -1011,6 +1011,8 @@ module.exports = "<div class=\"sort_content_section\">\r\n  <div class=\"contain
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__common_service_service__ = __webpack_require__("./src/app/common-service.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_timers__ = __webpack_require__("./node_modules/timers-browserify/main.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_timers___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_timers__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_ng2_nouislider__ = __webpack_require__("./node_modules/ng2-nouislider/src/ng2-nouislider.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_ng2_nouislider___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8_ng2_nouislider__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1020,6 +1022,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+
 
 
 
@@ -1044,37 +1047,69 @@ var CoinlistComponent = /** @class */ (function () {
     // special params:
     CoinlistComponent.prototype.ngOnInit = function () {
         var _this = this;
-        this.someRange = 0;
-        this.marketRange = 0;
+        // this.someRange = [0, 499];
+        // this.marketRange= 0;
         this.someRange2config = {
-            snap: true,
-            animate: true,
+            behaviour: 'drag',
+            connect: true,
+            start: [0, 499],
+            keyboard: true,
+            step: 0.1,
+            pageSteps: 10,
             range: {
                 'min': 0,
-                '25%': .50,
+                '25%': 0.5,
                 '50%': 1,
-                '75%': 500,
-                'max': 501,
+                '75%': 100,
+                'max': 500,
             },
             pips: {
-                mode: 'steps',
-                density: 5
+                mode: 'count',
+                density: 2,
+                values: 5,
+                stepped: true
+            }
+        };
+        this.volumeConfig = {
+            behaviour: 'drag',
+            connect: true,
+            start: [0, 499],
+            keyboard: true,
+            step: 0.1,
+            pageSteps: 10,
+            range: {
+                'min': 0,
+                '25%': 1,
+                '50%': 5,
+                '75%': 100,
+                'max': 500,
+            },
+            pips: {
+                mode: 'count',
+                density: 2,
+                values: 5,
+                stepped: true
             }
         };
         this.marketCapConfig = {
-            snap: false,
-            animate: true,
+            behaviour: 'drag',
+            connect: true,
+            start: [0, 499],
+            keyboard: true,
+            step: 0.1,
+            pageSteps: 10,
             range: {
                 'min': 0,
-                '20%': 25,
-                '40%': 50,
-                '60%': 100,
-                '80%': 500,
-                'max': 501,
+                '25%': 25,
+                '50%': 50,
+                '75%': 100,
+                'max': 500,
             },
             pips: {
-                mode: 'steps',
-                density: 5
+                mode: 'count',
+                density: 2,
+                values: 5,
+                stepped: true
             }
         };
         if (window.screen.width > 990) {
@@ -1100,17 +1135,23 @@ var CoinlistComponent = /** @class */ (function () {
             // this.marketCapVal = this.makeNumber(this.marketCapVal,'marketCap');
         });
         Object(__WEBPACK_IMPORTED_MODULE_7_timers__["setTimeout"])(function () {
-            var valueArray = ['0', '$.50', '$1', '$500', '>$500'];
+            var valueArray = ['0', '$.50', '$1', '$100', '>$500'];
             var elemen = document.getElementById('priceNoUiSlider');
             var arrayL = elemen.getElementsByClassName('noUi-value');
             for (var m = 0; m < valueArray.length; m++) {
                 arrayL[m].textContent = valueArray[m];
             }
-            var valueArray1 = ['0', '25M', '50M', '100M', '500M', '>500M'];
+            var valueArray1 = ['0', '25M', '50M', '100M', '>500M'];
             var elemen1 = document.getElementById('marketCapNoUiSlider');
             var arrayL1 = elemen1.getElementsByClassName('noUi-value');
             for (var m = 0; m < valueArray1.length; m++) {
                 arrayL1[m].textContent = valueArray1[m];
+            }
+            var valueArray2 = ['$0', '$1M', '$5M', '$100M', '>$500M'];
+            var elemen2 = document.getElementById('volumeNoUiSlider');
+            var arrayL2 = elemen2.getElementsByClassName('noUi-value');
+            for (var m = 0; m < valueArray2.length; m++) {
+                arrayL2[m].textContent = valueArray2[m];
             }
         }, 1000);
         // setTimeout(() => {
@@ -1123,20 +1164,31 @@ var CoinlistComponent = /** @class */ (function () {
         var elemen = document.getElementById('priceNoUiSlider');
         var arrayL = elemen.getElementsByClassName('noUi-value');
         var getfilterdData = {};
-        if (event <= 500) {
+        if (event[0] < 500 && event[1] < 500) {
             getfilterdData = {
                 "price": {
-                    "from": 0,
-                    "to": event
+                    "from": event[0],
+                    "to": event[1]
                 }
             };
+            Object(__WEBPACK_IMPORTED_MODULE_7_timers__["setTimeout"])(function () {
+                var elemen = document.getElementById('priceNoUiSlider');
+                elemen.getElementsByClassName('noUi-tooltip')[0].innerHTML = '$' + event[0];
+                elemen.getElementsByClassName('noUi-tooltip')[1].innerHTML = '$' + event[1];
+            }, 200);
         }
         else {
             getfilterdData = {
                 "price": {
-                    "from": event
+                    "from": event[0]
                 }
             };
+            Object(__WEBPACK_IMPORTED_MODULE_7_timers__["setTimeout"])(function () {
+                // this.priceSliderRef.slider.set([ 500,500 ]);
+                var elemen = document.getElementById('priceNoUiSlider');
+                elemen.getElementsByClassName('noUi-tooltip')[0].innerHTML = '$' + event[0];
+                elemen.getElementsByClassName('noUi-tooltip')[1].innerHTML = '$500+';
+            }, 200);
         }
         var toVal = parseFloat((event.to / this.currencyValue).toFixed(2));
         this.isThere = false;
@@ -1150,16 +1202,20 @@ var CoinlistComponent = /** @class */ (function () {
         if (!this.isThere) {
             this.advFilter.push(getfilterdData);
         }
-        Object(__WEBPACK_IMPORTED_MODULE_7_timers__["setTimeout"])(function () {
-            if (event <= 500) {
-                var elemen_1 = document.getElementById('priceNoUiSlider');
-                var arrayL1 = elemen_1.getElementsByClassName('noUi-tooltip')[0].innerHTML = '$0-$' + event;
-            }
-            else if (event == 501) {
-                var elemen_2 = document.getElementById('priceNoUiSlider');
-                var arrayL1 = elemen_2.getElementsByClassName('noUi-tooltip')[0].innerHTML = '$500+';
-            }
-        }, 200);
+        // setTimeout(()=>{
+        //   if(event[0] < 500 && event[1] < 500){
+        //     debugger
+        //      let elemen = document.getElementById('priceNoUiSlider');
+        //      elemen.getElementsByClassName('noUi-tooltip')[0].innerHTML = '$'+event[0]
+        //      elemen.getElementsByClassName('noUi-tooltip')[1].innerHTML = '$'+event[1]
+        //   }
+        //   else if(event[0] == 500 || event[1] == 500){
+        //     let elemen = document.getElementById('priceNoUiSlider');
+        //     let arrayL1 = elemen.getElementsByClassName('noUi-tooltip')[0].innerHTML = '$500+'
+        //     elemen.getElementsByClassName('noUi-tooltip')[1].innerHTML = '$500+'
+        //   }
+        //   //  this.priceSliderRef.slider.set([1,100 ]);
+        // },200)
     };
     CoinlistComponent.prototype.dayfilter = function (event) {
         var getfilterdData = {
@@ -1200,12 +1256,41 @@ var CoinlistComponent = /** @class */ (function () {
         }
     };
     CoinlistComponent.prototype.dayVolumeFilter = function (event) {
-        var getfilterdData = {
-            "dayVolume": {
-                "from": event.from,
-                "to": event.to
-            }
-        };
+        var events = [];
+        events[0] = event[0] * 1000000;
+        events[1] = event[1] * 1000000;
+        var getfilterdData = {};
+        if (event[0] < 500 && event[1] < 500) {
+            getfilterdData = {
+                "dayVolume": {
+                    "from": events[0],
+                    "to": events[1]
+                }
+            };
+            Object(__WEBPACK_IMPORTED_MODULE_7_timers__["setTimeout"])(function () {
+                var elemen1 = document.getElementById('volumeNoUiSlider');
+                elemen1.getElementsByClassName('noUi-tooltip')[0].innerHTML = '$' + event[0] + 'M';
+                elemen1.getElementsByClassName('noUi-tooltip')[1].innerHTML = '$' + event[1] + 'M';
+            }, 200);
+        }
+        else {
+            getfilterdData = {
+                "dayVolume": {
+                    "from": events[0]
+                }
+            };
+            Object(__WEBPACK_IMPORTED_MODULE_7_timers__["setTimeout"])(function () {
+                var elemen1 = document.getElementById('volumeNoUiSlider');
+                elemen1.getElementsByClassName('noUi-tooltip')[0].innerHTML = '$' + event[0] + ' M';
+                elemen1.getElementsByClassName('noUi-tooltip')[1].innerHTML = '$500M+';
+            }, 200);
+        }
+        // let getfilterdData = {
+        //   "dayVolume": {
+        //     "from": event.from,
+        //     "to": event.to
+        //   }
+        // }
         this.isThere = false;
         for (var i = 0; i < this.advFilter.length; i++) {
             if (this.advFilter[i].dayVolume) {
@@ -1219,22 +1304,34 @@ var CoinlistComponent = /** @class */ (function () {
         }
     };
     CoinlistComponent.prototype.marketCapFilter = function (event) {
-        var events = event * 1000000;
+        var events = [];
+        events[0] = event[0] * 1000000;
+        events[1] = event[1] * 1000000;
         var getfilterdData = {};
-        if (event <= 500) {
+        if (event[0] < 500 && event[1] < 500) {
             getfilterdData = {
                 "marketCapValue": {
-                    "from": 0,
-                    "to": events
+                    "from": events[0],
+                    "to": events[1]
                 }
             };
+            Object(__WEBPACK_IMPORTED_MODULE_7_timers__["setTimeout"])(function () {
+                var elemen1 = document.getElementById('marketCapNoUiSlider');
+                elemen1.getElementsByClassName('noUi-tooltip')[0].innerHTML = event[0] + 'M';
+                elemen1.getElementsByClassName('noUi-tooltip')[1].innerHTML = event[1] + 'M';
+            }, 200);
         }
         else {
             getfilterdData = {
                 "marketCapValue": {
-                    "from": events
+                    "from": events[0]
                 }
             };
+            Object(__WEBPACK_IMPORTED_MODULE_7_timers__["setTimeout"])(function () {
+                var elemen1 = document.getElementById('marketCapNoUiSlider');
+                elemen1.getElementsByClassName('noUi-tooltip')[0].innerHTML = event[0] + 'M';
+                elemen1.getElementsByClassName('noUi-tooltip')[1].innerHTML = 500 + 'M+';
+            }, 200);
         }
         this.isThere = false;
         for (var i = 0; i < this.advFilter.length; i++) {
@@ -1248,16 +1345,6 @@ var CoinlistComponent = /** @class */ (function () {
             // document.getElementsByClassName('noUi-tooltip')[0].innerHTML = this.changeRefreshRate;
             this.advFilter.push(getfilterdData);
         }
-        Object(__WEBPACK_IMPORTED_MODULE_7_timers__["setTimeout"])(function () {
-            if (event <= 500) {
-                var elemen1 = document.getElementById('marketCapNoUiSlider');
-                var arrayL1 = elemen1.getElementsByClassName('noUi-tooltip')[0].innerHTML = '0-' + event + 'M';
-            }
-            else if (event == 501) {
-                var elemen1 = document.getElementById('marketCapNoUiSlider');
-                var arrayL1 = elemen1.getElementsByClassName('noUi-tooltip')[0].innerHTML = 500 + '+ M';
-            }
-        }, 200);
     };
     CoinlistComponent.prototype.resetAdvFilter = function () {
         if (this.advFilter.length > 0) {
@@ -1268,9 +1355,11 @@ var CoinlistComponent = /** @class */ (function () {
             else {
                 this.component1.userNormalData();
             }
-            this.someRange = 0;
-            this.marketRange = 0;
-            //  this.priceVal.update({ from: 0, to: this.maxPrice });
+            this.someRange = [0, 499];
+            this.marketRange = [0, 499];
+            this.volumeRange = [0, 499];
+            // this.priceSliderRef.slider.set([0,499 ]);
+            //this.priceVal.update({ from: 0, to: this.maxPrice });
             this.dayChange.update({ from: -100, to: 100 });
             this.weeklyChange.update({ from: -100, to: 100 });
             this.volume24H.update({ from: 0, to: this.maxVolume });
@@ -1349,6 +1438,10 @@ var CoinlistComponent = /** @class */ (function () {
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["ViewChild"])('marketCap'),
         __metadata("design:type", __WEBPACK_IMPORTED_MODULE_1_ng2_ion_range_slider__["IonRangeSliderComponent"])
     ], CoinlistComponent.prototype, "marketCap", void 0);
+    __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["ViewChild"])('priceSliderRef'),
+        __metadata("design:type", __WEBPACK_IMPORTED_MODULE_8_ng2_nouislider__["NouisliderComponent"])
+    ], CoinlistComponent.prototype, "priceSliderRef", void 0);
     CoinlistComponent = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
             selector: 'app-coinlist',
