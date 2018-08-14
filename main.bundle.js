@@ -177,12 +177,15 @@ var AppComponent = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_31_ngx_cookie_service__ = __webpack_require__("./node_modules/ngx-cookie-service/index.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_32__app_directives_emailvalidation_directive__ = __webpack_require__("./src/app/directives/emailvalidation.directive.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_33__app_directives_onlyalphabets_directive__ = __webpack_require__("./src/app/directives/onlyalphabets.directive.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_34_ng2_datepicker__ = __webpack_require__("./node_modules/ng2-datepicker/dist/bundles/ng2-datepicker.umd.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_34_ng2_datepicker___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_34_ng2_datepicker__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
 
 
 
@@ -265,6 +268,7 @@ var AppModule = /** @class */ (function () {
                 __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__["a" /* BrowserModule */],
                 __WEBPACK_IMPORTED_MODULE_22__app_routing_module__["a" /* AppRoutingModule */],
                 __WEBPACK_IMPORTED_MODULE_26_ngx_order_pipe__["a" /* OrderModule */],
+                __WEBPACK_IMPORTED_MODULE_34_ng2_datepicker__["NgDatepickerModule"],
                 __WEBPACK_IMPORTED_MODULE_29_ng4_social_login__["SocialLoginModule"],
                 __WEBPACK_IMPORTED_MODULE_25_ng2_accordion__["AccordionModule"],
                 __WEBPACK_IMPORTED_MODULE_3_ng2_order_pipe__["Ng2OrderModule"],
@@ -2380,7 +2384,7 @@ module.exports = ".addPortfolio{\r\n    background: #e67e22;\r\n    padding: 7px
 /***/ "./src/app/main/content/portfolio/portfolio.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"load_spinner\" *ngIf=\"showLoadSpinner\">\r\n  <span class=\"fa fa-spinner fa-spin fa-2x\"></span>\r\n</div>\r\n<div class=\"portfolio_main\">\r\n  <div class=\"container\">\r\n\r\n    <div class=\"grid_view_head\">\r\n      <h6>\r\n        <b>{{userName}}</b>\r\n      </h6>\r\n      <div class=\"price_data\">\r\n        <h2>$2,000.00\r\n          <i class=\"fa fa-arrows-v\" aria-hidden=\"true\"></i>\r\n        </h2>\r\n      </div>\r\n      <div class=\"grid_list_tab\">\r\n        <ul>\r\n          <li style=\"cursor:pointer\">\r\n            <button (click)=\"addCoin.show()\" class=\"addCoin_btn\">Add Coins</button>\r\n          </li>\r\n          <!-- <li (click)=\"changeGridView('list_view')\" style=\"cursor:pointer\" class=\"active\" id=\"list_view\">\r\n            <i class=\"fa fa-list-ul\" aria-hidden=\"true\"></i>\r\n            <span>List View</span> \r\n          </li>\r\n          <li (click)=\"changeGridView('grid_view')\" style=\"cursor:pointer\" id=\"grid_view\">\r\n            <i class=\"fa fa-table\" aria-hidden=\"true\"></i>\r\n           <span>Grid View</span> \r\n          </li> -->\r\n        </ul>\r\n      </div>\r\n    </div>\r\n\r\n    <!--grid_view-->\r\n    <div class=\"grid_view\" *ngIf=\"gridSelected\">\r\n      <div class=\"grid_view_details\">\r\n        <div class=\" col-xs-12 col-sm-12 col-md-4 col-lg-4\" *ngFor=\"let coins of portfoliogrid | filter: searchText \">\r\n          <div class=\"bitsoin\">\r\n            <h2> {{coins.name | uppercase}}</h2>\r\n            <ul>\r\n              <li>\r\n                <p>\r\n                  <label>PRICE </label>\r\n                  <span class=\"price_head\">{{ coins.price }}</span>\r\n                </p>\r\n              </li>\r\n              <li>\r\n                <p>\r\n                  <label>24 HR Change </label>\r\n                  <span>{{coins.dayPrice | number : '.0-2'}}</span>\r\n                </p>\r\n              </li>\r\n              <li>\r\n                <p>\r\n                  <label>7 Day Chnage </label>\r\n                  <span>{{coins.weeklyChange | number : '.0-2'}} ({{coins.weeklyChangePercent | number : '.0-2'}}%)</span>\r\n                </p>\r\n              </li>\r\n              <li>\r\n                <p>\r\n                  <label>24 HR Volume</label>\r\n                  <span>{{coins.dayVolume | number : '.0-2'}}</span>\r\n                </p>\r\n              </li>\r\n              <li>\r\n                <p>\r\n                  <label>Market Cap</label>\r\n                  <span>{{coins.marketCapValue | number : '.0-2'}}</span>\r\n                </p>\r\n              </li>\r\n\r\n            </ul>\r\n          </div>\r\n        </div>\r\n      </div>\r\n    </div>\r\n    <!--grid_view-->\r\n\r\n    <!--list_view-->\r\n    <div class=\"table-responsive col-sm-12 col-xs-12 col-md-12 col-lg-12 coin-page-lft list_view_table\" *ngIf=\"listSelected\">\r\n      <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" class=\"table-responsive\">\r\n        <thead>\r\n          <tr>\r\n            <th>#</th>\r\n            <th (click)=\"sort('name')\">Coins\r\n              <span class=\"fa sort-icon\" *ngIf=\"key =='name'\" [ngClass]=\"{'fa-sort-up':reverse,'fa-sort-down':!reverse}\">\r\n              </span>\r\n            </th>\r\n            <th (click)=\"sort('total_coins')\">Totals\r\n              <span class=\"fa sort-icon\" *ngIf=\"key =='total_coins'\" [ngClass]=\"{'fa-sort-up':reverse,'fa-sort-down':!reverse}\"></span>\r\n            </th>\r\n            <th (click)=\"sort('price_paid')\">Price Paid\r\n              <span class=\"fa sort-icon\" *ngIf=\"key =='price_paid'\" [ngClass]=\"{'fa-sort-up':reverse,'fa-sort-down':!reverse}\"></span>\r\n            </th>\r\n            <th (click)=\"sort('price')\">Current Price\r\n                <span class=\"fa sort-icon\" *ngIf=\"key =='price'\" [ngClass]=\"{'fa-sort-up':reverse,'fa-sort-down':!reverse}\"></span>\r\n              </th>\r\n            <th (click)=\"sort('dayPrice')\">Total Gain/Loss\r\n              <span class=\"fa sort-icon\" *ngIf=\"key =='dayPrice'\" [ngClass]=\"{'fa-sort-up':reverse,'fa-sort-down':!reverse}\"></span>\r\n            </th>\r\n            <th>Trade</th>\r\n          </tr>\r\n        </thead>\r\n\r\n        <tbody>\r\n          <tr *ngFor=\"let coins of coinList ; let i = index\">\r\n            <td>{{i+1}}</td>\r\n            <td>{{coins.name}}</td>\r\n            <td class=\"ls_price\">{{coins.total_coins | number : '.0-2'}}</td>\r\n            <td class=\"ls_price\">{{coins.price_paid | number : '.0-2'}}</td>\r\n            <td class=\"ls_price\" [ngClass]=\"{'colorGreen': coins.dayPriceStatus === 'true','colorRed': coins.dayPriceStatus === 'false'}\">{{coins.price | number : '.0-2'}} \r\n                <span class=\"fa upDownSymbol\" [ngClass]=\"{'arrow-up': coins.dayPriceStatus === 'true','arrow-down': coins.dayPriceStatus === 'false'}\"></span>\r\n              </td>\r\n            <td class=\"\" [ngClass]=\"{'colorGreen': coins.price_paid < coins.price,'colorRed': coins.price_paid > coins.price}\">{{ coins.price - coins.price_paid}}\r\n              <span class=\"fa upDownSymbol\" [ngClass]=\"{'arrow-up': coins.price_paid < coins.price,'arrow-down': coins.price_paid > coins.price}\"></span>\r\n            </td>\r\n            <td class=\"trade_btn\">\r\n              <button>Trade </button>\r\n            </td>\r\n          </tr>\r\n        </tbody>\r\n      </table>\r\n    </div>\r\n    <!--list_view-->\r\n    <div *ngIf=\"noData\" class=\"noDataFound\">You have not yet added any data to portfolio!</div>\r\n    <div *ngIf=\"getLoggedIn\" class=\"noDataFound\">Please Log in To Get Portfolio List</div>\r\n  </div>\r\n</div>\r\n\r\n\r\n\r\n<div mdbModal #addCoin=\"mdb-modal\" class=\"modal fade\" id=\"addPortfolio_popup\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"myModalLabel\"\r\n  aria-hidden=\"true\" [config]=\"{backdrop: false, ignoreBackdropClick: false}\">\r\n  <div class=\"modal-dialog cascading-modal\" role=\"document\">\r\n    <!--Content-->\r\n    <div class=\"modal-content\">\r\n\r\n      <!--Header-->\r\n      <!-- <div class=\"modal-header light-blue darken-3 white-text\">\r\n                <h4 class=\"title\">\r\n                    <i class=\"fa fa-user-plus\"></i> Register</h4>\r\n                <button type=\"button\" class=\"close waves-effect waves-light\" data-dismiss=\"modal\" aria-label=\"Close\" (click)=\"registerform.hide()\">\r\n                    <span aria-hidden=\"true\">×</span>\r\n                </button>\r\n            </div> -->\r\n      <!--Body-->\r\n      <div class=\"modal-body\">\r\n        <label style=\"color:red;\" *ngIf=\"errormessageSignUp\">Please Enter all mandatory fields</label>\r\n        <form id=\"signuPCredentials\">\r\n          <div class=\"md-form form-sm\">\r\n            <select class=\"select_dropdown\" id=\"selectDropDown\"  (change)=\"getCurrencyDetails($event.target.value)\">\r\n              <option disabled value=\"name\">Name of Coin</option>\r\n              <option *ngFor=\"let currency of currencyList;let i = index;\" value=\"{{currency.symbol}}\">{{currency.name}}</option>\r\n            </select>\r\n          </div>\r\n\r\n          <div class=\"md-form form-sm\">\r\n            <!-- <i class=\"fa fa-envelope prefix\"></i> -->\r\n            <input type=\"text\" name=\"total_coins\" [(ngModel)]=\"addCoinModel.total_coins\" class=\"form-control required placeholder_color\" placeholder=\"Quantity\">\r\n          </div>\r\n          <div class=\"md-form form-sm\">\r\n            <!-- <i class=\"fa fa-envelope prefix\"></i> -->\r\n            <input type=\"text\" name=\"price_paid\" [(ngModel)]=\"addCoinModel.price_paid\" class=\"form-control required placeholder_color\" placeholder=\"Price Paid\">\r\n          </div>\r\n          <!-- <div class=\"placeholder_color\">\r\n            <input type=\"checkbox\" > Calculate Average Price.\r\n          </div> -->\r\n          <div class=\"md-form form-sm\">\r\n            <!-- <i class=\"fa fa-envelope prefix\"></i> -->\r\n            <input type=\"date\" name=\"trade_date\" [(ngModel)]=\"addCoinModel.trade_date\" class=\"form-control required placeholder_color\" placeholder=\"Date of Purchase\">\r\n          </div>\r\n          <div class=\"text-center mt-2\">\r\n            <button class=\"btn btn-info waves-light\" (click)=\"AddCoinIntoPortfolio(addCoinModel)\" mdbWavesEffect>Add Coin\r\n              <!-- <i class=\"fa fa-sign-in ml-1\"></i> -->\r\n            </button>\r\n          </div>\r\n        </form>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</div>"
+module.exports = "<div class=\"load_spinner\" *ngIf=\"showLoadSpinner\">\r\n  <span class=\"fa fa-spinner fa-spin fa-2x\"></span>\r\n</div>\r\n<div class=\"portfolio_main\">\r\n  <div class=\"container\">\r\n\r\n    <div class=\"grid_view_head\">\r\n      <h6>\r\n        <b>{{userName}}</b>\r\n      </h6>\r\n      <div class=\"price_data\">\r\n        <h2>$2,000.00\r\n          <i class=\"fa fa-arrows-v\" aria-hidden=\"true\"></i>\r\n        </h2>\r\n      </div>\r\n      <div class=\"grid_list_tab\">\r\n        <ul>\r\n          <li style=\"cursor:pointer\">\r\n            <button (click)=\"addCoin.show()\" class=\"addCoin_btn\">Add Coins</button>\r\n          </li>\r\n          <!-- <li (click)=\"changeGridView('list_view')\" style=\"cursor:pointer\" class=\"active\" id=\"list_view\">\r\n            <i class=\"fa fa-list-ul\" aria-hidden=\"true\"></i>\r\n            <span>List View</span> \r\n          </li>\r\n          <li (click)=\"changeGridView('grid_view')\" style=\"cursor:pointer\" id=\"grid_view\">\r\n            <i class=\"fa fa-table\" aria-hidden=\"true\"></i>\r\n           <span>Grid View</span> \r\n          </li> -->\r\n        </ul>\r\n      </div>\r\n    </div>\r\n\r\n    <!--grid_view-->\r\n    <div class=\"grid_view\" *ngIf=\"gridSelected\">\r\n      <div class=\"grid_view_details\">\r\n        <div class=\" col-xs-12 col-sm-12 col-md-4 col-lg-4\" *ngFor=\"let coins of portfoliogrid | filter: searchText \">\r\n          <div class=\"bitsoin\">\r\n            <h2> {{coins.name | uppercase}}</h2>\r\n            <ul>\r\n              <li>\r\n                <p>\r\n                  <label>PRICE </label>\r\n                  <span class=\"price_head\">{{ coins.price }}</span>\r\n                </p>\r\n              </li>\r\n              <li>\r\n                <p>\r\n                  <label>24 HR Change </label>\r\n                  <span>{{coins.dayPrice | number : '.0-2'}}</span>\r\n                </p>\r\n              </li>\r\n              <li>\r\n                <p>\r\n                  <label>7 Day Chnage </label>\r\n                  <span>{{coins.weeklyChange | number : '.0-2'}} ({{coins.weeklyChangePercent | number : '.0-2'}}%)</span>\r\n                </p>\r\n              </li>\r\n              <li>\r\n                <p>\r\n                  <label>24 HR Volume</label>\r\n                  <span>{{coins.dayVolume | number : '.0-2'}}</span>\r\n                </p>\r\n              </li>\r\n              <li>\r\n                <p>\r\n                  <label>Market Cap</label>\r\n                  <span>{{coins.marketCapValue | number : '.0-2'}}</span>\r\n                </p>\r\n              </li>\r\n\r\n            </ul>\r\n          </div>\r\n        </div>\r\n      </div>\r\n    </div>\r\n    <!--grid_view-->\r\n\r\n    <!--list_view-->\r\n    <div class=\"table-responsive col-sm-12 col-xs-12 col-md-12 col-lg-12 coin-page-lft list_view_table\" *ngIf=\"listSelected\">\r\n      <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" class=\"table-responsive\">\r\n        <thead>\r\n          <tr>\r\n            <th>#</th>\r\n            <th (click)=\"sort('name')\">Coins\r\n              <span class=\"fa sort-icon\" *ngIf=\"key =='name'\" [ngClass]=\"{'fa-sort-up':reverse,'fa-sort-down':!reverse}\">\r\n              </span>\r\n            </th>\r\n            <th (click)=\"sort('total_coins')\">Totals\r\n              <span class=\"fa sort-icon\" *ngIf=\"key =='total_coins'\" [ngClass]=\"{'fa-sort-up':reverse,'fa-sort-down':!reverse}\"></span>\r\n            </th>\r\n            <th (click)=\"sort('price_paid')\">Price Paid\r\n              <span class=\"fa sort-icon\" *ngIf=\"key =='price_paid'\" [ngClass]=\"{'fa-sort-up':reverse,'fa-sort-down':!reverse}\"></span>\r\n            </th>\r\n            <th (click)=\"sort('price')\">Current Price\r\n                <span class=\"fa sort-icon\" *ngIf=\"key =='price'\" [ngClass]=\"{'fa-sort-up':reverse,'fa-sort-down':!reverse}\"></span>\r\n              </th>\r\n            <th (click)=\"sort('dayPrice')\">Total Gain/Loss\r\n              <span class=\"fa sort-icon\" *ngIf=\"key =='dayPrice'\" [ngClass]=\"{'fa-sort-up':reverse,'fa-sort-down':!reverse}\"></span>\r\n            </th>\r\n            <th>Trade</th>\r\n          </tr>\r\n        </thead>\r\n\r\n        <tbody>\r\n          <tr *ngFor=\"let coins of coinList ; let i = index\">\r\n            <td>{{i+1}}</td>\r\n            <td>{{coins.name}}</td>\r\n            <td class=\"ls_price\">{{coins.total_coins | number : '.0-2'}}</td>\r\n            <td class=\"ls_price\">{{coins.price_paid | number : '.0-2'}}</td>\r\n            <td class=\"ls_price\" [ngClass]=\"{'colorGreen': coins.dayPriceStatus === 'true','colorRed': coins.dayPriceStatus === 'false'}\">{{coins.price | number : '.0-2'}} \r\n                <span class=\"fa upDownSymbol\" [ngClass]=\"{'arrow-up': coins.dayPriceStatus === 'true','arrow-down': coins.dayPriceStatus === 'false'}\"></span>\r\n              </td>\r\n            <td class=\"\" [ngClass]=\"{'colorGreen': coins.price_paid < coins.price * coins.total_coins,'colorRed': coins.price_paid > coins.price *coins.total_coins}\">{{ coins.price * coins.total_coins - coins.price_paid}}\r\n              <span class=\"fa upDownSymbol\" [ngClass]=\"{'arrow-up': coins.price_paid  < coins.price * coins.total_coins,'arrow-down': coins.price_paid > coins.price * coins.total_coins}\"></span>\r\n            </td>\r\n            <td class=\"trade_btn\">\r\n              <button>Trade </button>\r\n            </td>\r\n          </tr>\r\n        </tbody>\r\n      </table>\r\n    </div>\r\n    <!--list_view-->\r\n    <div *ngIf=\"noData\" class=\"noDataFound\">You have not yet added any data to portfolio!</div>\r\n    <div *ngIf=\"getLoggedIn\" class=\"noDataFound\">Please Log in To Get Portfolio List</div>\r\n  </div>\r\n</div>\r\n\r\n\r\n\r\n<div mdbModal #addCoin=\"mdb-modal\" class=\"modal fade\" id=\"addPortfolio_popup\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"myModalLabel\"\r\n  aria-hidden=\"true\" [config]=\"{backdrop: false, ignoreBackdropClick: false}\">\r\n  <div class=\"modal-dialog cascading-modal\" role=\"document\">\r\n    <!--Content-->\r\n    <div class=\"modal-content\">\r\n\r\n      <!--Header-->\r\n      <!-- <div class=\"modal-header light-blue darken-3 white-text\">\r\n                <h4 class=\"title\">\r\n                    <i class=\"fa fa-user-plus\"></i> Register</h4>\r\n                <button type=\"button\" class=\"close waves-effect waves-light\" data-dismiss=\"modal\" aria-label=\"Close\" (click)=\"registerform.hide()\">\r\n                    <span aria-hidden=\"true\">×</span>\r\n                </button>\r\n            </div> -->\r\n      <!--Body-->\r\n      <div class=\"modal-body\">\r\n        <label style=\"color:red;\" *ngIf=\"errormessageSignUp\">Please Enter all mandatory fields</label>\r\n        <form id=\"signuPCredentials\">\r\n          <div class=\"md-form form-sm\">\r\n            <select class=\"select_dropdown\" id=\"selectDropDown\"  (change)=\"getCurrencyDetails($event.target.value)\">\r\n              <option disabled value=\"name\">Name of Coin</option>\r\n              <option *ngFor=\"let currency of currencyList;let i = index;\" value=\"{{currency.symbol}}\">{{currency.name}}</option>\r\n            </select>\r\n          </div>\r\n\r\n          <div class=\"md-form form-sm\">\r\n            <!-- <i class=\"fa fa-envelope prefix\"></i> -->\r\n            <input type=\"text\" name=\"total_coins\" [(ngModel)]=\"addCoinModel.total_coins\" class=\"form-control required placeholder_color\" placeholder=\"Quantity\">\r\n          </div>\r\n          <div class=\"md-form form-sm\">\r\n            <!-- <i class=\"fa fa-envelope prefix\"></i> -->\r\n            <input type=\"text\" name=\"price_paid\" [(ngModel)]=\"addCoinModel.price_paid\" class=\"form-control required placeholder_color\" placeholder=\"Price Paid\">\r\n          </div>\r\n          <!-- <div class=\"placeholder_color\">\r\n            <input type=\"checkbox\" > Calculate Average Price.\r\n          </div> -->\r\n          <div class=\"md-form form-sm\">\r\n            <!-- <i class=\"fa fa-envelope prefix\"></i> -->\r\n            <input type=\"date\" name=\"trade_date\" [(ngModel)]=\"addCoinModel.trade_date\" class=\"form-control required placeholder_color\" placeholder=\"Date of Purchase\">\r\n            \r\n          </div>\r\n          <div class=\"text-center mt-2\">\r\n            <button class=\"btn btn-info waves-light\" (click)=\"AddCoinIntoPortfolio(addCoinModel)\" mdbWavesEffect>Add Coin\r\n              <!-- <i class=\"fa fa-sign-in ml-1\"></i> -->\r\n            </button>\r\n          </div>\r\n        </form>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</div>"
 
 /***/ }),
 
@@ -2429,7 +2433,7 @@ var PortfolioComponent = /** @class */ (function () {
             _this.getLoggedIn = false;
             _this.isLoggedin = true;
             _this.coinList = [];
-            _this.getPortfolioList();
+            // this.getPortfolioList();
         });
         this.changeGraphTheme.clear_portfolio_Data_listener().subscribe(function () {
             _this.coinList = [];
@@ -2470,41 +2474,44 @@ var PortfolioComponent = /** @class */ (function () {
         else {
             this.isLoggedin = false;
         }
-        this.getPortfolioList();
-        setInterval(function () {
-            _this.getPortfolioList();
-        }, 3000);
+        // this.getPortfolioList();
+        // setInterval(() => {
+        //   this.getPortfolioList();
+        // },3000)
         this.http.post('http://54.165.36.80:5687/exchange/coinNames', '').map(function (response) { return response.json(); }).subscribe(function (data) {
             _this.currencyList = data;
         });
+        this.getPortfolioList();
     };
-    PortfolioComponent.prototype.getPortfolioList = function () {
-        var _this = this;
-        if (localStorage.getItem('userToken') && this.clearInterval) {
-            var tokenV = localStorage.getItem('userToken');
-            this.runningInterval = this.http.post('http://54.165.36.80:5687/api/coins/getPortfolio', { token: tokenV }).map(function (response) { return response.json(); }).subscribe(function (data) {
-                console.log(JSON.stringify(data));
-                if (data.length == 0) {
-                    _this.noData = true;
-                }
-                if (_this.coinList.length > 0) {
-                    _this.updatePortfolio(data);
-                }
-                else {
-                    _this.showLoadSpinner = false;
-                    _this.coinList = data;
-                    _this.portfoliogrid = data;
-                }
-            }, function (err) {
-                _this.showLoadSpinner = false;
-                _this.noData = true;
-            });
-        }
-        else {
-            this.showLoadSpinner = false;
-            this.getLoggedIn = true;
-        }
-    };
+    // getPortfolioList() {
+    //   if (localStorage.getItem('userToken') && this.clearInterval) {
+    //     let tokenV = localStorage.getItem('userToken');
+    //     this.runningInterval =  this.http.post('http://54.165.36.80:5687/api/coins/getPortfolio', { token: tokenV }).map(
+    //       response => response.json()).subscribe(
+    //       data => {
+    //         console.log(JSON.stringify(data))
+    //         if(data.length == 0){
+    //           this.noData = true;
+    //         }
+    //         if( this.coinList.length > 0){
+    //             this.updatePortfolio(data)
+    //         }
+    //         else{
+    //            this.showLoadSpinner = false;
+    //         this.coinList = data;
+    //         this.portfoliogrid = data;
+    //         }
+    //       },
+    //       err => {
+    //         this.showLoadSpinner = false;
+    //         this.noData = true;
+    //       })
+    //   }
+    //   else{
+    //     this.showLoadSpinner = false;
+    //     this.getLoggedIn = true;
+    //   }
+    // }
     PortfolioComponent.prototype.updatePortfolio = function (allCoins) {
         var _loop_1 = function (i) {
             var checkIsThere = true;
@@ -2525,6 +2532,15 @@ var PortfolioComponent = /** @class */ (function () {
             _loop_1(i);
         }
     };
+    PortfolioComponent.prototype.getPortfolioList = function () {
+        var _this = this;
+        var token = localStorage.getItem('userToken');
+        this.http.post('http://54.165.36.80:5687/api/coins/getPortfolio', { token: token }).map(function (response) { return response.json(); }).subscribe(function (data) {
+            _this.coinList = data.portfolioList;
+            console.log(data);
+            _this.showLoadSpinner = false;
+        });
+    };
     PortfolioComponent.prototype.getCurrencyDetails = function (value) {
         var _this = this;
         this.http.get("http://54.165.36.80:5687/exchange/getusd/" + value).map(function (response) { return response.json(); }).subscribe(function (data) {
@@ -2533,6 +2549,7 @@ var PortfolioComponent = /** @class */ (function () {
         });
     };
     PortfolioComponent.prototype.AddCoinIntoPortfolio = function (model) {
+        var _this = this;
         var objects = {};
         objects['name'] = this.coinDetails[0].name;
         objects['price_paid'] = model['price_paid'];
@@ -2541,10 +2558,13 @@ var PortfolioComponent = /** @class */ (function () {
         objects['price'] = this.coinDetails[0].price;
         objects['dayPriceStatus'] = this.coinDetails[0].dayPriceStatus;
         console.log(objects);
-        this.coinList.push(objects);
-        this.addCoin.hide();
-        this.addCoinModel = {};
-        __WEBPACK_IMPORTED_MODULE_4_angular_bootstrap_md_utils_facade_browser__["a" /* document */].getElementById('selectDropDown').value = 'name';
+        var tokenV = localStorage.getItem('userToken');
+        this.http.put('http://54.165.36.80:5687/api/userSetting/addPortfolio', { token: tokenV, portfolioList: objects }).map(function (response) { return response.json(); }).subscribe(function (data) {
+            _this.coinList.push(objects);
+            _this.addCoin.hide();
+            _this.addCoinModel = {};
+            __WEBPACK_IMPORTED_MODULE_4_angular_bootstrap_md_utils_facade_browser__["a" /* document */].getElementById('selectDropDown').value = 'name';
+        });
     };
     PortfolioComponent.prototype.ngOnDestroy = function () {
         // this.runningInterval.unsubscribe()
@@ -3831,6 +3851,8 @@ var TvChartContainerComponent = /** @class */ (function () {
         this.overrides_obj = this.graphThemeColor.theme;
         this.toolsBg = this.graphThemeColor.toolsBg;
         if (localStorage.getItem('userToken')) {
+            this.coinList = [];
+            this.favCoinsList = [];
             var tokenV = localStorage.getItem('userToken');
             this.http.post('http://54.165.36.80:5687/api/userSetting/getUserData', { token: tokenV }).map(function (response) { return response.json(); }).subscribe(function (data) {
                 _this.changeGraphTheme.customizeColumns_filter(data.customizeColumns);
@@ -3840,6 +3862,8 @@ var TvChartContainerComponent = /** @class */ (function () {
             });
         }
         else {
+            this.coinList = [];
+            this.favCoinsList = [];
             var cols = localStorage.getItem('customizeColumns');
             this.customizeColUpdate(JSON.parse(cols));
             this.getCoinList();
@@ -3849,43 +3873,61 @@ var TvChartContainerComponent = /** @class */ (function () {
         var _this = this;
         var tokenV = localStorage.getItem('userToken');
         if (tokenV && this.clearInterval) {
-            this.subscriptionOfHttp = this.http.post('http://54.165.36.80:5687/api/coins/getFavourites', { token: tokenV }).map(function (response) { return response.json(); }).subscribe(function (data) {
+            var toL = this.favCoinsList.length + this.coinList.length > 0 ? this.favCoinsList.length + this.coinList.length : 0;
+            console.log(this.sortingKey);
+            this.subscriptionOfHttp = this.http.post('http://54.165.36.80:5687/api/coins/getFavourites', { token: tokenV, from: 0, to: toL, sort: { key: this.sortingKey, value: this.reverse } }).map(function (response) { return response.json(); }).subscribe(function (data) {
                 if (_this.clearInterval) {
-                    if (_this.favCoinsList.length > 0) {
+                    if (_this.favCoinsList.length > 0 && _this.coinList.length > 0) {
                         _this.noData = false;
-                        _this.updateFavCoinsData(data);
+                        for (var n = 0; n < data.length; n++) {
+                            if (data[n].favourite == true) {
+                                _this.updateFavCoinsData(data[n].data);
+                            }
+                            else if (data[n].favourite == false) {
+                                _this.updateAllCoinsData(data[n].data);
+                            }
+                        }
                     }
                     else {
                         _this.noData = false;
                         _this.showLoadSpinner = false;
-                        _this.favCoinsList = data;
-                        if (parseInt(_this.setIntervalTime) >= 1000) {
-                            _this.favCoinInterval = Object(__WEBPACK_IMPORTED_MODULE_8_timers__["setInterval"])(function () {
-                                _this.getAlongFavCoins();
-                            }, _this.setIntervalTime);
+                        for (var n = 0; n < data.length; n++) {
+                            if (data[n].favourite == true) {
+                                _this.favCoinsList = data[n].data;
+                            }
+                            else if (data[n].favourite == false) {
+                                _this.coinList = data[n].data;
+                            }
                         }
+                        // this.favCoinsList = data[0].data;
+                        // this.coinList = data[1].data;
+                        // if (parseInt(this.setIntervalTime) >= 1000) {
+                        //     this.runningInterval = setInterval(() => {
+                        //         this.getAlongFavCoins();
+                        //     }, this.setIntervalTime);
+                        // }
                     }
                 }
             });
-            var toL = this.coinList.length > 0 ? this.coinList.length : 20;
-            this.subscriptionOfHttp = this.http.post('http://54.165.36.80:5687/api/coins/getCoins', { from: 0, to: toL, token: tokenV }).map(function (response) { return response.json(); }).subscribe(function (data) {
-                if (_this.clearInterval) {
-                    if (_this.coinList.length > 0 && _this.clearInterval) {
-                        _this.noData = false;
-                        _this.updateAllCoinsData(data);
-                    }
-                    else {
-                        _this.noData = false;
-                        _this.showLoadSpinner = false;
-                        _this.coinList = data;
-                        if (parseInt(_this.setIntervalTime) >= 1000) {
-                            _this.favCoinInterval = Object(__WEBPACK_IMPORTED_MODULE_8_timers__["setInterval"])(function () {
-                                _this.getAlongFavCoins();
-                            }, _this.setIntervalTime);
-                        }
-                    }
-                }
-            });
+            // let toL = this.coinList.length > 0 ? this.coinList.length : 20;
+            // this.subscriptionOfHttp = this.http.post('http://54.165.36.80:5687/api/coins/getCoins', { from: 0, to: toL, token: tokenV }).map(response => response.json()).subscribe(data => {
+            //     if (this.clearInterval) {
+            //         if (this.coinList.length > 0 && this.clearInterval) {
+            //             this.noData = false;
+            //             this.updateAllCoinsData(data);
+            //         }
+            //         else {
+            //             this.noData = false;
+            //             this.showLoadSpinner = false;
+            //             this.coinList = data;
+            //             if (parseInt(this.setIntervalTime) >= 1000) {
+            //                 this.runningInterval = setInterval(() => {
+            //                     this.getAlongFavCoins();
+            //                 }, this.setIntervalTime);
+            //             }
+            //         }
+            //     }
+            // })
         }
     };
     TvChartContainerComponent.prototype.getCoinList = function () {
@@ -4416,16 +4458,21 @@ var TvChartContainerComponent = /** @class */ (function () {
     };
     TvChartContainerComponent.prototype.getUserCoins = function (tokenV) {
         var _this = this;
-        var toL = this.favCoinsList.length > 0 ? this.favCoinsList.length : 20;
+        var toL = this.coinList.length + this.favCoinsList.length > 0 ? this.coinList.length + this.favCoinsList.length : 20;
+        console.log(this.sortingKey);
         this.subscriptionOfHttp = this.http.post('http://54.165.36.80:5687/api/coins/getFavourites', { token: tokenV, from: 0, to: toL, sort: { key: this.sortingKey, value: this.reverse } }).map(function (response) { return response.json(); }).subscribe(function (data) {
-            _this.favCoinsList = data;
+            _this.noData = false;
+            _this.showLoadSpinner = false;
+            for (var n = 0; n < data.length; n++) {
+                if (data[n].favourite == true) {
+                    _this.favCoinsList = data[n].data;
+                }
+                else if (data[n].favourite == false) {
+                    _this.coinList = data[n].data;
+                }
+            }
         }, function (err) {
             _this.favCoinsList = [];
-        });
-        this.subscriptionOfHttp = this.http.post('http://54.165.36.80:5687/api/coins/getCoins', { token: tokenV, from: 0, to: toL, sort: { key: this.sortingKey, value: this.reverse } }).map(function (response) { return response.json(); }).subscribe(function (data) {
-            _this.coinList = data;
-            console.log(JSON.stringify(data));
-        }, function (err) {
             _this.coinList = [];
         });
     };
@@ -4440,17 +4487,16 @@ var TvChartContainerComponent = /** @class */ (function () {
         this.signUpModal.hide();
     };
     TvChartContainerComponent.prototype.userWithFavCoins = function () {
-        var _this = this;
         this.isAdvFilter = false;
         this.clearInterval = true;
         this.coinList = [];
         this.favCoinsList = [];
         this.getAlongFavCoins();
-        if (parseInt(this.setIntervalTime) >= 1000) {
-            this.runningInterval = Object(__WEBPACK_IMPORTED_MODULE_8_timers__["setInterval"])(function () {
-                _this.getAlongFavCoins();
-            }, this.setIntervalTime);
-        }
+        // if (parseInt(this.setIntervalTime) >= 1000) {
+        //     this.runningInterval = setInterval(() => {
+        //         this.getAlongFavCoins();
+        //     }, this.setIntervalTime);
+        // }
     };
     TvChartContainerComponent.prototype.userNormalData = function () {
         this.isAdvFilter = false;
@@ -4471,6 +4517,7 @@ var TvChartContainerComponent = /** @class */ (function () {
                 }
             }
         }
+        this.clearInterval = false;
         // this.subscriptions.unsubscribe();
         clearInterval(this.runningInterval);
         this.ngUnsubscribe.next();
@@ -4480,21 +4527,39 @@ var TvChartContainerComponent = /** @class */ (function () {
         var _this = this;
         if ((__WEBPACK_IMPORTED_MODULE_7_angular_bootstrap_md_utils_facade_browser__["c" /* window */].innerHeight + __WEBPACK_IMPORTED_MODULE_7_angular_bootstrap_md_utils_facade_browser__["c" /* window */].scrollY) >= __WEBPACK_IMPORTED_MODULE_7_angular_bootstrap_md_utils_facade_browser__["a" /* document */].body.offsetHeight) {
             if (localStorage.getItem('userToken')) {
-                this.url = 'http://54.165.36.80:5687/coins/getCoins';
-                var tokenV = localStorage.getItem('userToken');
+                this.url = 'http://54.165.36.80:5687/api/coins/getFavourites';
+                var tokenv = localStorage.getItem('userToken');
+                this.subscriptionOfHttp = this.http.post(this.url, { token: tokenv, from: this.coinList.length + this.favCoinsList.length, to: 20 }).map(function (response) { return response.json(); }).subscribe(function (data) {
+                    for (var n = 0; n < data.length; n++) {
+                        if (data[n].favourite == true) {
+                            data[n].data.forEach(function (element) {
+                                _this.favCoinsList.push(element);
+                            });
+                        }
+                        else if (data[n].favourite == false) {
+                            data[n].data.forEach(function (element) {
+                                _this.coinList.push(element);
+                            });
+                            //this.updateAllCoinsData(data[n].data);
+                        }
+                    }
+                    _this.showLoadSpinner = false;
+                }, function (err) {
+                    console.log(err);
+                });
             }
             else {
                 this.url = 'http://54.165.36.80:5687/exchange/getusd';
+                this.subscriptionOfHttp = this.http.post(this.url, { from: this.coinList.length + 1, to: 21, token: localStorage.getItem('userToken') ? localStorage.getItem('userToken') : '' }).map(function (response) { return response.json(); }).subscribe(function (data) {
+                    data.forEach(function (element) {
+                        _this.coinList.push(element);
+                    });
+                    _this.showLoadSpinner = false;
+                }, function (err) {
+                    console.log(err);
+                });
             }
             this.showLoadSpinner = true;
-            this.subscriptionOfHttp = this.http.post(this.url, { from: this.coinList.length + 1, to: this.coinList.length + 21, token: localStorage.getItem('userToken') ? localStorage.getItem('userToken') : '' }).map(function (response) { return response.json(); }).subscribe(function (data) {
-                data.forEach(function (element) {
-                    _this.coinList.push(element);
-                });
-                _this.showLoadSpinner = false;
-            }, function (err) {
-                console.log(err);
-            });
             this.showScrollTop = true;
         }
     };
