@@ -3739,7 +3739,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
-
 /*AmChart Func  */
 
 /*AmChart Func  */
@@ -4725,53 +4724,59 @@ var TvChartContainerComponent = /** @class */ (function () {
         this.ngUnsubscribe.next();
         this.ngUnsubscribe.complete();
     };
-    TvChartContainerComponent.prototype.onWindowScroll = function (event) {
-        var _this = this;
-        if ((__WEBPACK_IMPORTED_MODULE_7_angular_bootstrap_md_utils_facade_browser__["c" /* window */].innerHeight + __WEBPACK_IMPORTED_MODULE_7_angular_bootstrap_md_utils_facade_browser__["c" /* window */].scrollY) >= __WEBPACK_IMPORTED_MODULE_7_angular_bootstrap_md_utils_facade_browser__["a" /* document */].body.offsetHeight) {
-            if (localStorage.getItem('userToken')) {
-                this.url = 'http://54.165.36.80:5687/api/coins/getFavourites';
-                var tokenv = localStorage.getItem('userToken');
-                this.subscriptionOfHttp = this.http.post(this.url, { token: tokenv, from: this.coinList.length + this.favCoinsList.length, to: 20 }).map(function (response) { return response.json(); }).subscribe(function (data) {
-                    if (_this.clearInterval && data.length <= 2) {
-                        for (var n = 0; n < data.length; n++) {
-                            if (data[n].favourite == true) {
-                                data[n].data.forEach(function (element) {
-                                    _this.favCoinsList.push(element);
-                                });
-                            }
-                            else if (data[n].favourite == false) {
-                                data[n].data.forEach(function (element) {
-                                    _this.coinList.push(element);
-                                });
-                                //this.updateAllCoinsData(data[n].data);
-                            }
-                        }
-                    }
-                    else {
-                        data.forEach(function (element) {
-                            _this.coinList.push(element);
-                        });
-                    }
-                    _this.showLoadSpinner = false;
-                }, function (err) {
-                    console.log(err);
-                });
-            }
-            else {
-                this.url = 'http://54.165.36.80:5687/exchange/getusd';
-                this.subscriptionOfHttp = this.http.post(this.url, { from: this.coinList.length + 1, to: 21, token: localStorage.getItem('userToken') ? localStorage.getItem('userToken') : '' }).map(function (response) { return response.json(); }).subscribe(function (data) {
-                    data.forEach(function (element) {
-                        _this.coinList.push(element);
-                    });
-                    _this.showLoadSpinner = false;
-                }, function (err) {
-                    console.log(err);
-                });
-            }
-            this.showLoadSpinner = true;
-            this.showScrollTop = true;
-        }
-    };
+    // @HostListener("window:scroll", ['$event'])
+    // onWindowScroll(event) {
+    //     if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
+    //         if (localStorage.getItem('userToken')) {
+    //             this.url = 'http://54.165.36.80:5687/api/coins/getFavourites';
+    //             let tokenv = localStorage.getItem('userToken');
+    //             this.subscriptionOfHttp = this.http.post(this.url, { token: tokenv, from: this.coinList.length + this.favCoinsList.length, to: 20 }).map(
+    //                 response => response.json()).subscribe(
+    //                 data => {
+    //                     if (this.clearInterval && data.length <= 2) {
+    //                         for (let n = 0; n < data.length; n++) {
+    //                             if (data[n].favourite == true) {
+    //                                 data[n].data.forEach(element => {
+    //                                     this.favCoinsList.push(element)
+    //                                 });
+    //                             }
+    //                             else if (data[n].favourite == false) {
+    //                                 data[n].data.forEach(element => {
+    //                                     this.coinList.push(element)
+    //                                 });
+    //                                 //this.updateAllCoinsData(data[n].data);
+    //                             }
+    //                         }
+    //                     }
+    //                     else {
+    //                         data.forEach(element => {
+    //                             this.coinList.push(element)
+    //                         });
+    //                     }
+    //                     this.showLoadSpinner = false;
+    //                 },
+    //                 err => {
+    //                     console.log(err)
+    //                 })
+    //         }
+    //         else {
+    //             this.url = 'http://54.165.36.80:5687/exchange/getusd';
+    //             this.subscriptionOfHttp = this.http.post(this.url, { from: this.coinList.length + 1, to: 21, token: localStorage.getItem('userToken') ? localStorage.getItem('userToken') : '' }).map(
+    //                 response => response.json()).subscribe(
+    //                 data => {
+    //                     data.forEach(element => {
+    //                         this.coinList.push(element)
+    //                     });
+    //                     this.showLoadSpinner = false;
+    //                 },
+    //                 err => {
+    //                     console.log(err)
+    //                 })
+    //         }
+    //         this.showLoadSpinner = true;
+    //         this.showScrollTop = true;
+    //     }
+    // }
     /*AmChart Implementation */
     TvChartContainerComponent.prototype.themeDo = function (chartId, chartData, coinToken) {
         var isTheme = __WEBPACK_IMPORTED_MODULE_7_angular_bootstrap_md_utils_facade_browser__["a" /* document */].getElementsByTagName('body')[0].classList.contains('black-theme');
@@ -5036,7 +5041,6 @@ var TvChartContainerComponent = /** @class */ (function () {
     };
     TvChartContainerComponent.prototype.getPortfolioList = function () {
         var _this = this;
-        debugger;
         var token = localStorage.getItem('userToken');
         this.http.post('http://54.165.36.80:5687/api/coins/getPortfolio', { token: token }).map(function (response) { return response.json(); }).subscribe(function (data) {
             _this.getLoggedIn = false;
@@ -5179,12 +5183,6 @@ var TvChartContainerComponent = /** @class */ (function () {
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"])(),
         __metadata("design:type", String)
     ], TvChartContainerComponent.prototype, "graphId", void 0);
-    __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["HostListener"])("window:scroll", ['$event']),
-        __metadata("design:type", Function),
-        __metadata("design:paramtypes", [Object]),
-        __metadata("design:returntype", void 0)
-    ], TvChartContainerComponent.prototype, "onWindowScroll", null);
     TvChartContainerComponent = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
             selector: 'app-tv-chart-container',
